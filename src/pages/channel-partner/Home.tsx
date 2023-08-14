@@ -2,9 +2,9 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import axios from 'axios';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import CpInstance from '../../config/axiosInstances/axiosCp';
 
 interface CardsProps {
     title: string;
@@ -13,7 +13,7 @@ interface CardsProps {
 
 const Cards = ({title,link}:CardsProps) => {
     return (
-        <div style={{ display: "flex", justifyContent: "center" }} className='col-md-6 mb-5'>
+        <div style={{ display: "flex", justifyContent: "center"}} className='col-md-6 mb-5'>
             <a href={link} style={{ textDecoration: "none" }}>
                 <Card sx={{ width: 350 }}>
                     <CardMedia
@@ -37,14 +37,15 @@ export const Home = () => {
     const key  = localStorage.getItem('cpToken')
     const navigate = useNavigate()
     useEffect(() => {
-        axios.get('http://localhost:3001/cp/home', {
+        CpInstance.get('/home', {
           headers: {
-            key
+            token:key
           }
         }).then((res)=>{
-            // console.log('rsssssssss')
+            // console.log(res.data,'data from backend')
         }).catch((err)=>{
-            // console.log(err)
+            console.log(err)
+            if(key) localStorage.removeItem('cpToken')
             navigate('/cp/login')
         })
       },[]);
@@ -54,7 +55,7 @@ export const Home = () => {
         <div className='container' style={{ display: "flex", justifyContent: "center" }} >
             <div className='row mt-5 container' style={{ display: "flex", justifyContent: "center" }}>
                 <Cards link={'hi'} title={'Tracking'}></Cards>
-                <Cards link={'hi'} title={'Pincode Search'}></Cards>
+                <Cards link={'/cp/pincode-search'} title={'Pincode Search'}></Cards>
                 <Cards link={'hi'} title={'My Bookings'}></Cards>
                 <Cards link={'hi'} title={'My Delivery'}></Cards>
             </div>

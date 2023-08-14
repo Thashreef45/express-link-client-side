@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { useState } from 'react';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import LoginForm from '../../components/LoginForm'
-
+import NodalInstance from '../../config/axiosInstances/axiosNp';
 
 export default function SignIn() {
 
@@ -25,7 +24,7 @@ export default function SignIn() {
       errResSetter("ID must be 6 characters")
     }
     else {
-      axios.post('http://localhost:3002/nodal/login', formData).then((res) => {
+      NodalInstance.post('/login', formData).then((res) => {
         localStorage.setItem('nodalToken',`Bearer ${res.data.token}`)
         navigate('/nodal/home')
 

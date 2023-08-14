@@ -7,8 +7,8 @@ import Container from '@mui/material/Container';
 import { FormHelperText } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { toast } from 'react-toastify';
+import NodalInstance from '../../config/axiosInstances/axiosNp';
 
 
 
@@ -50,7 +50,7 @@ export default function CreateNodal() {
             errResSetter("Address is too short")
         }
         else {
-              axios.post('http://localhost:3002/nodal/create-nodal', data,{
+            NodalInstance.post('/create-nodal', data,{
                 headers:{token:token}
               }).then((res) => {
                 localStorage.setItem('apexToken',`Bearer ${res.data.token}`)

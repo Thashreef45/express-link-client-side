@@ -7,8 +7,8 @@ import Container from '@mui/material/Container';
 import { FormHelperText } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { toast } from 'react-toastify';
+import CpInstance from '../../config/axiosInstances/axiosCp';
 
 
 
@@ -50,7 +50,7 @@ export default function CreateCP() {
             errResSetter("Address is too short")
         }
         else {
-              axios.post('http://localhost:3001/cp/create-cp', data,{
+            CpInstance.post('/create-cp', data,{
                 headers:{token:token}
               }).then((res) => {
                 localStorage.setItem('apexToken',`Bearer ${res.data.token}`)

@@ -8,9 +8,14 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { FormHelperText } from '@mui/material';
 
+interface SignInProps {
+  title: string;
+  submitHandler: (e: React.FormEvent) => void;
+  errRes: string | null; 
+}
 
-export default function SignIn({title,submitHandler,errRes}) {
-  
+
+export default function SignIn({title,submitHandler,errRes}:SignInProps) {
 
   return (
     <div >
