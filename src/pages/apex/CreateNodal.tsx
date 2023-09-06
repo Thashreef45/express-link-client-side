@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import NodalInstance from '../../config/axiosInstances/axiosNp';
+import ApextInstance from '../../config/axiosInstances/axiosApex';
 
 
 
@@ -50,10 +51,10 @@ export default function CreateNodal() {
             errResSetter("Address is too short")
         }
         else {
-            NodalInstance.post('/create-nodal', data,{
+            ApextInstance.post('/create-nodal', data,{
                 headers:{token:token}
               }).then((res) => {
-                localStorage.setItem('apexToken',`Bearer ${res.data.token}`)
+                // localStorage.setItem('apexToken',`Bearer ${res.data.token}`)
                 navigate('/apex/home')
 
               }).catch((err) => {

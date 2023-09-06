@@ -11,7 +11,7 @@ const CpRoutes = () => {
             <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="" element={<Navigate to="/cp/login" />} />
-                <Route path="" element={<ProtectCp />}>
+                <Route  element={<ProtectCp />}>
                     <Route path="/home" element={<Home />} />
                     <Route path="/pincode-search" element={<PincodeSearch />} />
                 </Route>

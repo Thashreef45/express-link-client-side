@@ -74,6 +74,7 @@ const PincodeSearch = () => {
             {!lowerDiv && <div style={{ height: "20%" }}></div>}
             <div style={{ height: '42.9vh', width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                 <Box component="form" sx={{
+                    // borderRadius:,
                     '& .MuiTextField-root': { m: 1 },
                 }} noValidate autoComplete="off">
                     <TextField
@@ -171,5 +172,7 @@ export function CpDataCard({name,phone,email,pincode,address}:CpCard) {
         </Card>
     );
 }
+
+
 
 

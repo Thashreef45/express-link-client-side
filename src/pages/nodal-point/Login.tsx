@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import LoginForm from '../../components/LoginForm'
@@ -9,6 +9,13 @@ export default function SignIn() {
 
   const [errRes, errResSetter] = useState('')
   const navigate = useNavigate()
+
+  useEffect(()=>{
+    const token = localStorage.getItem('nodalToken')
+    if(token){
+      navigate('/nodal/home')
+    }
+  },[])
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement | null>) => {
     event.preventDefault();
@@ -24,6 +31,7 @@ export default function SignIn() {
       errResSetter("ID must be 6 characters")
     }
     else {
+      console.log('formData',formData)
       NodalInstance.post('/login', formData).then((res) => {
         localStorage.setItem('nodalToken',`Bearer ${res.data.token}`)
         navigate('/nodal/home')

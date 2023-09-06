@@ -8,24 +8,40 @@ import { FormHelperText } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import CpInstance from '../../config/axiosInstances/axiosCp';
+import NodalInstance from '../../config/axiosInstances/axiosNp';
 
 
 
 
 
 export default function CreateCP() {
+    
 
     const [errRes, errResSetter] = useState('')
     const navigate = useNavigate()
 
-    // useEffect(()=>{
+    useEffect(() => {
+        const token = localStorage.getItem('nodalToken')
+        NodalInstance.get('/home',{
+            headers: {
+                token: token
+            }
+        }).then((res) => {
+            console.log(res.data)
+            
+        }).catch((err) => {
+            console.log(err)
+            if(token) localStorage.removeItem('nodalToken')
+            navigate('/nodal/login')
+        })
 
-    // },[])
+    }, [])
+
+    // const 
 
 
-    const handleSubmit = async (event:any) => {
-        const token = localStorage.getItem('apexToken')
+    const handleSubmit = async (event: any) => {
+        const token = localStorage.getItem('nodalToken')
         event.preventDefault();
         errResSetter("")
         const formData = new FormData(event.target);
@@ -37,8 +53,8 @@ export default function CreateCP() {
             data.id = String(data.id).trim()
             errResSetter("ID must be 6 characters")
         }
-        else if (String(data.email).trim().length <8) {
-            data.email = String( data.email).trim()
+        else if (String(data.email).trim().length < 8) {
+            data.email = String(data.email).trim()
             errResSetter("Enter a valid email")
         } else if (String(data.phone).trim().length < 10) {
             errResSetter("Not a valid phone number")
@@ -46,19 +62,18 @@ export default function CreateCP() {
             errResSetter("Enter a valid Pincode")
         }
         else if (String(data.address).trim().length < 10) {
-            data.address = String( data.address).trim()
+            data.address = String(data.address).trim()
             errResSetter("Address is too short")
         }
         else {
-            CpInstance.post('/create-cp', data,{
-                headers:{token:token}
-              }).then((res) => {
-                localStorage.setItem('apexToken',`Bearer ${res.data.token}`)
-                navigate('/apex/home')
-
-              }).catch((err) => {
+            NodalInstance.post('/create-cp', data, {
+                headers: { token: token }
+            }).then((res) => {
+                localStorage.setItem('apexToken', `Bearer ${res.data.token}`)
+                navigate('/nodal/home')
+            }).catch((err) => {
                 toast.error(err.response.data.message)
-              })
+            })
         }
     };
 
@@ -124,6 +139,7 @@ export default function CreateCP() {
                             label="Phone"
                             name="phone"
                             type="Number"
+                            inputProps={{ maxLength: 10 }}
                             // autoComplete="id"
                             autoFocus
                         />
@@ -150,7 +166,7 @@ export default function CreateCP() {
                             // autoComplete="id"
                             autoFocus
                         />
-                        
+
                         {errRes && <FormHelperText error={true}>{errRes}</FormHelperText>}
 
 
@@ -158,8 +174,8 @@ export default function CreateCP() {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 4, mb: 2 ,height:50}}
-                            style={{ color: "#FFF" ,fontSize:17}}
+                            sx={{ mt: 4, mb: 2, height: 50 }}
+                            style={{ color: "#FFF", fontSize: 17 }}
                         >
                             CREATE
                         </Button>
