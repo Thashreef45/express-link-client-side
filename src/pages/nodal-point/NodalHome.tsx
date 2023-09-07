@@ -12,18 +12,36 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Colors } from '../../constants/Colors';
+import NodalInstance from '../../config/axiosInstances/axiosNp';
+import { useNavigate } from 'react-router-dom';
 
-
-const cards = [{name:"Pincode Search",link:""},
-                {name:"Tracking",link:""},
-                {name:"Send FDM",link:""},
-                {name:"Recieved FDM",link:""},
-                {name:"Create-CP",link:"/nodal/create-cp"},
-
-              ];
-
+interface GridCardProps {
+    card: {
+        name: string;
+        link: string;
+        image: string;
+    };
+    key: React.Key;
+}
 
 const NodalHome = () => {
+    const navigate = useNavigate()
+
+
+    NodalInstance.get('/home', {
+        headers: {
+            token: localStorage.getItem('nodalToken')
+        }
+    }).then((res) => {
+        console.log(res.data)
+    }).catch(() => {
+        if (localStorage.getItem('nodalToken')) {
+            localStorage.removeItem('nodalToken')
+        }
+        navigate('/nodal/login')
+    })
+
+
     return (
         <>
             <AppBar position="relative">
@@ -36,8 +54,9 @@ const NodalHome = () => {
             <main>
                 <Container sx={{ py: 8 }} maxWidth="md">
                     <Grid container spacing={4}>
-                        {cards.map((card,index) => (
+                        {cards.map((card, index) => (
                             <GridCard key={index} card={card} />
+
                         ))}
                     </Grid>
                 </Container>
@@ -48,7 +67,7 @@ const NodalHome = () => {
 }
 
 
-const GridCard = ({card,key}) => {
+const GridCard = ({ card, key }: GridCardProps) => {
     return (
         <Grid item key={key} xs={12} sm={6} md={4}>
             <Card
@@ -58,19 +77,19 @@ const GridCard = ({card,key}) => {
                     component="div"
                     sx={{// 16:9
                         pt: '56.25%',
-                        backgroundColor:Colors.PrimaryColor
+                        backgroundColor: Colors.PrimaryColor
                     }}
-                    // image="https://source.unsplash.com/random?wallpapers"
+                    image={card.image}
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
+                    <Typography gutterBottom variant="h5" component="h2" color={Colors.SecondaryColor}>
                         {card.name}
                     </Typography>
                 </CardContent >
 
                 <CardActions>
                     <a href={card.link}>
-                    <Button size="small">Browse</Button></a>
+                        <Button size="small">Browse</Button></a>
                 </CardActions>
             </Card>
         </Grid>
@@ -85,36 +104,37 @@ export default NodalHome
 
 
 
+const cards = [{
+    name: "Pincode Search",
+    link: "",
+    image: '../../public/images/icons8-pin-100.png'
+},
+{
+    name: "Tracking",
+    link: "",
+    image: "../../public/images/icons8-tracking-100.png"
+},
+{
+    name: "Send FDM",
+    link: "",
+    image: "../../public/images/icons8-send-64.png"
+},
+{
+    name: "Recieved FDM",
+    link: "",
+    image: "../../public/images/icons8-import-64.png"
+},
+{
+    name: "Create-CP",
+    link: "/nodal/create-cp",
+    image: '../../public/images/icons8-add-new-64.png'
+},
 
-{/* Footer */ }
-{/* <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
-        >
-          Something here to give the footer a purpose!
-        </Typography>
-        <Copyright />
-      </Box> */}
-{/* End footer */ }
+];
 
 
-// function Copyright() {
-//     return (
-//         <Typography variant="body2" color="text.secondary" align="center">
-//             {'Copyright © '}
-//             <Link color="inherit" href="https://mui.com/">
-//                 Your Website
-//             </Link>{' '}
-//             {new Date().getFullYear()}
-//             {'.'}
-//         </Typography>
-//     );
-// }
+
+
+
 
 

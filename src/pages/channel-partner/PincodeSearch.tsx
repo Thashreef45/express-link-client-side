@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import CpInstance from '../../config/axiosInstances/axiosCp';
 import { useNavigate } from 'react-router-dom';
 import { FormHelperText } from '@mui/material';
+import { Colors } from '../../constants/Colors';
 
 
 const PincodeSearch = () => {
@@ -117,7 +118,7 @@ const PincodeSearch = () => {
 
             {lowerDiv &&
                 <div style={{
-                    backgroundColor: "#26B99A", height: '50vh', width: '100vw',
+                    backgroundColor: Colors.PrimaryColor, height: '50vh', width: '100vw',
                     display: "flex", justifyContent: "center", alignItems: 'center'
                 }}>
                     <div style={{

@@ -15,26 +15,22 @@ import NodalInstance from '../../config/axiosInstances/axiosNp';
 
 
 export default function CreateCP() {
-    
 
     const [errRes, errResSetter] = useState('')
     const navigate = useNavigate()
-
     useEffect(() => {
         const token = localStorage.getItem('nodalToken')
-        NodalInstance.get('/home',{
+        NodalInstance.get('/home', {
             headers: {
                 token: token
             }
         }).then((res) => {
-            console.log(res.data)
-            
+            console.log(res.data.id,'<<')
         }).catch((err) => {
             console.log(err)
-            if(token) localStorage.removeItem('nodalToken')
+            if (token) localStorage.removeItem('nodalToken')
             navigate('/nodal/login')
         })
-
     }, [])
 
     // const 

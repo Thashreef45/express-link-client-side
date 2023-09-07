@@ -5,60 +5,105 @@ import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CpInstance from '../../config/axiosInstances/axiosCp';
+import { Button, CardActions, Container, Grid } from '@mui/material';
+import { Colors } from '../../constants/Colors';
+import { AxiosResponse } from 'axios';
 
-interface CardsProps {
-    title: string;
-    link: string;
-  }
-
-const Cards = ({title,link}:CardsProps) => {
-    return (
-        <div style={{ display: "flex", justifyContent: "center"}} className='col-md-6 mb-5'>
-            <a href={link} style={{ textDecoration: "none" }}>
-                <Card sx={{ width: 350 }}>
-                    <CardMedia
-                        sx={{ height: 300, backgroundColor: "#26B99A" }}
-                        // image="../../../public/images/Screenshot from 2023-07-13 17-41-51.png"
-
-                        title={title}
-                    />
-                    <CardContent style={{ backgroundColor: "#556080", color: "#FFF" }}>
-                        <Typography gutterBottom variant="h5" component="div">
-                            {title}
-                        </Typography>
-                    </CardContent>
-                </Card>
-            </a>
-        </div>
-    )
+interface GridCardProps {
+    card: {
+        name: string;
+        link: string;
+        image: string;
+    };
+    key: React.Key;
 }
 
 export const Home = () => {
-    const key  = localStorage.getItem('cpToken')
+    const key = localStorage.getItem('cpToken')
     const navigate = useNavigate()
     useEffect(() => {
         CpInstance.get('/home', {
-          headers: {
-            token:key
-          }
-        }).then((res)=>{
+            headers: {
+                token: key
+            }
+        }).then((res: AxiosResponse) => {
+            res = res
             // console.log(res.data,'data from backend')
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log(err)
-            if(key) localStorage.removeItem('cpToken')
+            if (key) localStorage.removeItem('cpToken')
             navigate('/cp/login')
         })
-      },[]);
-      
+    }, []);
 
     return (
-        <div className='container' style={{ display: "flex", justifyContent: "center" }} >
-            <div className='row mt-5 container' style={{ display: "flex", justifyContent: "center" }}>
-                <Cards link={'hi'} title={'Tracking'}></Cards>
-                <Cards link={'/cp/pincode-search'} title={'Pincode Search'}></Cards>
-                <Cards link={'hi'} title={'My Bookings'}></Cards>
-                <Cards link={'hi'} title={'My Delivery'}></Cards>
-            </div>
-        </div>
+        <>
+            <main>
+                <Container sx={{ py: 8 }} maxWidth="md">
+                    <Grid container spacing={4}>
+                        {cards.map((card, index) => (
+                            <GridCard key={index} card={card} />
+                        ))}
+                    </Grid>
+                </Container>
+            </main>
+
+        </>
     );
 }
+
+
+const GridCard = ({ card, key }: GridCardProps) => {
+    return (
+        <Grid item key={key} xs={12} sm={6} md={4}>
+            <Card
+                sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+            >
+                <CardMedia
+                    component="div"
+                    sx={{// 16:9
+                        pt: '56.25%',
+                        backgroundColor: Colors.PrimaryColor
+                    }}
+                    image={card.image}
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                        {card.name}
+                    </Typography>
+                </CardContent >
+
+                <CardActions>
+                    <a href={card.link}>
+                        <Button size="small">Browse</Button></a>
+                </CardActions>
+            </Card>
+        </Grid>
+    )
+}
+
+
+
+
+const cards = [
+    {
+        name: "Pincode Search",
+        link: "/cp/pincode-search",
+        image: '../../public/images/icons8-pin-100.png'
+    },
+    {
+        name: "Tracking",
+        link: "",
+        image: "../../public/images/icons8-tracking-100.png"
+    },
+    {
+        name: "My Booking",
+        link: "",
+        image: "../../public/images/icons8-booking-96.png"
+    },
+    {
+        name: "My Delivery",
+        link: "",
+        image: "../../public/images/icons8-delivery-96.png"
+    },
+];

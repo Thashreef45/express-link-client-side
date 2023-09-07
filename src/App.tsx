@@ -7,6 +7,7 @@ import { ThemeProvider} from '@mui/material'
 import {Theme} from '../src/components/theme-provider/theme'
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import { Navigate } from 'react-router-dom'
 
 
 function App() {
@@ -17,9 +18,14 @@ function App() {
         <Router>
          <ToastContainer />
           <Routes>
+
+            {/* setting default to cp */}
+            <Route path='/' element={<Navigate to='/cp'/>}/> 
+
             <Route path='/cp/*' element={<CpRoutes />} />
             <Route path='/nodal/*' element={<NodalRoutes/>} />
             <Route path='/apex/*' element={<ApexRoute/>}/>
+            
           </Routes>
         </Router>
       </ThemeProvider>
