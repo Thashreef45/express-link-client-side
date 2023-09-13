@@ -12,8 +12,9 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.14.0",
-    "@mui/material": "^5.14.0",
+    "@mui/icons-material": "^5.14.8",
+    "@mui/material": "^5.14.8",
+    "@mui/system": "^5.14.8",
     "@types/react-router-dom": "^5.3.3",
     "@types/react-toastify": "^4.1.0",
     "axios": "^1.4.0",

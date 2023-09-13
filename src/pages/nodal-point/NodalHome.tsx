@@ -1,31 +1,22 @@
-
-import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
-// import CameraIcon from '@mui/icons-material/PhotoCamera';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-// import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Colors } from '../../constants/Colors';
-import NodalInstance from '../../config/axiosInstances/axiosNp';
+import NodalInstance from '../../services/axiosInstances/axiosNp';
 import { useNavigate } from 'react-router-dom';
+import nodalCards,{ GridCardProps } from '../../constants/CardDatas/NodalCards';
 
-interface GridCardProps {
-    card: {
-        name: string;
-        link: string;
-        image: string;
-    };
-    key: React.Key;
-}
+
+const cards = nodalCards
 
 const NodalHome = () => {
     const navigate = useNavigate()
+
 
 
     NodalInstance.get('/home', {
@@ -44,19 +35,13 @@ const NodalHome = () => {
 
     return (
         <>
-            <AppBar position="relative">
-                <Toolbar>
-                    {/* <CameraIcon sx={{ mr: 2 }} /> */}
-                    <Button style={{ color: 'white', backgroundColor: 'gray' }}>Logout</Button>
-                </Toolbar>
-            </AppBar>
 
             <main>
                 <Container sx={{ py: 8 }} maxWidth="md">
                     <Grid container spacing={4}>
                         {cards.map((card, index) => (
                             <GridCard key={index} card={card} />
-
+ 
                         ))}
                     </Grid>
                 </Container>
@@ -98,43 +83,3 @@ const GridCard = ({ card, key }: GridCardProps) => {
 
 
 export default NodalHome
-
-
-
-
-
-
-const cards = [{
-    name: "Pincode Search",
-    link: "",
-    image: '../../public/images/icons8-pin-100.png'
-},
-{
-    name: "Tracking",
-    link: "",
-    image: "../../public/images/icons8-tracking-100.png"
-},
-{
-    name: "Send FDM",
-    link: "",
-    image: "../../public/images/icons8-send-64.png"
-},
-{
-    name: "Recieved FDM",
-    link: "",
-    image: "../../public/images/icons8-import-64.png"
-},
-{
-    name: "Create-CP",
-    link: "/nodal/create-cp",
-    image: '../../public/images/icons8-add-new-64.png'
-},
-
-];
-
-
-
-
-
-
-

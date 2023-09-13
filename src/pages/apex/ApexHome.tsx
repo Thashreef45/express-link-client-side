@@ -1,42 +1,43 @@
+
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CpInstance from '../../services/axiosInstances/axiosCp';
 import { Button, CardActions, Container, Grid } from '@mui/material';
 import { Colors } from '../../constants/Colors';
-import { AxiosResponse } from 'axios';
-import cpCards, { GridCardProps } from '../../constants/CardDatas/CpCards';
+import ApextInstance from '../../services/axiosInstances/axiosApex';
+import ApexCardData, { GridCardProps } from '../../constants/CardDatas/ApexCard';
 import Header from '../../components/Header';
 
-const cards = cpCards
+const cards = ApexCardData
 
-export const Home = () => {
-    const key = localStorage.getItem('cpToken')
+
+const ApexHome = () => {
     const navigate = useNavigate()
     useEffect(() => {
-        CpInstance.get('/home', {
-            headers: {
-                token: key
-            }
-        }).then((res: AxiosResponse) => {
-            res = res
-            // console.log(res.data,'data from backend')
-        }).catch((err) => {
-            console.log(err)
-            if (key) localStorage.removeItem('cpToken')
-            navigate('/cp/login')
-        })
-    }, []);
+        let token = localStorage.getItem('apexToken')
+        if (!token) navigate('/apex/login')
+        else {
+            ApextInstance.get('/home', {
+                headers: {
+                    token
+                }
+            }).then((res) => {
+                console.log(res.data)
+            }).catch(() => {
+                if (token) localStorage.removeItem('apexToken')
+                navigate('/apex/login')
+            })
+        }
+
+    }, [])
 
     return (
         <>
             <Header />
-            <div style={{ display: 'flex', width: '100vw', alignItems: 'center', justifyContent: 'center', marginTop: '3rem' }}>
-                    <h2 style={{color:Colors.SecondaryColor,marginTop:'0px',marginBottom:'0px'}}>Channel Partner Dashboard</h2>
-            </div>
+
             <main>
                 <Container sx={{ py: 8 }} maxWidth="lg">
                     <Grid container spacing={4}>
@@ -50,6 +51,10 @@ export const Home = () => {
         </>
     );
 }
+
+export default ApexHome
+
+
 
 
 const GridCard = ({ card, key }: GridCardProps) => {

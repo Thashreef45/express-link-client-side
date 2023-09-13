@@ -8,8 +8,7 @@ import { FormHelperText } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import NodalInstance from '../../config/axiosInstances/axiosNp';
-import ApextInstance from '../../config/axiosInstances/axiosApex';
+import ApextInstance from '../../services/axiosInstances/axiosApex';
 
 
 
@@ -25,7 +24,7 @@ export default function CreateNodal() {
     // },[])
 
 
-    const handleSubmit = async (event:any) => {
+    const handleSubmit = async (event: any) => {
         const token = localStorage.getItem('apexToken')
         event.preventDefault();
         errResSetter("")
@@ -38,8 +37,8 @@ export default function CreateNodal() {
             data.id = String(data.id).trim()
             errResSetter("ID must be 6 characters")
         }
-        else if (String(data.email).trim().length <8) {
-            data.email = String( data.email).trim()
+        else if (String(data.email).trim().length < 8) {
+            data.email = String(data.email).trim()
             errResSetter("Enter a valid email")
         } else if (String(data.phone).trim().length < 10) {
             errResSetter("Not a valid phone number")
@@ -47,19 +46,20 @@ export default function CreateNodal() {
             errResSetter("Enter a valid Pincode")
         }
         else if (String(data.address).trim().length < 10) {
-            data.address = String( data.address).trim()
+            data.address = String(data.address).trim()
             errResSetter("Address is too short")
         }
         else {
-            ApextInstance.post('/create-nodal', data,{
-                headers:{token:token}
-              }).then((res) => {
+            console.log(token, '<<token  data>>', data, '<<')
+            ApextInstance.post('/create-nodal', data, {
+                headers: { token: token }
+            }).then((res) => {
                 // localStorage.setItem('apexToken',`Bearer ${res.data.token}`)
                 navigate('/apex/home')
 
-              }).catch((err) => {
+            }).catch((err) => {
                 toast.error(err.response.data.message)
-              })
+            })
         }
     };
 
@@ -83,6 +83,17 @@ export default function CreateNodal() {
                         Create Nodal Point
                     </Typography> <br />
                     <Box component="form" onSubmit={(e) => { handleSubmit(e) }} noValidate sx={{ mt: 1 }}>
+
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="name"
+                            label="Name"
+                            name="name"
+                            // autoComplete="id"
+                            autoFocus
+                        />
 
                         <TextField
                             margin="normal"
@@ -151,7 +162,7 @@ export default function CreateNodal() {
                             // autoComplete="id"
                             autoFocus
                         />
-                        
+
                         {errRes && <FormHelperText error={true}>{errRes}</FormHelperText>}
 
 
@@ -159,8 +170,8 @@ export default function CreateNodal() {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 4, mb: 2 ,height:50}}
-                            style={{ color: "#FFF" ,fontSize:17}}
+                            sx={{ mt: 4, mb: 2, height: 50 }}
+                            style={{ color: "#FFF", fontSize: 17 }}
                         >
                             CREATE
                         </Button>
@@ -171,3 +182,15 @@ export default function CreateNodal() {
         </div>
     );
 }
+
+
+// message createNodalReq {
+//     string id=1;
+//     int64 phone=2;
+//     string email=3;
+//     string password=4;
+//     string apex=5;
+//     string address=6;
+//     int32 pincode=7;
+//     string token=8;
+// }

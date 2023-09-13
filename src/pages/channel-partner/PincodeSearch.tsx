@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import CpInstance from '../../config/axiosInstances/axiosCp';
+import CpInstance from '../../services/axiosInstances/axiosCp';
 import { useNavigate } from 'react-router-dom';
 import { FormHelperText } from '@mui/material';
 import { Colors } from '../../constants/Colors';

@@ -8,7 +8,7 @@ import { FormHelperText } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import NodalInstance from '../../config/axiosInstances/axiosNp';
+import NodalInstance from '../../services/axiosInstances/axiosNp';
 
 
 
@@ -20,12 +20,13 @@ export default function CreateCP() {
     const navigate = useNavigate()
     useEffect(() => {
         const token = localStorage.getItem('nodalToken')
+
         NodalInstance.get('/home', {
             headers: {
                 token: token
             }
         }).then((res) => {
-            console.log(res.data.id,'<<')
+            // console.log(res.data.id, '<<')
         }).catch((err) => {
             console.log(err)
             if (token) localStorage.removeItem('nodalToken')
@@ -102,6 +103,16 @@ export default function CreateCP() {
                             label="ID"
                             name="id"
                             // autoComplete="id"
+                            autoFocus
+                        />
+
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="name"
+                            label="Name"
+                            name="name"
                             autoFocus
                         />
 

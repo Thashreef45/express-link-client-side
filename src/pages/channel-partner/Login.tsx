@@ -2,7 +2,7 @@ import { useState,useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import LoginForm from '../../components/LoginForm'
-import CpInstance from '../../config/axiosInstances/axiosCp';
+import CpInstance from '../../services/axiosInstances/axiosCp';
 
 
 export default function SignIn() {

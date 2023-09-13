@@ -3,7 +3,7 @@ import { useState,useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import LoginForm from '../../components/LoginForm'
-import ApextInstance from '../../config/axiosInstances/axiosApex';
+import ApextInstance from '../../services/axiosInstances/axiosApex';
 
 export default function SignIn() {
 
