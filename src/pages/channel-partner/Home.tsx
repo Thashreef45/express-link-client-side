@@ -23,7 +23,6 @@ export const Home = () => {
             }
         }).then((res: AxiosResponse) => {
             res = res
-            // console.log(res.data,'data from backend')
         }).catch((err) => {
             console.log(err)
             if (key) localStorage.removeItem('cpToken')
@@ -33,7 +32,7 @@ export const Home = () => {
 
     return (
         <>
-            <Header />
+            <Header role='cp'/>
             <div style={{ display: 'flex', width: '100vw', alignItems: 'center', justifyContent: 'center', marginTop: '3rem' }}>
                     <h2 style={{color:Colors.SecondaryColor,marginTop:'0px',marginBottom:'0px'}}>Channel Partner Dashboard</h2>
             </div>

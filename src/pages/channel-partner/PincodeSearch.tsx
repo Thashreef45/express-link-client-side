@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-
-
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -11,6 +9,7 @@ import CpInstance from '../../services/axiosInstances/axiosCp';
 import { useNavigate } from 'react-router-dom';
 import { FormHelperText } from '@mui/material';
 import { Colors } from '../../constants/Colors';
+import Header from '../../components/Header';
 
 
 const PincodeSearch = () => {
@@ -71,6 +70,8 @@ const PincodeSearch = () => {
 
 
     return (
+        <>
+        <Header  role='cp' />
         <div style={{ height: '92.9vh', width: '100vw' }}>
             {!lowerDiv && <div style={{ height: "20%" }}></div>}
             <div style={{ height: '42.9vh', width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -128,7 +129,7 @@ const PincodeSearch = () => {
                         {cpData && 
                             <CpDataCard 
                             name={cpData.name} email={cpData.email} phone={cpData.phone}
-                            address={cpData.address.address} pincode={cpData.address.pincode}
+                            address={cpData.address} pincode={cpData.pincode}
                             />
                         }
                         {cpNotFound && <h2 className='text-light'>{cpNotFound}</h2>}
@@ -136,6 +137,8 @@ const PincodeSearch = () => {
                 </div>
             }
         </div>
+
+        </>
     )
 }
 
@@ -169,6 +172,9 @@ export function CpDataCard({name,phone,email,pincode,address}:CpCard) {
                 <Typography variant="h6" component="div">
                     Address:{address}
                 </Typography>
+                {/* <Typography variant="h6" component="div">
+                    Name:{name}
+                </Typography> */}
             </CardContent>
         </Card>
     );

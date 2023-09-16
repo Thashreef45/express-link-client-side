@@ -11,12 +11,13 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import { useNavigate } from 'react-router-dom';
 
-const pages = ['Products','Pricing', 'Blog'];
-const settings = [ {name:'Account',link:''},
-                  { name:'Logout'}];
+const pages = ['Products', 'Pricing', 'Blog'];
+const settings = [{ name: 'Account', link: '' },
+{ name: 'Logout' }];
 
-function Header() {
+function Header({role}:{role:string}) {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -35,13 +36,25 @@ function Header() {
     setAnchorElUser(null);
   };
 
+
+  const navigate = useNavigate()
+
+  const logoutHandler = () => {
+    localStorage.removeItem(`${role}Token`)
+    navigate(`/${role}/login`);
+  }
+
+  const accounClicktHandler = () => {
+    console.log('account clicked')
+  }
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          
+
           <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-    
+
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -79,7 +92,7 @@ function Header() {
               ))}
             </Menu>
           </Box>
-          
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
@@ -114,11 +127,13 @@ function Header() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography  textAlign="center">{setting.name}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={accounClicktHandler}>
+                <Typography textAlign="center">Account</Typography>
+              </MenuItem>
+
+              <MenuItem onClick={logoutHandler}>
+                <Typography textAlign="center">Logout</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

@@ -9,7 +9,7 @@ CpInstance.interceptors.request.use(
 
         const token = localStorage.getItem('cpToken');
         if (token) {
-            config.headers['Authorization'] = `${token}`;
+            config.headers['token'] = `${token}`;
         }
         return config;
     },

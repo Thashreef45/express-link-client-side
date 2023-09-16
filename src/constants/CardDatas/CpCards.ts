@@ -29,6 +29,11 @@ const cpCards = [
         link: "/cp/purchase-awb",
         image: "/src/assets/images/icons8-awb-96.png"
     },
+    {
+        name: "New Booking",
+        link: "/cp/new-booking",
+        image: "/src/assets/images/icons8-awb-96.png"
+    },
 ];
 
 

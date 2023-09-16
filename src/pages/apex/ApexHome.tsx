@@ -10,6 +10,7 @@ import { Colors } from '../../constants/Colors';
 import ApextInstance from '../../services/axiosInstances/axiosApex';
 import ApexCardData, { GridCardProps } from '../../constants/CardDatas/ApexCard';
 import Header from '../../components/Header';
+import { width } from '@mui/system';
 
 const cards = ApexCardData
 
@@ -36,7 +37,7 @@ const ApexHome = () => {
 
     return (
         <>
-            <Header />
+            <Header role={'apex'} />
 
             <main>
                 <Container sx={{ py: 8 }} maxWidth="lg">
