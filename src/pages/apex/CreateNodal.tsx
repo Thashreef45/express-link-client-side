@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ApextInstance from '../../services/axiosInstances/axiosApex';
+import Header from '../../components/Header';
 
 
 
@@ -65,19 +66,20 @@ export default function CreateNodal() {
 
 
     return (
-        <div >
+        < >
+            <Header role='apex'></Header>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 8,
+                        marginTop: 5,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                     }}
                 >
-                    <img src="../../../public/images/Screenshot_2023-06-20_121057-removebg-preview.png"
-                        style={{ width: "50%" }} alt="" /> <br /> <br />
+                    <img src="/src/assets/images/Screenshot_2023-06-20_121057-removebg-preview.png"
+                        style={{ width: "50%" }} alt="" /> <br />
 
                     <Typography color={"#556080"} component="h1" variant="h5">
                         Create Nodal Point
@@ -179,18 +181,6 @@ export default function CreateNodal() {
                     </Box>
                 </Box>
             </Container>
-        </div>
+        </>
     );
 }
-
-
-// message createNodalReq {
-//     string id=1;
-//     int64 phone=2;
-//     string email=3;
-//     string password=4;
-//     string apex=5;
-//     string address=6;
-//     int32 pincode=7;
-//     string token=8;
-// }

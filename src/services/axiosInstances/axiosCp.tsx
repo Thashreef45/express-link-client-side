@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const CpInstance = axios.create({
-    baseURL: 'http://localhost:3333/cp'
+    baseURL: 'http://localhost:3333/cp',
 });
 
 CpInstance.interceptors.request.use(

@@ -16,7 +16,7 @@ import BuyAwbModal from '../../components/channel-partner/BuyAwbModal';
 
 
 const cards = awbCards
-let  consignmentPrefix : string
+let consignmentPrefix: string
 
 export default function PurchaseAwb() {
 
@@ -25,11 +25,7 @@ export default function PurchaseAwb() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        CpInstance.get('/home', {
-            headers: {
-                token: key
-            }
-        }).then((res: AxiosResponse) => {
+        CpInstance.get('/home').then((res: AxiosResponse) => {
             consignmentPrefix = res.data.consignmentPrefix
         }).catch((err) => {
             console.log(err)
@@ -44,7 +40,11 @@ export default function PurchaseAwb() {
             <Header role='cp' />
             <main>
                 <div style={{ display: 'flex', width: '100vw', alignItems: 'center', justifyContent: 'center', marginTop: '3rem' }}>
-                    <h1 style={{ color: Colors.SecondaryColor }}>Purchase Consignment</h1>
+                    <center>
+                        <img src="/src/assets/images/Screenshot_2023-06-20_121057-removebg-preview.png"
+                            style={{ width: "30%" }} alt="" /> <br /> <br /> <br /> <br />
+                        <h1 style={{ color: Colors.SecondaryColor }}>Purchase Consignment</h1>
+                    </center>
                 </div>
                 <Container sx={{ py: 8 }} maxWidth="lg">
                     <Grid container spacing={4}>
@@ -89,8 +89,8 @@ const GridCard = ({ card, key }: { card: any, key: number }) => {
                     </Button>
 
                     <BuyAwbModal
-                        name = {card.name}
-                        cpPrefix = {consignmentPrefix}
+                        name={card.name}
+                        cpPrefix={consignmentPrefix}
                         show={modalShow}
                         onHide={() => setModalShow(false)}
                     />

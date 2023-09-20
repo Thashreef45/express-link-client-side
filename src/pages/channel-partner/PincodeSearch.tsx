@@ -17,11 +17,7 @@ const PincodeSearch = () => {
     const key = localStorage.getItem('cpToken')
     const navigate = useNavigate()
     useEffect(() => {
-        CpInstance.get('/home', {
-            headers: {
-                token: key
-            }
-        }).then().catch((err) => {
+        CpInstance.get('/home').then().catch((err) => {
             console.log(err)
             if (key) localStorage.removeItem('cpToken')
             navigate('/cp/login')
@@ -38,17 +34,12 @@ const PincodeSearch = () => {
     const handleSubmit = () => {
         if (pincode.length > 5) {
             setLowerDiv(true)
-            CpInstance.post('/search-by-pincode', { pincode: pincode }, {
-                headers: {
-                    token: key
-                }
-            }).then((res) => {
+            CpInstance.post('/search-by-pincode', { pincode: pincode }).then((res) => {
                 cpDataSetter(res.data)
                 cpNotFoundSetter('')
+            }).catch((err) => {
+                cpNotFoundSetter(err.response.data.message)
             })
-                .catch((err) => {
-                    cpNotFoundSetter(err.response.data.message)
-                })
         }
         else {
             errSetter('Enter a valid pincode')
@@ -71,72 +62,74 @@ const PincodeSearch = () => {
 
     return (
         <>
-        <Header  role='cp' />
-        <div style={{ height: '92.9vh', width: '100vw' }}>
-            {!lowerDiv && <div style={{ height: "20%" }}></div>}
-            <div style={{ height: '42.9vh', width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                <Box component="form" sx={{
-                    // borderRadius:,
-                    '& .MuiTextField-root': { m: 1 },
-                }} noValidate autoComplete="off">
-                    <TextField
-                        onChange={handleInputChange}
-                        id="filled-search"
-                        label="Pincode"
-                        type="search"
-                        variant="filled"
-                        name='pincode'
-                        inputProps={{
-                            inputMode: 'numeric',
-                            pattern: '[0-9]*',
-                            onInput: (event: React.FormEvent<HTMLInputElement>) => {
-                                const input = event.currentTarget;
-                                const value = input.value;
+            <Header role='cp' />
 
-                                if (value === '' || (value.length === 1 && value === '0')) {
-                                    input.value = '';
-                                } else {
-                                    input.value = value.replace(/[^0-9]/g, '');
+            <div style={{ height: '92.9vh', width: '100vw' }}>
+                {!lowerDiv && <div style={{ height: "20%" }}></div>}
+                <div style={{ height: '42.9vh', width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                    <Box component="form" sx={{
+                        // borderRadius:,
+                        '& .MuiTextField-root': { m: 1 },
+                    }} noValidate autoComplete="off">
 
-                                    if (input.value.length > 6) {
-                                        input.value = input.value.slice(0, 6);
+                        <TextField
+                            onChange={handleInputChange}
+                            id="filled-search"
+                            label="Pincode"
+                            type="search"
+                            variant="filled"
+                            name='pincode'
+                            inputProps={{
+                                inputMode: 'numeric',
+                                pattern: '[0-9]*',
+                                onInput: (event: React.FormEvent<HTMLInputElement>) => {
+                                    const input = event.currentTarget;
+                                    const value = input.value;
+
+                                    if (value === '' || (value.length === 1 && value === '0')) {
+                                        input.value = '';
+                                    } else {
+                                        input.value = value.replace(/[^0-9]/g, '');
+
+                                        if (input.value.length > 6) {
+                                            input.value = input.value.slice(0, 6);
+                                        }
                                     }
-                                }
-                            },
-                        }}
-                    />
-                </Box><br />
+                                },
+                            }}
+                        />
+                    </Box><br />
 
 
 
-                <Button onClick={() => handleSubmit()} variant="contained" color="primary">
-                    Search
-                </Button><br />
+                    <Button onClick={() => handleSubmit()} variant="contained" color="primary">
+                        Search
+                    </Button><br />
 
-                <FormHelperText error={true}>{errRes}</FormHelperText>
+                    <FormHelperText error={true}>{errRes}</FormHelperText>
 
-            </div>
+                </div>
 
-            {lowerDiv &&
-                <div style={{
-                    backgroundColor: Colors.PrimaryColor, height: '50vh', width: '100vw',
-                    display: "flex", justifyContent: "center", alignItems: 'center'
-                }}>
+                {lowerDiv &&
                     <div style={{
-                        backgroundColor: "", height: "50%", width: "50%",
+                        backgroundColor: Colors.PrimaryColor, height: '50vh', width: '100vw',
                         display: "flex", justifyContent: "center", alignItems: 'center'
                     }}>
-                        {cpData && 
-                            <CpDataCard 
-                            name={cpData.name} email={cpData.email} phone={cpData.phone}
-                            address={cpData.address} pincode={cpData.pincode}
-                            />
-                        }
-                        {cpNotFound && <h2 className='text-light'>{cpNotFound}</h2>}
+                        <div style={{
+                            backgroundColor: "", height: "50%", width: "50%",
+                            display: "flex", justifyContent: "center", alignItems: 'center'
+                        }}>
+                            {cpData &&
+                                <CpDataCard
+                                    name={cpData.name} email={cpData.email} phone={cpData.phone}
+                                    address={cpData.address} pincode={cpData.pincode}
+                                />
+                            }
+                            {cpNotFound && <h2 className='text-light'>{cpNotFound}</h2>}
+                        </div>
                     </div>
-                </div>
-            }
-        </div>
+                }
+            </div>
 
         </>
     )
@@ -149,11 +142,11 @@ export default PincodeSearch;
 // Card part--------------------
 
 interface CpCard {
-    name:string,phone:number,email:string,
-    address:string,pincode:number
+    name: string, phone: number, email: string,
+    address: string, pincode: number
 }
 
-export function CpDataCard({name,phone,email,pincode,address}:CpCard) {
+export function CpDataCard({ name, phone, email, pincode, address }: CpCard) {
     return (
         <Card sx={{ width: 400, display: 'flex', justifyContent: 'center' }}>
             <CardContent>

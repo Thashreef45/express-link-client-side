@@ -17,11 +17,7 @@ export const Home = () => {
     const key = localStorage.getItem('cpToken')
     const navigate = useNavigate()
     useEffect(() => {
-        CpInstance.get('/home', {
-            headers: {
-                token: key
-            }
-        }).then((res: AxiosResponse) => {
+        CpInstance.get('/home').then((res: AxiosResponse) => {
             res = res
         }).catch((err) => {
             console.log(err)
@@ -32,9 +28,13 @@ export const Home = () => {
 
     return (
         <>
-            <Header role='cp'/>
-            <div style={{ display: 'flex', width: '100vw', alignItems: 'center', justifyContent: 'center', marginTop: '3rem' }}>
-                    <h2 style={{color:Colors.SecondaryColor,marginTop:'0px',marginBottom:'0px'}}>Channel Partner Dashboard</h2>
+            <Header role='cp' />
+            <center className='mt-4'>
+                <img src="/src/assets/images/Screenshot_2023-06-20_121057-removebg-preview.png"
+                    style={{ width: "20%" }} alt="" />
+            </center>
+            <div style={{ display: 'flex', width: '100vw', alignItems: 'center', justifyContent: 'center', marginTop: '2rem' }}>
+                <h1 style={{ color: Colors.SecondaryColor, marginTop: '0px', marginBottom: '0px' }}>Channel Partner Dashboard</h1>
             </div>
             <main>
                 <Container sx={{ py: 8 }} maxWidth="lg">

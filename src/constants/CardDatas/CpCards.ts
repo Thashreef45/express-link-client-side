@@ -21,7 +21,7 @@ const cpCards = [
     },
     {
         name: "Employee Management",
-        link: "",
+        link: "/cp/employee-management",
         image: "/src/assets/images/icons8-employee-96.png"
     },
     {
@@ -32,7 +32,7 @@ const cpCards = [
     {
         name: "New Booking",
         link: "/cp/new-booking",
-        image: "/src/assets/images/icons8-awb-96.png"
+        image: "/src/assets/images/icons8-new-document-96.png"
     },
 ];
 

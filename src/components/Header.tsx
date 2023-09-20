@@ -13,9 +13,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = [{ name: 'Account', link: '' },
-{ name: 'Logout' }];
+// const pages = ['Products', 'Pricing', 'Blog'];
+// const settings = [{ name: 'Account', link: '' },
+// { name: 'Logout' }];
 
 function Header({role}:{role:string}) {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -46,6 +46,11 @@ function Header({role}:{role:string}) {
 
   const accounClicktHandler = () => {
     console.log('account clicked')
+  }
+
+  const Home = () => {
+    handleCloseNavMenu()
+    navigate(`/${role}/home`);
   }
 
   return (
@@ -80,29 +85,25 @@ function Header({role}:{role:string}) {
                 horizontal: 'left',
               }}
               open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+              onClose={()=>Home()}
               sx={{
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+            
+                <MenuItem  onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">Home</Typography>
                 </MenuItem>
-              ))}
             </Menu>
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                onClick={()=>Home()}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                Home
               </Button>
-            ))}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
