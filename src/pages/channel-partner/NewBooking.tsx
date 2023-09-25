@@ -4,6 +4,7 @@ import Header from "../../components/Header"
 import { useEffect, useState } from "react"
 import CpInstance from "../../services/axiosInstances/axiosCp"
 import { useNavigate } from "react-router-dom"
+import useImageUpload from "../../services/cloudinary/config"
 
 
 const NewBooking = () => {
@@ -19,12 +20,18 @@ const NewBooking = () => {
     const [awb, setAwb] = useState('')
     const [value, setValue] = useState('')
     const [err, setErr] = useState('')
+    const [successMsg, setSuccesMsg] = useState('')
+
+
+    const [pincode, setPincode] = useState('')
 
 
 
+
+    const { imageUrl, uploadImage } = useImageUpload();
     const navigate = useNavigate()
+
     const token = localStorage.getItem('cpToken')
-    let pincode: number
 
     const phoneValdator = (number: any) => {
         if (number.length < 11) {
@@ -32,74 +39,92 @@ const NewBooking = () => {
         }
     }
 
+    //error handling common function for catch-errors
+    const makeError = (err: string) => {
+        setErr(err)
+        setTimeout(() => {
+            setErr("")
+        }, 2500);
+    }
+
+
     useEffect(() => {
         CpInstance.get('/home').then((res) => {
-            pincode = res.data.pincode
+            setPincode(res.data.pincode)
             CpInstance.get('/get-consignment-types').then((res) => {
                 setContentTypes(res.data.types)
             })
         }).catch((err) => {
-            console.log(err)
             if (token) localStorage.removeItem('cpToken')
             navigate('/cp/login')
         })
     }, []);
 
-    // message newBookingReq {
-    //     string awb = 1; -- 
-    //     string image = 2; --
-    //     int64 mobile = 3;  --
-    //     string address = 4; --
-    //     int32 pincode = 5; ---
-    //     int32 originPin = 6; ---
-    //     bool isDoc = 7;
-    //     string contentType = 8;
-    //     double declaredValue = 9;
-    // }
 
-    const handleSubmit = () => {
+
+    const handleSubmit = async () => {
         if (number.length < 10) {
-            setErr('Number Should be 10 digits')
-            setTimeout(() => {
-                setErr("")
-            }, 2500);
-        } else if (address.length < 10) {
-            setErr('Address too short')
-            setTimeout(() => {
-                setErr("")
-            }, 2500);
-        } else if (!image) {
-            setErr('Choose a image')
-            setTimeout(() => {
-                setErr("")
-            }, 2500);
-        }else if(awb.length < 10){
-            setErr('Enter a valid AWB')
-            setTimeout(() => {
-                setErr("")
-            }, 2500);
-        } else {
-            CpInstance.post('/validate-awb',{awb,token:localStorage.getItem('cpToken')}).then((res)=>{
-                
-            }).catch((err)=>{
-
-            })
-            const data = {
-                awb: awb,
-                image: image,
-                mobile: number,
-                address: address,
-                originPin: pincode,
-                pincode: desPincode,
-                isDoc,
-                type,
-                declaredValue: value
-            }
-
-            console.table(data)
+            makeError('Number should be 10 digits');
         }
 
-    }
+        if (address.length < 10) {
+            makeError('Address is too short');
+        }
+
+        if (!image) {
+            makeError('Choose an image');
+        }
+
+        // api section
+        try {
+            await CpInstance.post('/validate-awb', { awb, token: localStorage.getItem('cpToken') });
+        } catch (error) {
+            makeError('Entered AWB is not valid');
+            return
+        }
+
+        try {
+            await CpInstance.post('/search-by-pincode', { pincode: Number(desPincode) });
+        } catch (error) {
+            makeError('Destination Pincode is not serviceable');
+            return
+        }
+
+        try {
+            await uploadImage(image);
+        } catch (error) {
+            makeError('Image upload failed');
+            return
+        }
+
+        const data = {
+            awb: awb,
+            image: imageUrl,
+            mobile: Number(number),
+            address: address,
+            originPin: Number(pincode),
+            pincode: Number(desPincode),
+            isDoc,
+            contentType: type,
+            declaredValue: Number(value),
+        };
+
+        try {
+            await CpInstance.post('/new-booking', data);
+        } catch (error) {
+            makeError('Booking failed');
+            return
+        }
+
+        setSuccesMsg('Booking Success');
+        setTimeout(() => {
+            setSuccesMsg('');
+            navigate('/cp/home');
+        }, 2500);
+    };
+
+
+
 
 
 
@@ -153,18 +178,23 @@ const NewBooking = () => {
                         />
 
 
-
-
                         <TextField
                             margin="normal"
                             required
                             fullWidth
                             id="image"
-                            onChange={(e) => setImage(e.currentTarget.value)}
+                            onChange={(e) => {
+                                const fileInput = document.querySelector('input[type="file"]');
+                                if (fileInput) {
+                                    const file = fileInput.files[0];
+                                    setImage(file)
+                                }
+                            }}
                             type="file"
                             name="image"
                             autoComplete="id"
                             autoFocus
+
                         />
 
 
@@ -218,8 +248,8 @@ const NewBooking = () => {
 
                                         if (input.value.length > 6) {
                                             input.value = input.value.slice(0, 6);
-                                            setDesPincode(value)
                                         }
+                                        setDesPincode(value)
                                     }
                                 },
                             }}
@@ -282,17 +312,20 @@ const NewBooking = () => {
 
                                             if (input.value.length > 5) {
                                                 input.value = input.value.slice(0, 6);
-                                                setValue(value)
                                             }
+                                            setValue(value)
                                         }
                                     },
                                 }}
                             />
                         </Box>}
 
+
                         {/* {errRes && <FormHelperText error={true}>{errRes}</FormHelperText>} */}
 
                         {err && <p className="text-danger m-2">{err}</p>}
+                        {successMsg && <p className="text-success m-2">{successMsg}</p>}
+
                         <Button
                             fullWidth
                             variant="contained"

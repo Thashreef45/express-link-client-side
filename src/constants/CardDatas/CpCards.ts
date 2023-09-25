@@ -37,20 +37,21 @@ const cpCards = [
 ];
 
 
+const Awbimage = "/src/assets/images/icons8-barcode-100.png"
 export const awbCards = [{
     name:"Normal",
     link: "",
-    image: '/src/assets/images/icons8-pin-100.png'
+    image:Awbimage
 },
 {
     name: "PR",
     link: "",
-    image: "/src/assets/images/icons8-tracking-100.png"
+    image:Awbimage
 },
 {
     name: "WE",
     link: "",
-    image: "/src/assets/images/icons8-tracking-100.png"
+    image:Awbimage
 },
 ];
 

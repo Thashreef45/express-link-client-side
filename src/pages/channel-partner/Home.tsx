@@ -14,6 +14,7 @@ import Header from '../../components/Header';
 const cards = cpCards
 
 export const Home = () => {
+
     const key = localStorage.getItem('cpToken')
     const navigate = useNavigate()
     useEffect(() => {
