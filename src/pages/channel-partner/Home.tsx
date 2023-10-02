@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CpInstance from '../../services/axiosInstances/axiosCp';
 import { Button, CardActions, Container, Grid } from '@mui/material';
-import { Colors } from '../../constants/Colors';
+import { Colors, Logo } from '../../constants/Colors';
 import { AxiosResponse } from 'axios';
 import cpCards, { GridCardProps } from '../../constants/CardDatas/CpCards';
 import Header from '../../components/Header';
@@ -30,11 +30,11 @@ export const Home = () => {
     return (
         <>
             <Header role='cp' />
-            <center className='mt-4'>
-                <img src="/src/assets/images/Screenshot_2023-06-20_121057-removebg-preview.png"
+            <center className='mt-4' >
+                <img src={Logo.Main}
                     style={{ width: "20%" }} alt="" />
             </center>
-            <div style={{ display: 'flex', width: '100vw', alignItems: 'center', justifyContent: 'center', marginTop: '2rem' }}>
+            <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center', marginTop: '2rem' }}>
                 <h1 style={{ color: Colors.SecondaryColor, marginTop: '0px', marginBottom: '0px' }}>Channel Partner Dashboard</h1>
             </div>
             <main>

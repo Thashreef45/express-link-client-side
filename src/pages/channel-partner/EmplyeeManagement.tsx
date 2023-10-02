@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Container } from 'react-bootstrap';
-import { Colors } from '../../constants/Colors';
+import { Colors, Logo } from '../../constants/Colors';
 import Header from '../../components/Header';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
@@ -69,7 +69,7 @@ const EmployeeManagement = () => {
         <>
             <Header role='cp' />
             <center className='mt-5'>
-                <img src="/src/assets/images/Screenshot_2023-06-20_121057-removebg-preview.png"
+                <img src={Logo.Main}
                     style={{ width: "20%" }} alt="" />
                 <h2 style={{ color: Colors.SecondaryColor }} className='mt-4'>Employee Management</h2>
             </center>

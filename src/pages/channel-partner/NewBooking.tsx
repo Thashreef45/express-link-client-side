@@ -4,7 +4,7 @@ import Header from "../../components/Header"
 import { useEffect, useState } from "react"
 import CpInstance from "../../services/axiosInstances/axiosCp"
 import { useNavigate } from "react-router-dom"
-import useImageUpload from "../../services/cloudinary/config"
+import useImageUpload from "../../services/cloudinary/useImageUpload"
 
 
 const NewBooking = () => {
@@ -38,6 +38,14 @@ const NewBooking = () => {
             setNumber(number)
         }
     }
+    
+    const setDefaultTypeAsDocument = (data:any) => {
+        data.map((element:any)=>{
+            if(element.typeName == 'Document'){
+                setType(element._id)
+            }
+        })
+    }
 
     //error handling common function for catch-errors
     const makeError = (err: string) => {
@@ -53,6 +61,7 @@ const NewBooking = () => {
             setPincode(res.data.pincode)
             CpInstance.get('/get-consignment-types').then((res) => {
                 setContentTypes(res.data.types)
+                setDefaultTypeAsDocument(res.data.types)
             })
         }).catch((err) => {
             if (token) localStorage.removeItem('cpToken')
@@ -65,14 +74,17 @@ const NewBooking = () => {
     const handleSubmit = async () => {
         if (number.length < 10) {
             makeError('Number should be 10 digits');
+            return
         }
 
         if (address.length < 10) {
             makeError('Address is too short');
+            return
         }
 
         if (!image) {
             makeError('Choose an image');
+            return
         }
 
         // api section
@@ -91,9 +103,9 @@ const NewBooking = () => {
         }
 
         try {
-            await uploadImage(image);
-        } catch (error) {
-            makeError('Image upload failed');
+            await uploadImage(image)
+        } catch (error:any) {
+            makeError(error.message);
             return
         }
 

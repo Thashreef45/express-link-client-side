@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Container, width } from '@mui/system';
 import { Button, CardActions, Grid } from '@mui/material';
-import { Colors } from '../../constants/Colors';
+import { Colors, Logo } from '../../constants/Colors';
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import CpInstance from '../../services/axiosInstances/axiosCp';
@@ -41,7 +41,7 @@ export default function PurchaseAwb() {
             <main>
                 <div style={{ display: 'flex', width: '100vw', alignItems: 'center', justifyContent: 'center', marginTop: '3rem' }}>
                     <center>
-                        <img src="/src/assets/images/Screenshot_2023-06-20_121057-removebg-preview.png"
+                        <img src={Logo.Main}
                             style={{ width: "30%" }} alt="" /> <br /> <br /> <br /> <br />
                         <h1 style={{ color: Colors.SecondaryColor }}>Purchase Consignment</h1>
                     </center>

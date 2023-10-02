@@ -11,7 +11,7 @@ const cpCards = [
     },
     {
         name: "My Booking",
-        link: "",
+        link: "/cp/my-bookings",
         image: "/src/assets/images/icons8-booking-96.png"
     },
     {

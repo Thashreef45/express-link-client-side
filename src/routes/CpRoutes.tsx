@@ -6,6 +6,7 @@ import PincodeSearch from "../pages/channel-partner/PincodeSearch"
 import PurchaseAwb from "../pages/channel-partner/PurchaseAwb"
 import NewBooking from "../pages/channel-partner/NewBooking"
 import EmployeeManagement from "../pages/channel-partner/EmplyeeManagement"
+import MyBookings from "../pages/channel-partner/MyBookings"
 // import BuyAwb from "../pages/channel-partner/BuyAwb"
 const CpRoutes = () => {
     return (
@@ -19,6 +20,7 @@ const CpRoutes = () => {
                     <Route path="/pincode-search" element={<PincodeSearch />} />
                     <Route path="/pincode-search" element={<PincodeSearch />} />
                     <Route path="/new-booking" element={<NewBooking />} />
+                    <Route path="/my-bookings" element={<MyBookings />} />
                     <Route path="/purchase-awb" element={<PurchaseAwb />} />
                     <Route path="/employee-management" element={<EmployeeManagement />} />
                 </Route>
