@@ -1,12 +1,14 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import CpInstance from '../../services/axiosInstances/axiosCp';
-import { useNavigate } from 'react-router-dom';
 
 const DeletBooking = (props: any) => {
 
   const DeleteHandler = (id: string) => {
-    CpInstance.delete(`/delete-booking/${id}`)
+    CpInstance.delete(`/delete-booking/${id}`).then(()=>{
+      props.data.Setdelete(true)
+    })
+    props.onHide()
   }
 
   return (

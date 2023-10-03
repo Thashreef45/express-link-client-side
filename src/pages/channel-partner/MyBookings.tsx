@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import CpInstance from '../../services/axiosInstances/axiosCp';
 import DeletBooking from '../../components/channel-partner/DeleteBookingModal';
 import { useNavigate } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 
 
@@ -20,8 +21,14 @@ const MyBookings = () => {
 
   const [bookingData, setBookings] = useState([])
   const [modalShow, setModalShow] = useState(false);
-  const [pincode, setPincode] = useState();
+  const [isDeleted, Setdelete] = useState(false);
 
+  if (isDeleted) {
+    CpInstance.get('/get-my-bookings').then((res) => {
+      setBookings(res.data.bookings)
+    }).catch((err) => console.log(err.message, 'messg'))
+    Setdelete(false)
+  }
 
   const [del, setDel] = useState('');
   const navigate = useNavigate()
@@ -35,12 +42,12 @@ const MyBookings = () => {
 
   useEffect(() => {
     CpInstance.get('/home').then((res) => {
-      setPincode(res.data.pincode)
+
     }).catch((err) => {
       if (localStorage.getItem('cpToken')) localStorage.removeItem('cpToken')
       navigate('/cp/login')
     })
-    
+
     CpInstance.get('/get-my-bookings').then((res) => {
       setBookings(res.data.bookings)
     }).catch((err) => console.log(err.message, 'messg'))
@@ -56,6 +63,14 @@ const MyBookings = () => {
         <h2 style={{ color: Colors.SecondaryColor }} className='mt-4'>My Bookings</h2>
       </center>
       <div className='mt-5 p-5'>
+
+        <Button className='mb-3'
+          style={{ backgroundColor: Colors.PrimaryColor, border: 0 }}
+          onClick={() => navigate('/cp/booking-history')}
+        >
+          Booking History
+        </Button>
+
         <TableContainer component={Paper} >
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
@@ -69,7 +84,7 @@ const MyBookings = () => {
                 <TableCell className='text-light' align="center">Remove</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
+            {bookingData && <TableBody>
               {bookingData.map((row: any) => (
                 <TableRow
                   key={row._id}
@@ -84,7 +99,7 @@ const MyBookings = () => {
                   <TableCell align="center">{row.type}</TableCell>
                   <TableCell
                     style={{ cursor: 'pointer' }}
-                    onClick={() => { editHandler(row.name) }} align="center"
+                    onClick={() => { }} align="center"
                   ><ModeEditIcon /></TableCell>
 
                   <TableCell
@@ -92,13 +107,22 @@ const MyBookings = () => {
                     onClick={() => {
                       setModalShow(true)
                       const Consignment = row.awbPrefix + row.awb
-                      setDel({ awb: Consignment, id: row._id})
+                      setDel({ awb: Consignment, id: row._id, Setdelete })
                     }} align="center"
                   ><DeleteForeverIcon style={{ color: 'red' }} /></TableCell>
                 </TableRow>
 
               ))}
-            </TableBody>
+            </TableBody>}
+
+            {!bookingData &&
+              <TableBody>
+                <TableRow >
+                  <TableCell /><TableCell /><TableCell />
+                  <TableCell style={{ textAlign: 'center' }}>No Data</TableCell>
+                </TableRow>
+              </TableBody>}
+
           </Table>
         </TableContainer>
 

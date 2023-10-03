@@ -9,6 +9,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import NodalInstance from '../../services/axiosInstances/axiosNp';
+import Header from '../../components/Header';
+import { Colors, Logo } from '../../constants/Colors';
 
 
 
@@ -77,11 +79,16 @@ export default function CreateCP() {
 
     return (
         <div >
+            <Header role='nodal' />
+            <center className='mt-3' >
+                <img src={Logo.Main}
+                    style={{ width: "20%" }} alt="" />
+            </center>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 8,
+                        // marginTop: 1,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',

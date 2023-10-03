@@ -6,17 +6,17 @@ import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { Colors } from '../../constants/Colors';
+import { Colors, Logo } from '../../constants/Colors';
 import NodalInstance from '../../services/axiosInstances/axiosNp';
 import { useNavigate } from 'react-router-dom';
 import nodalCards,{ GridCardProps } from '../../constants/CardDatas/NodalCards';
+import Header from '../../components/Header';
 
 
 const cards = nodalCards
 
 const NodalHome = () => {
     const navigate = useNavigate()
-
 
 
     NodalInstance.get('/home', {
@@ -35,7 +35,14 @@ const NodalHome = () => {
 
     return (
         <>
-
+            <Header role='nodal' />
+            <center className='mt-4' >
+                <img src={Logo.Main}
+                    style={{ width: "20%" }} alt="" />
+            </center>
+            <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center', marginTop: '2rem' }}>
+                <h1 style={{ color: Colors.SecondaryColor, marginTop: '0px', marginBottom: '0px' }}>Nodal Point Dashboard</h1>
+            </div>
             <main>
                 <Container sx={{ py: 8 }} maxWidth="md">
                     <Grid container spacing={4}>

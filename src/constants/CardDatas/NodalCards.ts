@@ -29,6 +29,11 @@ const nodalCards = [
         link: "",
         image: "/src/assets/images/icons8-employee-96.png"
     },
+    {
+        name: "Accept FDM",
+        link: "/nodal/accept-fdm",
+        image: ""
+    },
 ];
 
 export interface GridCardProps {
