@@ -8,45 +8,36 @@ import Paper from '@mui/material/Paper';
 import Header from '../../components/Header';
 import { Colors, Logo } from '../../constants/Colors';
 import { useEffect, useState } from 'react';
-import CpInstance from '../../services/axiosInstances/axiosCp';
 import { useNavigate } from 'react-router-dom';
-// import { Button } from 'react-bootstrap';
 import Button from '@mui/material/Button';
-import { TextField } from '@mui/material';
 import NodalInstance from '../../services/axiosInstances/axiosNp';
 
 
 
 const AcceptFdm = () => {
 
-    const [data, setData] = useState([{cp:'hi',fdmCount:4},{cp:'hlo',fdmCount:6}])
-    const [pincode, setPincode] = useState()
-    const [fromDate, setFromDate] = useState('')
-    const [toDate, setToDate] = useState('')
-    const [err, setErr] = useState('')
+    const [data, setData] = useState([])
 
 
     const navigate = useNavigate()
 
 
-    const formatDate = (dateString: string) => {
-        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-        return new Date(dateString).toLocaleDateString(undefined, options);
+    const acceptHandler = (id: string) => {
+        NodalInstance.get(`/accept-fdm-cp/${id}`).then((res) => {
+            setContent()
+        })
     }
 
-    const makeError = (err:string) => {
-        setErr(err)
-        setTimeout(()=>{
-            setErr('')
-        },2000)
+    const setContent = async () => {
+        NodalInstance.get('/accept-fdm').then((res) => {
+            setData(res.data.data)
+        })
     }
 
 
     useEffect(() => {
         NodalInstance.get('/home').then((res) => {
-            NodalInstance.get('/accept-fdm').then((res)=>{
-                //logic here set data
-            })
+            setContent()
         }).catch((err) => {
             if (localStorage.getItem('nodalToken')) localStorage.removeItem('nodalToken')
             navigate('/nodal/login')
@@ -71,31 +62,31 @@ const AcceptFdm = () => {
                         <TableHead>
                             <TableRow className='bg-dark'>
                                 <TableCell className='text-light' align="center">Channel-Partners</TableCell>
-                                <TableCell className='text-light' align="center">FDM Count</TableCell>
-                                <TableCell className='text-light' align="center">Accept</TableCell>
+                                <TableCell className='text-light' align="center">Booking</TableCell>
+                                <TableCell className='text-light' align="center">Accept FDM</TableCell>
                             </TableRow>
                         </TableHead>
+
                         {data && <TableBody>
-                            {data.map((row: any) => (
+                            {data.map((row: { id: string, fdmCount: number }, i) => (
                                 <TableRow
-                                    key={row._id}
+                                    key={i + 100}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
-                                    <TableCell align="center">{row.cp}</TableCell>
+                                    <TableCell align="center">{row.id}</TableCell>
                                     <TableCell align="center">{row.fdmCount}</TableCell>
                                     <TableCell align="center">
-                                       <Button>Accept</Button> 
+                                        {<Button
+                                            onClick={() => acceptHandler(row.id)}
+                                            disabled={row.fdmCount <= 0}
+                                        >Accept</Button>}
                                     </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>}
 
-
                     </Table>
                 </TableContainer>
-
-
-
             </div>
         </>
     );

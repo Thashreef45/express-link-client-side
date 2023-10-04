@@ -17,7 +17,7 @@ import { Button } from 'react-bootstrap';
 
 
 
-const MyBookings = () => {
+const MyBookings = () => {4
 
   const [bookingData, setBookings] = useState([])
   const [modalShow, setModalShow] = useState(false);
@@ -42,15 +42,14 @@ const MyBookings = () => {
 
   useEffect(() => {
     CpInstance.get('/home').then((res) => {
-
+      const pincode = res.data.pincode
+      CpInstance.get(`/get-my-bookings/${pincode}`).then((res) => {
+        setBookings(res.data.bookings)
+      }).catch((err) => console.log(err.message, 'messg'))
     }).catch((err) => {
       if (localStorage.getItem('cpToken')) localStorage.removeItem('cpToken')
       navigate('/cp/login')
     })
-
-    CpInstance.get('/get-my-bookings').then((res) => {
-      setBookings(res.data.bookings)
-    }).catch((err) => console.log(err.message, 'messg'))
   }, [])
 
 
