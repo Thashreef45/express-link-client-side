@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import CpInstance from "../../services/axiosInstances/axiosCp"
 import { useNavigate } from "react-router-dom"
 import useImageUpload from "../../services/cloudinary/useImageUpload"
+import { Logo } from "../../constants/Colors"
 
 
 const NewBooking = () => {
@@ -24,7 +25,7 @@ const NewBooking = () => {
 
 
     const [pincode, setPincode] = useState('')
-
+    const [originAddress, setOriginAddress] = useState()
 
 
 
@@ -59,6 +60,7 @@ const NewBooking = () => {
     useEffect(() => {
         CpInstance.get('/home').then((res) => {
             setPincode(res.data.pincode)
+            setOriginAddress(res.data.address)
             CpInstance.get('/get-consignment-types').then((res) => {
                 setContentTypes(res.data.types)
                 setDefaultTypeAsDocument(res.data.types)
@@ -117,6 +119,7 @@ const NewBooking = () => {
             originPin: Number(pincode),
             pincode: Number(desPincode),
             isDoc,
+            originAddress,
             contentType: type,
             declaredValue: Number(value),
         };
@@ -153,7 +156,7 @@ const NewBooking = () => {
                         alignItems: 'center',
                     }}
                 >
-                    <img src="/src/assets/images/Screenshot_2023-06-20_121057-removebg-preview.png"
+                    <img src={Logo.Main}
                         style={{ width: "50%" }} alt="" /> <br />
 
                     <Typography color={"#556080"} component="h1" variant="h5">

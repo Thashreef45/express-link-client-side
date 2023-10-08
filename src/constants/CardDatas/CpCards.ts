@@ -6,7 +6,7 @@ const cpCards = [
     },
     {
         name: "Tracking",
-        link: "",
+        link: "/cp/tracking",
         image: "/src/assets/images/icons8-tracking-100.png"
     },
     {

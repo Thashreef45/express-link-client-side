@@ -18,7 +18,7 @@ import { TextField } from '@mui/material';
 
 const BookingHistory = () => {
 
-    const [data, setData] = useState()
+    const [data, setData] = useState([])
     const [pincode, setPincode] = useState()
     const [fromDate, setFromDate] = useState('')
     const [toDate, setToDate] = useState('')
@@ -33,11 +33,11 @@ const BookingHistory = () => {
         return new Date(dateString).toLocaleDateString(undefined, options);
     }
 
-    const makeError = (err:string) => {
+    const makeError = (err: string) => {
         setErr(err)
-        setTimeout(()=>{
+        setTimeout(() => {
             setErr('')
-        },2000)
+        }, 2000)
     }
 
 
@@ -51,20 +51,24 @@ const BookingHistory = () => {
     }, [])
 
     const submitHandler = () => {
-        const fromDateObj:Date = new Date(fromDate);
-        const toDateObj:Date = new Date(toDate);
+        const fromDateObj: Date = new Date(fromDate);
+        const toDateObj: Date = new Date(toDate);
         const dateDifferenceInDays: number = (toDateObj.getTime() - fromDateObj.getTime()) / (1000 * 60 * 60 * 24);
-        
-        if(!fromDate){}
-        else if(!toDate){}
-        else{
-            if(fromDate > toDate){
+
+        if (!fromDate) {
+            makeError('Select from Date')
+        }
+        else if (!toDate) {
+            makeError("Select to Date")
+         }
+        else {
+            if (fromDate > toDate) {
                 makeError('From date should be less than To data')
-            }else if(dateDifferenceInDays>=11){
+            } else if (dateDifferenceInDays >= 11) {
                 makeError('10 days only allowed')
-            }else{
-                CpInstance.post('/get-booking-history',{from:fromDate,to:toDate,pincode}).then((res)=>{
-                    //logic here set data
+            } else {
+                CpInstance.post('/get-booking-history', { from: fromDate, to: toDate, pincode }).then((res) => {
+                    setData(res.data.data)
                 })
             }
         }
@@ -85,15 +89,15 @@ const BookingHistory = () => {
                 <input
                     className='mb-3'
                     type="date"
-                    onChange={(e)=>setFromDate(e.currentTarget.value)}
+                    onChange={(e) => setFromDate(e.currentTarget.value)}
                     max={new Date().toISOString().split('T')[0]}
                 />
                 <input
                     className='mb-3 mx-3'
                     type="date"
-                    onChange={(e)=>setToDate(e.currentTarget.value)}
+                    onChange={(e) => setToDate(e.currentTarget.value)}
                     max={new Date().toISOString().split('T')[0]}
-     
+
                 />
                 <Button className='m-3 mt-2'
                     variant='contained'
@@ -130,14 +134,14 @@ const BookingHistory = () => {
                         {data && <TableBody>
                             {data.map((row: any) => (
                                 <TableRow
-                                    key={row._id}
+                                    key={row.awb}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     <TableCell component="th" scope="row">
                                         {row.awbPrefix}{row.awb}
                                     </TableCell>
                                     <TableCell align="center">{row.destinationPin}</TableCell>
-                                    <TableCell align="center">Booked</TableCell>
+                                    <TableCell align="center">{row.status}</TableCell>
                                     <TableCell align="center">{formatDate(row.bookingTime)}</TableCell>
                                     <TableCell align="center">{row.type}</TableCell>
                                 </TableRow>
@@ -145,7 +149,7 @@ const BookingHistory = () => {
                             ))}
                         </TableBody>}
 
-                        {!data &&
+                        {!data.length &&
                             <TableBody>
                                 <TableRow >
                                     <TableCell /><TableCell />
@@ -155,8 +159,6 @@ const BookingHistory = () => {
 
                     </Table>
                 </TableContainer>
-
-
 
             </div>
         </>

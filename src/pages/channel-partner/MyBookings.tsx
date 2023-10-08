@@ -17,7 +17,8 @@ import { Button } from 'react-bootstrap';
 
 
 
-const MyBookings = () => {4
+const MyBookings = () => {
+  4
 
   const [bookingData, setBookings] = useState([])
   const [modalShow, setModalShow] = useState(false);
