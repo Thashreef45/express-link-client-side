@@ -3,11 +3,54 @@ import Header from "../../components/Header"
 import { Button, TextField, Typography } from "@mui/material"
 import { Colors, Logo } from "../../constants/Colors"
 import { useState } from "react"
+import CpInstance from "../../services/axiosInstances/axiosCp"
 
 
 const TrackingPage = () => {
-    const [data,setData] = useState('')
-    const errMsg = 'Hey'
+
+    const [data,setData] = useState()
+    const [errMsg,setErrMsg] = useState('kdk')
+    const [awb,setAwb] = useState('')
+
+
+    const makeError = (err:string) => {
+        setErrMsg(err)
+        setTimeout(()=>{
+            setErrMsg('')
+        },2000)
+    }
+
+    const HandleAwbInputs = (value:string) => {
+        if(value.length < 3){
+            if(!isNaN(Number(value[0]))) {
+                makeError('First two character should be Letters')
+            }else if(!isNaN(Number(value[1]))) {
+                makeError('First two character should be Letters')
+            }else {
+                setAwb(value.toUpperCase())
+            }
+        }else{
+            let num = value.slice(2)
+            if( isNaN(Number(num)) ){
+                makeError('First Two Characters should be letters others should be numbers')
+            }
+            else setAwb(value)
+
+        } 
+    }
+
+    const HandleTracking = ()=> {
+        if(awb.length < 10){
+            makeError('AWB Should be 10 characters')
+        }else {
+            CpInstance.get(`/tracking/${awb}`).then((res)=>{
+                console.log(res.data.data,'data vannu')
+                setData(res.data.data)
+            })
+        }
+        console.log(awb)
+    }
+
 
 
     return(
@@ -36,18 +79,27 @@ const TrackingPage = () => {
                             id="awb"
                             label="AWB"
                             name="awb"
+                            value={awb}
                             autoComplete="id"
                             autoFocus
-                            onChange={(e)=>setData('hey')}
+                            onChange={(e)=>HandleAwbInputs(e.target.value)}
+                            inputProps={{maxLength:10}}
                         />
                     </Box>
-                    <Button >Track</Button>
+                    <Button
+                        onClick={HandleTracking}
+                     >Track</Button>
                 </Box>
 
                 {errMsg && <Typography
                     sx={{textAlign:'center',color:'red'}}
                 >{errMsg}</Typography>}
             </Container>}
+
+
+
+
+
 
             {data && 
             <Container>
@@ -72,7 +124,7 @@ const TrackingPage = () => {
                         alignItems: 'center', justifyContent: 'center',
                     }}
                 >
-                    <a className="mx-4" href="" >
+                    <a className="mx-4" href={data.image} >
                         <img src="/src/assets/images/icons8-image-64 (1).png" alt="" />
                     </a>
                     <a href="" >
@@ -87,7 +139,7 @@ const TrackingPage = () => {
                         alignItems: 'center', justifyContent: 'center'
                     }}
                 >
-                    <h3 className="text-light">AWB:10000056</h3>
+                    <h3 className="text-light">AWB:{data.awbPrefix}{data.awb}</h3>
                 </Box>
 
 
@@ -120,8 +172,8 @@ const TrackingPage = () => {
                         padding: 2, color: 'white',
                         marginBottom: 1
                     }}>
-                        <Typography >Origin Pincode :671123</Typography>
-                        <Typography marginTop={2}>Destination Pincode :670302</Typography>
+                        <Typography >Origin Pincode :{data.originPin}</Typography>
+                        <Typography marginTop={2}>Destination Pincode :{data.destinationPin}</Typography>
                     </Box>
 
                     <Box sx={{
@@ -130,8 +182,8 @@ const TrackingPage = () => {
                         padding: 2, color: 'white',
                         marginBottom: 1
                     }}>
-                        <Typography>Booking Date: 11/06/2024</Typography>
-                        <Typography marginTop={2}>Consignment Type : Document</Typography>
+                        <Typography>Booking Date: {data.bookingTime}</Typography>
+                        <Typography marginTop={2}>Consignment Type : {data.contentType}</Typography>
                     </Box>
 
                     <Box sx={{
@@ -139,7 +191,7 @@ const TrackingPage = () => {
                         height: "100%", width: "100%",
                         padding: 2, color: 'white'
                     }}>
-                        <Typography >Delivery Status : Intransist</Typography>
+                        <Typography >Delivery Status : {data.status}</Typography>
                         {/* <Typography marginTop={2}>Destination Pincode :</Typography> */}
                     </Box>
                 </Box>

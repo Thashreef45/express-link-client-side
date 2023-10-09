@@ -22,6 +22,7 @@ const NewBooking = () => {
     const [value, setValue] = useState('')
     const [err, setErr] = useState('')
     const [successMsg, setSuccesMsg] = useState('')
+    let imageLink = ''
 
 
     const [pincode, setPincode] = useState('')
@@ -105,7 +106,7 @@ const NewBooking = () => {
         }
 
         try {
-            await uploadImage(image)
+            imageLink = await uploadImage(image)
         } catch (error:any) {
             makeError(error.message);
             return
@@ -113,7 +114,7 @@ const NewBooking = () => {
 
         const data = {
             awb: awb,
-            image: imageUrl,
+            image: imageLink,
             mobile: Number(number),
             address: address,
             originPin: Number(pincode),

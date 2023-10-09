@@ -44,7 +44,7 @@ const NodalHome = () => {
                 <h1 style={{ color: Colors.SecondaryColor, marginTop: '0px', marginBottom: '0px' }}>Nodal Point Dashboard</h1>
             </div>
             <main>
-                <Container sx={{ py: 8 }} maxWidth="md">
+                <Container sx={{ py: 8 }} maxWidth="lg">
                     <Grid container spacing={4}>
                         {cards.map((card, index) => (
                             <GridCard key={index} card={card} />
