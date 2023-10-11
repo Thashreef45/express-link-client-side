@@ -18,11 +18,18 @@ import Header from '../../components/Header';
 export default function CreateNodal() {
 
     const [errRes, errResSetter] = useState('')
+    const [consignmentPrefix, setPrefix] = useState('')
+
     const navigate = useNavigate()
 
-    // useEffect(()=>{
-
-    // },[])
+    useEffect(() => {
+        ApextInstance.get('/home').then((res) => {
+            setPrefix(res.data.consignmentPrefix)
+        }).catch(() => {
+            if (localStorage.getItem('apexToken')) localStorage.removeItem('apexToken')
+            navigate('/apex/login')
+        })
+    }, [])
 
 
     const handleSubmit = async (event: any) => {
@@ -51,10 +58,9 @@ export default function CreateNodal() {
             errResSetter("Address is too short")
         }
         else {
+            data.consignmentPrefix = consignmentPrefix
             console.log(token, '<<token  data>>', data, '<<')
-            ApextInstance.post('/create-nodal', data, {
-                headers: { token: token }
-            }).then((res) => {
+            ApextInstance.post('/create-nodal', data).then((res) => {
                 // localStorage.setItem('apexToken',`Bearer ${res.data.token}`)
                 navigate('/apex/home')
 

@@ -9,8 +9,9 @@ import Container from '@mui/material/Container';
 import { Colors, Logo } from '../../constants/Colors';
 import NodalInstance from '../../services/axiosInstances/axiosNp';
 import { useNavigate } from 'react-router-dom';
-import nodalCards,{ GridCardProps } from '../../constants/CardDatas/NodalCards';
+import nodalCards, { GridCardProps } from '../../constants/CardDatas/NodalCards';
 import Header from '../../components/Header';
+import { useEffect } from 'react';
 
 
 const cards = nodalCards
@@ -19,18 +20,15 @@ const NodalHome = () => {
     const navigate = useNavigate()
 
 
-    NodalInstance.get('/home', {
-        headers: {
-            token: localStorage.getItem('nodalToken')
-        }
-    }).then((res) => {
-        console.log(res.data)
-    }).catch(() => {
-        if (localStorage.getItem('nodalToken')) {
-            localStorage.removeItem('nodalToken')
-        }
-        navigate('/nodal/login')
-    })
+    useEffect(() => {
+        NodalInstance.get('/home').then((res) => {
+        }).catch(() => {
+            if (localStorage.getItem('nodalToken')) {
+                localStorage.removeItem('nodalToken')
+            }
+            navigate('/nodal/login')
+        })
+    }, [])
 
 
     return (
@@ -47,8 +45,8 @@ const NodalHome = () => {
                 <Container sx={{ py: 8 }} maxWidth="lg">
                     <Grid container spacing={4}>
                         {cards.map((card, index) => (
-                            <GridCard key={index} card={card} />
- 
+                            <GridCard key={index + 100} card={card} />
+
                         ))}
                     </Grid>
                 </Container>
@@ -59,9 +57,9 @@ const NodalHome = () => {
 }
 
 
-const GridCard = ({ card, key }: GridCardProps) => {
+const GridCard = ({ card }: GridCardProps) => {
     return (
-        <Grid item key={key} xs={12} sm={6} md={4}>
+        <Grid item xs={12} sm={6} md={4}>
             <Card
                 sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
             >

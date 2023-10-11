@@ -174,5 +174,3 @@ export function CpDataCard({ name, phone, email, pincode, address }: CpCard) {
 }
 
 
-
-

@@ -29,7 +29,6 @@ export default function SignIn() {
     }
     else {
       ApextInstance.post('/login', formData).then((res) => {
-        console.log(res.data.token)
         localStorage.setItem('apexToken',`Bearer ${res.data.token}`)
         navigate('/apex/home')
 

@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import NodalInstance from '../../services/axiosInstances/axiosNp';
 import Header from '../../components/Header';
-import { Colors, Logo } from '../../constants/Colors';
+import { Logo } from '../../constants/Colors';
 
 
 
@@ -19,16 +19,14 @@ import { Colors, Logo } from '../../constants/Colors';
 export default function CreateCP() {
 
     const [errRes, errResSetter] = useState('')
+    const [prefix, setPrefix] = useState('')
     const navigate = useNavigate()
+
     useEffect(() => {
         const token = localStorage.getItem('nodalToken')
 
-        NodalInstance.get('/home', {
-            headers: {
-                token: token
-            }
-        }).then((res) => {
-            // console.log(res.data.id, '<<')
+        NodalInstance.get('/home').then((res) => {
+            setPrefix(res.data.consignmentPrefix)
         }).catch((err) => {
             console.log(err)
             if (token) localStorage.removeItem('nodalToken')
@@ -40,7 +38,6 @@ export default function CreateCP() {
 
 
     const handleSubmit = async (event: any) => {
-        const token = localStorage.getItem('nodalToken')
         event.preventDefault();
         errResSetter("")
         const formData = new FormData(event.target);
@@ -65,9 +62,8 @@ export default function CreateCP() {
             errResSetter("Address is too short")
         }
         else {
-            NodalInstance.post('/create-cp', data, {
-                headers: { token: token }
-            }).then((res) => {
+            data.consignmentPrefix = prefix
+            NodalInstance.post('/create-cp', data).then((res) => {
                 localStorage.setItem('apexToken', `Bearer ${res.data.token}`)
                 navigate('/nodal/home')
             }).catch((err) => {

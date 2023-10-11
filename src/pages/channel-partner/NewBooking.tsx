@@ -23,12 +23,10 @@ const NewBooking = () => {
     const [err, setErr] = useState('')
     const [successMsg, setSuccesMsg] = useState('')
     let imageLink = ''
-
+    const [originData, setOriginData] = useState('')
+    let desData = ''
 
     const [pincode, setPincode] = useState('')
-    const [originAddress, setOriginAddress] = useState()
-
-
 
     const { imageUrl, uploadImage } = useImageUpload();
     const navigate = useNavigate()
@@ -40,16 +38,16 @@ const NewBooking = () => {
             setNumber(number)
         }
     }
-    
-    const setDefaultTypeAsDocument = (data:any) => {
-        data.map((element:any)=>{
-            if(element.typeName == 'Document'){
+
+    const setDefaultTypeAsDocument = (data: any) => {
+        data.map((element: any) => {
+            if (element.typeName == 'Document') {
                 setType(element._id)
             }
         })
     }
 
-    //error handling common function for catch-errors
+    //error handling - common function
     const makeError = (err: string) => {
         setErr(err)
         setTimeout(() => {
@@ -61,7 +59,7 @@ const NewBooking = () => {
     useEffect(() => {
         CpInstance.get('/home').then((res) => {
             setPincode(res.data.pincode)
-            setOriginAddress(res.data.address)
+            setOriginData(res.data)
             CpInstance.get('/get-consignment-types').then((res) => {
                 setContentTypes(res.data.types)
                 setDefaultTypeAsDocument(res.data.types)
@@ -90,6 +88,7 @@ const NewBooking = () => {
             return
         }
 
+
         // api section
         try {
             await CpInstance.post('/validate-awb', { awb, token: localStorage.getItem('cpToken') });
@@ -99,7 +98,8 @@ const NewBooking = () => {
         }
 
         try {
-            await CpInstance.post('/search-by-pincode', { pincode: Number(desPincode) });
+            await CpInstance.post('/search-by-pincode', { pincode: Number(desPincode) })
+                .then((res) => { desData = res.data })
         } catch (error) {
             makeError('Destination Pincode is not serviceable');
             return
@@ -107,7 +107,7 @@ const NewBooking = () => {
 
         try {
             imageLink = await uploadImage(image)
-        } catch (error:any) {
+        } catch (error: any) {
             makeError(error.message);
             return
         }
@@ -120,10 +120,14 @@ const NewBooking = () => {
             originPin: Number(pincode),
             pincode: Number(desPincode),
             isDoc,
-            originAddress,
+            originAddress: originData.address,
             contentType: type,
             declaredValue: Number(value),
+            isSameNodal: originData.nodalPoint === desData.nodalPoint,
+            isSameApex: originData.consignmentPrefix === desData.consignmentPrefix,
         };
+
+
 
         try {
             await CpInstance.post('/new-booking', data);

@@ -31,7 +31,6 @@ export default function SignIn() {
       errResSetter("ID must be 6 characters")
     }
     else {
-      console.log('formData', formData)
       NodalInstance.post('/login', formData).then((res) => {
         localStorage.setItem('nodalToken', `Bearer ${res.data.token}`)
         navigate('/nodal/home')

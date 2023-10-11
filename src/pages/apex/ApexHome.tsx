@@ -20,14 +20,8 @@ const ApexHome = () => {
         let token = localStorage.getItem('apexToken')
         if (!token) navigate('/apex/login')
         else {
-            ApextInstance.get('/home', {
-                headers: {
-                    token
-                }
-            }).then((res) => {
-                console.log(res.data)
-            }).catch(() => {
-                if (token) localStorage.removeItem('apexToken')
+            ApextInstance.get('/home').catch(() => {
+                if (localStorage.getItem('apexToken')) localStorage.removeItem('apexToken')
                 navigate('/apex/login')
             })
         }
@@ -49,7 +43,7 @@ const ApexHome = () => {
                 <Container sx={{ py: 8 }} maxWidth="lg">
                     <Grid container spacing={4}>
                         {cards.map((card, index) => (
-                            <GridCard key={index} card={card} />
+                            <GridCard key={index+100} card={card} />
                         ))}
                     </Grid>
                 </Container>
@@ -64,9 +58,9 @@ export default ApexHome
 
 
 
-const GridCard = ({ card, key }: GridCardProps) => {
+const GridCard = ({ card }: GridCardProps) => {
     return (
-        <Grid item key={key} xs={12} sm={6} md={4}>
+        <Grid item  xs={12} sm={6} md={4}>
             <Card
                 sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
             >

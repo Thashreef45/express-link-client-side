@@ -11,7 +11,7 @@ const nodalCards = [
     },
     {
         name: "Send FDM",
-        link: "",
+        link: "/nodal/send-fdms",
         image: "/src/assets/images/icons8-send-64.png"
     },
     {

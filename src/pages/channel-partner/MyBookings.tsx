@@ -18,16 +18,18 @@ import { Button } from 'react-bootstrap';
 
 
 const MyBookings = () => {
-  4
+  
 
   const [bookingData, setBookings] = useState([])
   const [modalShow, setModalShow] = useState(false);
   const [isDeleted, Setdelete] = useState(false);
+  const [pincode, SetPincode] = useState();
+
 
   if (isDeleted) {
-    CpInstance.get('/get-my-bookings').then((res) => {
+    CpInstance.get(`/get-my-bookings/${pincode}`).then((res) => {
       setBookings(res.data.bookings)
-    }).catch((err) => console.log(err.message, 'messg'))
+    }).catch((err) => console.log(err, 'messg'))
     Setdelete(false)
   }
 
@@ -43,8 +45,9 @@ const MyBookings = () => {
 
   useEffect(() => {
     CpInstance.get('/home').then((res) => {
-      const pincode = res.data.pincode
-      CpInstance.get(`/get-my-bookings/${pincode}`).then((res) => {
+      SetPincode(res.data.pincode)
+      console.log(pincode,'$tate')
+      CpInstance.get(`/get-my-bookings/${res.data.pincode}`).then((res) => {
         setBookings(res.data.bookings)
       }).catch((err) => console.log(err.message, 'messg'))
     }).catch((err) => {
