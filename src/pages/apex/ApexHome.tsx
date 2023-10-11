@@ -1,47 +1,49 @@
+
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CpInstance from '../../services/axiosInstances/axiosCp';
 import { Button, CardActions, Container, Grid } from '@mui/material';
-import { Colors, Logo } from '../../constants/Colors';
-import { AxiosResponse } from 'axios';
-import cpCards, { GridCardProps } from '../../constants/CardDatas/CpCards';
+import { Colors } from '../../constants/Colors';
+import ApextInstance from '../../services/axiosInstances/axiosApex';
+import ApexCardData, { GridCardProps } from '../../constants/CardDatas/ApexCard';
 import Header from '../../components/Header';
 
-const cards = cpCards
+const cards = ApexCardData
 
-export const Home = () => {
 
-    const key = localStorage.getItem('cpToken')
+const ApexHome = () => {
     const navigate = useNavigate()
     useEffect(() => {
-        CpInstance.get('/home').then((res: AxiosResponse) => {
-            res = res
-        }).catch((err) => {
-            console.log(err)
-            if (key) localStorage.removeItem('cpToken')
-            navigate('/cp/login')
-        })
-    }, []);
+        let token = localStorage.getItem('apexToken')
+        if (!token) navigate('/apex/login')
+        else {
+            ApextInstance.get('/home').catch(() => {
+                if (localStorage.getItem('apexToken')) localStorage.removeItem('apexToken')
+                navigate('/apex/login')
+            })
+        }
+
+    }, [])
 
     return (
         <>
-            <Header role='cp' />
-            <center className='mt-4' >
-                <img src={Logo.Main}
+            <Header role={'apex'} />
+
+            <center className='mt-4'>
+                <img src="/src/assets/images/Screenshot_2023-06-20_121057-removebg-preview.png"
                     style={{ width: "20%" }} alt="" />
             </center>
-            <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center', marginTop: '2rem' }}>
-                <h1 style={{ color: Colors.SecondaryColor, marginTop: '0px', marginBottom: '0px' }}>Channel Partner Dashboard</h1>
+            <div style={{ display: 'flex', width: '100vw', alignItems: 'center', justifyContent: 'center', marginTop: '2rem' }}>
+                <h2 style={{ color: Colors.SecondaryColor, marginTop: '0px', marginBottom: '0px' }}>Apex Dashboard</h2>
             </div>
             <main>
                 <Container sx={{ py: 8 }} maxWidth="lg">
                     <Grid container spacing={4}>
-                        {cards.map((card) => (
-                            <GridCard key={card.name} card={card} />
+                        {cards.map((card, index) => (
+                            <GridCard key={index+100} card={card} />
                         ))}
                     </Grid>
                 </Container>
@@ -51,10 +53,14 @@ export const Home = () => {
     );
 }
 
+export default ApexHome
 
-const GridCard = ({ card  }: GridCardProps) => {
+
+
+
+const GridCard = ({ card }: GridCardProps) => {
     return (
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid item  xs={12} sm={6} md={4}>
             <Card
                 sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
             >

@@ -1,19 +1,21 @@
-
+import ApexHome from "../pages/apex/ApexHome"
 import CreateNodal from "../pages/apex/CreateNodal"
 import Login from "../pages/apex/Login"
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, Navigate } from "react-router-dom"
 
 const ApexRoute = () => {
     return (
-    <>
-        {/* <Header /> */}
-        <Routes>
-            <Route path="/login" element={<Login />} />
-            {/* <Route path="/home" element={<Home/>} /> */}
-            <Route path="/create-nodal" element={<CreateNodal />} />
+        <>
+            <Routes>
+                <Route path="" element={<Navigate to="/apex/login" />} />
+                <Route path="/login" element={<Login />} />
+                {/* <Route path="/" element={<ProtectApex />}> */}
+                <Route path="/home" element={<ApexHome/>} />
+                <Route path="/create-nodal" element={<CreateNodal />} />
+                {/* </Route> */}
 
-        </Routes>
-    </>
+            </Routes>
+        </>
     )
 }
 export default ApexRoute

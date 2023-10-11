@@ -7,8 +7,10 @@ import Container from '@mui/material/Container';
 import { FormHelperText } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { toast } from 'react-toastify';
+import NodalInstance from '../../services/axiosInstances/axiosNp';
+import Header from '../../components/Header';
+import { Logo } from '../../constants/Colors';
 
 
 
@@ -17,15 +19,25 @@ import { toast } from 'react-toastify';
 export default function CreateCP() {
 
     const [errRes, errResSetter] = useState('')
+    const [prefix, setPrefix] = useState('')
     const navigate = useNavigate()
 
-    // useEffect(()=>{
+    useEffect(() => {
+        const token = localStorage.getItem('nodalToken')
 
-    // },[])
+        NodalInstance.get('/home').then((res) => {
+            setPrefix(res.data.consignmentPrefix)
+        }).catch((err) => {
+            console.log(err)
+            if (token) localStorage.removeItem('nodalToken')
+            navigate('/nodal/login')
+        })
+    }, [])
+
+    // const 
 
 
-    const handleSubmit = async (event:any) => {
-        const token = localStorage.getItem('apexToken')
+    const handleSubmit = async (event: any) => {
         event.preventDefault();
         errResSetter("")
         const formData = new FormData(event.target);
@@ -37,8 +49,8 @@ export default function CreateCP() {
             data.id = String(data.id).trim()
             errResSetter("ID must be 6 characters")
         }
-        else if (String(data.email).trim().length <8) {
-            data.email = String( data.email).trim()
+        else if (String(data.email).trim().length < 8) {
+            data.email = String(data.email).trim()
             errResSetter("Enter a valid email")
         } else if (String(data.phone).trim().length < 10) {
             errResSetter("Not a valid phone number")
@@ -46,30 +58,33 @@ export default function CreateCP() {
             errResSetter("Enter a valid Pincode")
         }
         else if (String(data.address).trim().length < 10) {
-            data.address = String( data.address).trim()
+            data.address = String(data.address).trim()
             errResSetter("Address is too short")
         }
         else {
-              axios.post('http://localhost:3001/cp/create-cp', data,{
-                headers:{token:token}
-              }).then((res) => {
-                localStorage.setItem('apexToken',`Bearer ${res.data.token}`)
-                navigate('/apex/home')
-
-              }).catch((err) => {
+            data.consignmentPrefix = prefix
+            NodalInstance.post('/create-cp', data).then((res) => {
+                localStorage.setItem('apexToken', `Bearer ${res.data.token}`)
+                navigate('/nodal/home')
+            }).catch((err) => {
                 toast.error(err.response.data.message)
-              })
+            })
         }
     };
 
 
     return (
         <div >
+            <Header role='nodal' />
+            <center className='mt-3' >
+                <img src={Logo.Main}
+                    style={{ width: "20%" }} alt="" />
+            </center>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 8,
+                        // marginTop: 1,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
@@ -91,6 +106,16 @@ export default function CreateCP() {
                             label="ID"
                             name="id"
                             // autoComplete="id"
+                            autoFocus
+                        />
+
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="name"
+                            label="Name"
+                            name="name"
                             autoFocus
                         />
 
@@ -124,6 +149,7 @@ export default function CreateCP() {
                             label="Phone"
                             name="phone"
                             type="Number"
+                            inputProps={{ maxLength: 10 }}
                             // autoComplete="id"
                             autoFocus
                         />
@@ -150,7 +176,7 @@ export default function CreateCP() {
                             // autoComplete="id"
                             autoFocus
                         />
-                        
+
                         {errRes && <FormHelperText error={true}>{errRes}</FormHelperText>}
 
 
@@ -158,8 +184,8 @@ export default function CreateCP() {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 4, mb: 2 ,height:50}}
-                            style={{ color: "#FFF" ,fontSize:17}}
+                            sx={{ mt: 4, mb: 2, height: 50 }}
+                            style={{ color: "#FFF", fontSize: 17 }}
                         >
                             CREATE
                         </Button>

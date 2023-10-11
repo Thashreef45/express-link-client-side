@@ -8,14 +8,24 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { FormHelperText } from '@mui/material';
 
+interface SignInProps {
+  title: string;
+  submitHandler: (e: React.FormEvent) => void;
+  errRes: string | null;
+}
 
-export default function SignIn({title,submitHandler,errRes}) {
-  
+
+export default function SignIn({ title, submitHandler, errRes }: SignInProps) {
 
   return (
-    <div >
+    < >
+      <center className='mt-5'>
+        <img src="/src/assets/images/Screenshot_2023-06-20_121057-removebg-preview.png"
+          style={{ width: "20%" }} alt="" />
+      </center>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+
         <Box
           sx={{
             marginTop: 8,
@@ -24,13 +34,12 @@ export default function SignIn({title,submitHandler,errRes}) {
             alignItems: 'center',
           }}
         >
-          <img src="../../../public/images/Screenshot_2023-06-20_121057-removebg-preview.png"
-          style={{width:"50%"}} alt="" /> <br /> <br />
+        
 
-          <Typography color={"#556080"} component="h1" variant="h5">
+          <Typography color={"#556080"} component="h4" variant="h4">
             {title} Log in
           </Typography> <br />
-          <Box component="form" onSubmit={(e)=>{submitHandler(e)}}  noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={(e) => { submitHandler(e) }} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -59,20 +68,20 @@ export default function SignIn({title,submitHandler,errRes}) {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              style={{color:"#FFF"}}
+              style={{ color: "#FFF" }}
             >
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
+              {/* <Grid item xs>
                 <Link href="#" variant="body2">
                   Forgot password?
                 </Link>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Box>
         </Box>
       </Container>
-    </div>
+    </>
   );
 }

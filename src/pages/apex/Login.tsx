@@ -1,12 +1,15 @@
 import * as React from 'react';
-import { useState } from 'react';
-import axios from 'axios';
+import { useState,useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import LoginForm from '../../components/LoginForm'
-
+import ApextInstance from '../../services/axiosInstances/axiosApex';
 
 export default function SignIn() {
+
+  useEffect(()=>{
+    if(localStorage.getItem('apexToken'))navigate('/apex/home')
+  },[])
 
   const [errRes, errResSetter] = useState('')
   const navigate = useNavigate()
@@ -25,8 +28,7 @@ export default function SignIn() {
       errResSetter("ID must be 6 characters")
     }
     else {
-      axios.post('http://localhost:3003/apex/login', formData).then((res) => {
-        console.log(res.data.token)
+      ApextInstance.post('/login', formData).then((res) => {
         localStorage.setItem('apexToken',`Bearer ${res.data.token}`)
         navigate('/apex/home')
 

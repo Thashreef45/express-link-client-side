@@ -1,47 +1,52 @@
+import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import CpInstance from '../../services/axiosInstances/axiosCp';
-import { Button, CardActions, Container, Grid } from '@mui/material';
+import Container from '@mui/material/Container';
 import { Colors, Logo } from '../../constants/Colors';
-import { AxiosResponse } from 'axios';
-import cpCards, { GridCardProps } from '../../constants/CardDatas/CpCards';
+import NodalInstance from '../../services/axiosInstances/axiosNp';
+import { useNavigate } from 'react-router-dom';
+import nodalCards, { GridCardProps } from '../../constants/CardDatas/NodalCards';
 import Header from '../../components/Header';
+import { useEffect } from 'react';
 
-const cards = cpCards
 
-export const Home = () => {
+const cards = nodalCards
 
-    const key = localStorage.getItem('cpToken')
+const NodalHome = () => {
     const navigate = useNavigate()
+
+
     useEffect(() => {
-        CpInstance.get('/home').then((res: AxiosResponse) => {
-            res = res
-        }).catch((err) => {
-            console.log(err)
-            if (key) localStorage.removeItem('cpToken')
-            navigate('/cp/login')
+        NodalInstance.get('/home').then((res) => {
+        }).catch(() => {
+            if (localStorage.getItem('nodalToken')) {
+                localStorage.removeItem('nodalToken')
+            }
+            navigate('/nodal/login')
         })
-    }, []);
+    }, [])
+
 
     return (
         <>
-            <Header role='cp' />
+            <Header role='nodal' />
             <center className='mt-4' >
                 <img src={Logo.Main}
                     style={{ width: "20%" }} alt="" />
             </center>
             <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center', marginTop: '2rem' }}>
-                <h1 style={{ color: Colors.SecondaryColor, marginTop: '0px', marginBottom: '0px' }}>Channel Partner Dashboard</h1>
+                <h1 style={{ color: Colors.SecondaryColor, marginTop: '0px', marginBottom: '0px' }}>Nodal Point Dashboard</h1>
             </div>
             <main>
                 <Container sx={{ py: 8 }} maxWidth="lg">
                     <Grid container spacing={4}>
-                        {cards.map((card) => (
-                            <GridCard key={card.name} card={card} />
+                        {cards.map((card, index) => (
+                            <GridCard key={index + 100} card={card} />
+
                         ))}
                     </Grid>
                 </Container>
@@ -52,7 +57,7 @@ export const Home = () => {
 }
 
 
-const GridCard = ({ card  }: GridCardProps) => {
+const GridCard = ({ card }: GridCardProps) => {
     return (
         <Grid item xs={12} sm={6} md={4}>
             <Card
@@ -67,7 +72,7 @@ const GridCard = ({ card  }: GridCardProps) => {
                     image={card.image}
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
+                    <Typography gutterBottom variant="h5" component="h2" color={Colors.SecondaryColor}>
                         {card.name}
                     </Typography>
                 </CardContent >
@@ -82,5 +87,4 @@ const GridCard = ({ card  }: GridCardProps) => {
 }
 
 
-
-
+export default NodalHome
