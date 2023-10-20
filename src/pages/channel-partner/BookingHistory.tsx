@@ -66,6 +66,7 @@ const BookingHistory = () => {
                 makeError('10 days only allowed')
             } else {
                 CpInstance.post('/get-booking-history', { from: fromDate, to: toDate, pincode }).then((res) => {
+                    console.log(res.data,'re$$')
                     setData(res.data.data)
                 })
             }
@@ -147,7 +148,7 @@ const BookingHistory = () => {
                             ))}
                         </TableBody>}
 
-                        {!data.length &&
+                        {!data &&
                             <TableBody>
                                 <TableRow >
                                     <TableCell /><TableCell />

@@ -9,18 +9,17 @@ import Header from '../../components/Header';
 import { Colors, Logo } from '../../constants/Colors';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { Button } from 'react-bootstrap';
 import { Button } from '@mui/material';
-import NodalInstance from '../../services/axiosInstances/axiosNp';
+import ApextInstance from '../../services/axiosInstances/axiosApex';
 
 
 
-const SendFdms = () => {
+const OutGoings = () => {
     const [fdms, setFdms] = useState([])
     const navigate = useNavigate()
 
     useEffect(() => {
-        NodalInstance.get('/home').then(() => {
+        ApextInstance.get('/home').then(() => {
             setFdmsData()
         }).catch((err) => {
             if (localStorage.getItem('cpToken')) localStorage.removeItem('cpToken')
@@ -35,24 +34,26 @@ const SendFdms = () => {
     }
 
     const transferFdm = (id: string) => {
-        NodalInstance.post('/transfer-sending-fdm',{id:id}).then(()=>{
-            setTimeout(()=>{setFdmsData()},100)
+        ApextInstance.post('/transfer-sending-fdm', { id: id }).then(() => {
+            setTimeout(() => { setFdmsData() }, 200)
         })
+        
     }
 
 
     const setFdmsData = () => {
-        NodalInstance.get('/get-sending-fdms').then((res) => {
+        ApextInstance.get('/get-sending-fdms').then((res) => {
+            console.log(res.data,'<<')
             setFdms(res.data.data)
         }).catch((err) => {
-            if(err.response.data.message == 'No data found')setFdms([])
+            if (err.response.data.message == 'No data found') setFdms([])
         })
     }
 
 
     return (
         <>
-            <Header role='nodal' />
+            <Header role='apex' />
             <center className='mt-5'>
                 <img src={Logo.Main}
                     style={{ width: "20%" }} alt="" />
@@ -106,7 +107,7 @@ const SendFdms = () => {
                             ))}
                         </TableBody>}
 
-                        {!fdms.length &&
+                        {!fdms &&
                             <TableBody>
                                 <TableRow >
                                     <TableCell /><TableCell /><TableCell />
@@ -122,7 +123,7 @@ const SendFdms = () => {
 }
 
 
-export default SendFdms
+export default OutGoings
 
 
 

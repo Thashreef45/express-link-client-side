@@ -15,8 +15,13 @@ const cpCards = [
         image: "/src/assets/images/icons8-booking-96.png"
     },
     {
-        name: "My Delivery",
-        link: "",
+        name: "Recieved-FDM",
+        link: "/cp/recieved-fdms",
+        image: "/src/assets/images/"
+    },
+    {
+        name: "Delivery Management",
+        link: "/cp/delivery-management",
         image: "/src/assets/images/icons8-delivery-96.png"
     },
     {

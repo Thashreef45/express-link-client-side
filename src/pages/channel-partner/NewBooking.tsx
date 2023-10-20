@@ -128,7 +128,6 @@ const NewBooking = () => {
         };
 
 
-
         try {
             await CpInstance.post('/new-booking', data);
         } catch (error) {

@@ -2,11 +2,11 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { Container, width } from '@mui/system';
+import { Container } from '@mui/system';
 import { Button, CardActions, Grid } from '@mui/material';
 import { Colors, Logo } from '../../constants/Colors';
 import { useNavigate } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import CpInstance from '../../services/axiosInstances/axiosCp';
 import { AxiosResponse } from 'axios';
 import { awbCards } from '../../constants/CardDatas/CpCards';
@@ -18,7 +18,7 @@ import BuyAwbModal from '../../components/channel-partner/BuyAwbModal';
 const cards = awbCards
 let consignmentPrefix: string
 
-export default function PurchaseAwb() {
+const PurchaseAwb = () => {
 
 
     const key = localStorage.getItem('cpToken')
@@ -59,10 +59,12 @@ export default function PurchaseAwb() {
     );
 }
 
+export default  PurchaseAwb
+
 
 const GridCard = ({ card, key }: { card: any, key: number }) => {
 
-    const [modalShow, setModalShow] = React.useState(false);
+    const [modalShow, setModalShow] = useState(false);
 
     return (
         <Grid item key={key} xs={12} sm={6} md={4}>
