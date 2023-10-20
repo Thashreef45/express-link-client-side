@@ -8,8 +8,9 @@ import NewBooking from "../pages/channel-partner/NewBooking"
 import EmployeeManagement from "../pages/channel-partner/EmplyeeManagement"
 import MyBookings from "../pages/channel-partner/MyBookings"
 import BookingHistory from "../pages/channel-partner/BookingHistory"
-import TrackingHistory from "../pages/channel-partner/TrackingHistory"
 import TrackingPage from "../pages/channel-partner/TrackingPage"
+import DeliveryManagement from "../pages/channel-partner/DeliveryManagement"
+import RecievedFdms from "../pages/channel-partner/RecievedFdms"
 // import BuyAwb from "../pages/channel-partner/BuyAwb"
 const CpRoutes = () => {
     return (
@@ -24,6 +25,8 @@ const CpRoutes = () => {
                     <Route path="/pincode-search" element={<PincodeSearch />} />
                     <Route path="/new-booking" element={<NewBooking />} />
                     <Route path="/my-bookings" element={<MyBookings />} />
+                    <Route path="/recieved-fdms" element={<RecievedFdms />} />
+                    <Route path="/delivery-management" element={<DeliveryManagement />} />
                     <Route path="/booking-history" element={<BookingHistory />} />
                     <Route path="/tracking" element={<TrackingPage />} />
                     <Route path="/purchase-awb" element={<PurchaseAwb />} />

@@ -2,6 +2,7 @@ import ApexHome from "../pages/apex/ApexHome"
 import CreateNodal from "../pages/apex/CreateNodal"
 import Login from "../pages/apex/Login"
 import { Routes, Route, Navigate } from "react-router-dom"
+import OutGoings from "../pages/apex/OutGoings"
 
 const ApexRoute = () => {
     return (
@@ -12,6 +13,7 @@ const ApexRoute = () => {
                 {/* <Route path="/" element={<ProtectApex />}> */}
                 <Route path="/home" element={<ApexHome/>} />
                 <Route path="/create-nodal" element={<CreateNodal />} />
+                <Route path="/out-goings" element={<OutGoings />} />
                 {/* </Route> */}
 
             </Routes>

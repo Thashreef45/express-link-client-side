@@ -16,7 +16,7 @@ const nodalCards = [
     },
     {
         name: "Recieved FDM",
-        link: "",
+        link: "/nodal/recieved-fdms",
         image: "/src/assets/images/icons8-import-64.png"
     },
     {

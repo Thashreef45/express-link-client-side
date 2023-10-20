@@ -46,9 +46,10 @@ const MyBookings = () => {
   useEffect(() => {
     CpInstance.get('/home').then((res) => {
       SetPincode(res.data.pincode)
-      console.log(pincode,'$tate')
       CpInstance.get(`/get-my-bookings/${res.data.pincode}`).then((res) => {
-        setBookings(res.data.bookings)
+        if(res.data?.bookings){
+          setBookings(res.data.bookings)
+        }
       }).catch((err) => console.log(err.message, 'messg'))
     }).catch((err) => {
       if (localStorage.getItem('cpToken')) localStorage.removeItem('cpToken')
@@ -118,7 +119,7 @@ const MyBookings = () => {
               ))}
             </TableBody>}
 
-            {!bookingData &&
+            {!bookingData.length &&
               <TableBody>
                 <TableRow >
                   <TableCell /><TableCell /><TableCell />

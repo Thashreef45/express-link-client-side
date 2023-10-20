@@ -15,7 +15,7 @@ import NodalInstance from '../../services/axiosInstances/axiosNp';
 
 
 
-const SendFdms = () => {
+const RecievingFdm = () => {
     const [fdms, setFdms] = useState([])
     const navigate = useNavigate()
 
@@ -35,14 +35,14 @@ const SendFdms = () => {
     }
 
     const transferFdm = (id: string) => {
-        NodalInstance.post('/transfer-sending-fdm',{id:id}).then(()=>{
-            setTimeout(()=>{setFdmsData()},100)
+        NodalInstance.post('/transfer-recieved-fdm',{id:id}).then(()=>{
+            setTimeout(()=>{setFdmsData()},150)
         })
     }
 
 
     const setFdmsData = () => {
-        NodalInstance.get('/get-sending-fdms').then((res) => {
+        NodalInstance.get('/get-recieved-fdms').then((res) => {
             setFdms(res.data.data)
         }).catch((err) => {
             if(err.response.data.message == 'No data found')setFdms([])
@@ -56,7 +56,7 @@ const SendFdms = () => {
             <center className='mt-5'>
                 <img src={Logo.Main}
                     style={{ width: "20%" }} alt="" />
-                <h2 style={{ color: Colors.SecondaryColor }} className='mt-4'>FDM to be transfer</h2>
+                <h2 style={{ color: Colors.SecondaryColor }} className='mt-4'>Recieved FDM to be transfer</h2>
             </center>
             <div className='mt-5 p-5'>
 
@@ -106,7 +106,7 @@ const SendFdms = () => {
                             ))}
                         </TableBody>}
 
-                        {!fdms.length &&
+                        {!fdms &&
                             <TableBody>
                                 <TableRow >
                                     <TableCell /><TableCell /><TableCell />
@@ -122,7 +122,7 @@ const SendFdms = () => {
 }
 
 
-export default SendFdms
+export default RecievingFdm
 
 
 

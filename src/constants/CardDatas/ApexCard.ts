@@ -17,7 +17,7 @@ const ApexCardData = [
     },
     {
         name: "Out Goings",
-        link: "",
+        link: "/apex/out-goings",
         image: "/src/assets/images/icons8-send-64.png"
     },
     {

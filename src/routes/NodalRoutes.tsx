@@ -7,6 +7,7 @@ import { Routes, Route, Navigate  } from "react-router-dom"
 import NodalHome from "../pages/nodal-point/NodalHome"
 import AcceptFdm from "../pages/nodal-point/AcceptFdm"
 import SendFdms from "../pages/nodal-point/SendFdm"
+import RecievingFdm from "../pages/nodal-point/RecievingFdm"
 // import PincodeSearch from "../pages/nodal-point/PincodeSearch"
 
 const NodalRoutes = () => {
@@ -22,7 +23,9 @@ const NodalRoutes = () => {
                     <Route path="/home" element={<NodalHome />} />
                     <Route path="/accept-fdm" element={<AcceptFdm />} />
                     <Route path="/send-fdms" element={<SendFdms />} />
-    
+                    <Route path="/recieved-fdms" element={<RecievingFdm />} />
+
+                    
                     {/* <Route path="/pincode-search" element={<PincodeSearch />} /> */}
                 </Route>
             </Routes>

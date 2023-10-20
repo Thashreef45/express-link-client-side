@@ -48,6 +48,7 @@ const TrackingPage = () => {
             makeError('AWB Should be 10 characters')
         } else {
             CpInstance.get(`/tracking/${awb}`).then((res) => {
+                console.log(res.data.data,'#track')
                 setData(res.data.data)
             }).catch((err) => {
                 makeError(err.response.data.message)
@@ -107,6 +108,7 @@ const TrackingPage = () => {
 
             {data &&
                 <Container>
+                    
                     <Box
                         sx={{
                             width: "100%",
@@ -118,7 +120,6 @@ const TrackingPage = () => {
                             flexDirection: { xs: 'column', sm: 'column', md: 'row' }
                         }}
                     >
-
                         <Box
                             sx={{
                                 width: "100%",
@@ -221,30 +222,30 @@ const TrackingPage = () => {
                             <Typography sx={{ textAlign: 'center', margin: 3, fontSize: '25px' }}>Tracking History</Typography>
                             <div style={{ width: "100%", height: '85%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <div style={{ width: "80%", height: '95%' }}>
-                                    <Typography sx={{ fontSize: 15 }}>Booked : {data.originAddress} <span className="mx-3">{formatDate(data.bookingTime)}</span></Typography>
+                                    <Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Booked</span> : {data.originAddress} <span className="mx-3">{formatDate(data.bookingTime)}</span></Typography>
 
                                     {data.sending &&
                                         <div>
-                                            {data.sending.nodalRecieved && <Typography sx={{ fontSize: 15 }}>Nodal Recieved :{data.sending.nodalRecieved.name} {formatDate(data.sending.nodalRecieved.Date)} </Typography>}
-                                            {data.sending.nodalSend && <Typography sx={{ fontSize: 15 }}>Nodal Send : </Typography>}
-                                            {data.sending.apexReceived && <Typography sx={{ fontSize: 15 }}>Apex Recieved : </Typography>}
-                                            {data.sending.apexSend && <Typography sx={{ fontSize: 15 }}>Apex Send : </Typography>}
+                                            {data.sending.nodalRecieved && <Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Nodal Recieved</span> : {data.sending.nodalRecieved.name}&nbsp;&nbsp; {formatDate(data.sending.nodalRecieved.Date)} </Typography>}
+                                            {data.sending.nodalSend && <Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Nodal Send</span> : {formatDate(data.sending.nodalSend)}  </Typography>}
+                                            {data.sending.apexRecieved && <Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Apex Recieved</span> : {data.sending.apexRecieved.name}&nbsp;&nbsp; {formatDate(data.sending.apexRecieved.Date)} </Typography>}
+                                            {data.sending.apexSend && <Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Apex Send</span> : {formatDate(data.sending.apexSend)}</Typography>}
                                         </div>
                                     }
 
-                                    {data.receiving &&
+                                    {data.recieving &&
                                         <div>
-                                            <Typography sx={{ fontSize: 15 }}>Apex Recieved : </Typography>
-                                            <Typography sx={{ fontSize: 15 }}>Apex Send : </Typography>
-                                            <Typography sx={{ fontSize: 15 }}>Nodal Recieved : </Typography>
-                                            <Typography sx={{ fontSize: 15 }}>Nodal Send : </Typography>
-                                            <Typography sx={{ fontSize: 15 }}>Cp Recieved : </Typography>
-                                            <Typography sx={{ fontSize: 15 }}>Delivered: </Typography>
+                                            {data.recieving.apexRecieved && <Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Apex Recieved: </span> {data.recieving.apexRecieved.name} &nbsp;&nbsp;{formatDate(data.recieving.apexRecieved.Date)} </Typography>}
+                                            {data.recieving.apexSend &&<Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Apex Send</span> : </Typography>}
+                                            {data.recieving.nodalRecieved && <Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Nodal Recieved</span> : {data.recieving.nodalRecieved.name}&nbsp;&nbsp;{formatDate(data.recieving.nodalRecieved.Date)} </Typography>} 
+                                            {data.recieving.nodalSend &&<Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Nodal Send :</span>{formatDate(data.recieving.nodalSend)} </Typography>}
+                                            {data.recieving.cpRecieved &&<Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Cp Recieved</span> : {data.recieving.cpRecieved.name} &nbsp;&nbsp;{formatDate(data.recieving.cpRecieved.Date)} </Typography>}
+                                            {data.recieving.cpUpdate && <Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Delivered</span>: </Typography>}
                                         </div>}
 
                                     {data.notDelivered &&
                                         <div>
-                                        <Typography sx={{ fontSize: 15 }}>Apex Send : </Typography>
+                                        <Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Apex Send</span> : </Typography>
                                         <Typography sx={{ fontSize: 15 }}>Nodal Recieved : </Typography>
                                         <Typography sx={{ fontSize: 15 }}>Nodal Send : </Typography>
                                         <Typography sx={{ fontSize: 15 }}>Cp Recieved : </Typography>

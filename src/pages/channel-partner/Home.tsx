@@ -37,22 +37,19 @@ export const Home = () => {
             <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center', marginTop: '2rem' }}>
                 <h1 style={{ color: Colors.SecondaryColor, marginTop: '0px', marginBottom: '0px' }}>Channel Partner Dashboard</h1>
             </div>
-            <main>
-                <Container sx={{ py: 8 }} maxWidth="lg">
-                    <Grid container spacing={4}>
-                        {cards.map((card) => (
-                            <GridCard key={card.name} card={card} />
-                        ))}
-                    </Grid>
-                </Container>
-            </main>
-
+            <Container sx={{ py: 8 }} maxWidth="lg">
+                <Grid container spacing={4}>
+                    {cards.map((card) => (
+                        <GridCard key={card.name} card={card} />
+                    ))}
+                </Grid>
+            </Container>
         </>
     );
 }
 
 
-const GridCard = ({ card  }: GridCardProps) => {
+const GridCard = ({ card }: GridCardProps) => {
     return (
         <Grid item xs={12} sm={6} md={4}>
             <Card
