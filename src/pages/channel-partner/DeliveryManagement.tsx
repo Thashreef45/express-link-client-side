@@ -9,13 +9,12 @@ import Paper from '@mui/material/Paper';
 import { Container } from 'react-bootstrap';
 import { Colors, Logo } from '../../constants/Colors';
 import Header from '../../components/Header';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { Box, Button, Typography } from '@mui/material';
-import AddEmployeeModal from '../../components/channel-partner/AddEmployeeModal';
+import { Box, Button } from '@mui/material';
 import { CardActions } from '@mui/joy';
 import { useEffect, useState } from 'react';
 import CpInstance from '../../services/axiosInstances/axiosCp';
 import { useNavigate } from 'react-router-dom';
+import AssignFdmModal from '../../components/channel-partner/AssignFdmModal';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -44,19 +43,31 @@ const DeliveryManagement = () => {
 
     const [rows, setrows] = useState([])
     const navigate = useNavigate()
+    const [id, setId] = useState('')
+    const [assigned, setAssigned] = useState(false)
 
-    useEffect(() => {
+    
+    const setData = () => {
         CpInstance.get('/get-recieved-fdm').then((res) => {
-            console.log(res.data,'=><S')
             if (res.data?.data) {
                 setrows(res.data?.data)
             }
         })
+    }
+    
+    if(assigned) {
+        setTimeout(()=>{setData()},100)
+        setAssigned(false)
+    }
+    
+    useEffect(() => {
+        setData()
     }, [])
 
 
-    const TransferHandler = (name: string) => {
-        console.log(name, 'delete')
+    const TransferHandler = (id: string) => {
+        setId(id)
+        setModalShow(true)
     }
 
     const [modalShow, setModalShow] = useState(false);
@@ -73,7 +84,7 @@ const DeliveryManagement = () => {
             </center>
 
             <Container className='mt-5'>
-                <Box sx={{display:'flex',justifyContent:'center'}}>
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Button className='mb-3'
                         style={{ backgroundColor: Colors.PrimaryColor, border: 0, marginRight: 10, color: 'white' }}
                         onClick={() => navigate('/cp/booking-history')}
@@ -82,13 +93,13 @@ const DeliveryManagement = () => {
                     </Button>
                     <Button className='mb-3'
                         style={{ backgroundColor: Colors.PrimaryColor, border: 0, color: 'white' }}
-                        onClick={() => navigate('/cp/booking-history')}
+                        onClick={() => navigate('/cp/fdm-assigned-employees')}
                     >
                         Assigned FDMS
                     </Button>
                 </Box>
 
-                <h3 style={{ textAlign: 'center', color: Colors.SecondaryColor, margin: '%' }}>Pending Delivery</h3>
+                <h3 style={{ textAlign: 'center', color: Colors.SecondaryColor, margin: '%' }}>Pending to Assign</h3>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 700 }} aria-label="customized table">
                         <TableHead>
@@ -102,27 +113,27 @@ const DeliveryManagement = () => {
                         </TableHead>
                         {rows && <TableBody>
                             {rows.map((row: any, index) => (
-                                <StyledTableRow key={index}>
+                                <StyledTableRow key={row._id}>
                                     <StyledTableCell component="th" scope="row">
-                                    {row.awbPrefix}{row.awb}
+                                        {row.awbPrefix}{row.awb}
                                     </StyledTableCell>
                                     <StyledTableCell align="center">{row.mobile}</StyledTableCell>
                                     <StyledTableCell align="center">{row.address}</StyledTableCell>
 
-                                    <StyledTableCell>{row.type}</StyledTableCell>
+                                    <StyledTableCell align="center">{row.type}</StyledTableCell>
 
-                                    <StyledTableCell>
-                                        <Button onClick={() => TransferHandler('hi')}>Assign</Button>
+                                    <StyledTableCell align="center">
+                                        <Button onClick={() => TransferHandler(row._id)}>Assign</Button>
                                     </StyledTableCell>
 
                                 </StyledTableRow>
                             ))}
                             {!rows.length &&
-                                    <TableRow >
-                                        <TableCell></TableCell>
-                                        <TableCell></TableCell>
-                                        <TableCell align='right'>No Pendings</TableCell>
-                                    </TableRow>
+                                <TableRow >
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell align='right'>No Pendings</TableCell>
+                                </TableRow>
                             }
                         </TableBody>}
                     </Table>
@@ -140,12 +151,14 @@ const DeliveryManagement = () => {
                         Add Employee<AddCircleIcon style={{ marginLeft: "1rem" }} />
                     </Button> */}
 
-                    <AddEmployeeModal
-                        setrows={setrows}
-                        show={modalShow}
-                        onHide={() => setModalShow(false)}
-                    />
                 </CardActions>
+
+                <AssignFdmModal
+                    show={modalShow}
+                    onHide={() => setModalShow(false)}
+                    id = {id}
+                    setAssigned = {setAssigned}
+                />
 
             </Container>
         </>

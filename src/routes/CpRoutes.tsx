@@ -11,6 +11,8 @@ import BookingHistory from "../pages/channel-partner/BookingHistory"
 import TrackingPage from "../pages/channel-partner/TrackingPage"
 import DeliveryManagement from "../pages/channel-partner/DeliveryManagement"
 import RecievedFdms from "../pages/channel-partner/RecievedFdms"
+import FdmAssignedEmployees from "../pages/channel-partner/FdmAssignedEmployees"
+import AssignedFdms from "../pages/channel-partner/AssignedFdms"
 // import BuyAwb from "../pages/channel-partner/BuyAwb"
 const CpRoutes = () => {
     return (
@@ -31,7 +33,9 @@ const CpRoutes = () => {
                     <Route path="/tracking" element={<TrackingPage />} />
                     <Route path="/purchase-awb" element={<PurchaseAwb />} />
                     <Route path="/employee-management" element={<EmployeeManagement />} />
-
+                    <Route path="/fdm-assigned-employees" element={<FdmAssignedEmployees />} />
+                    <Route path="/assigned-fdms/:id" element={<AssignedFdms />} />
+                    
                 </Route>
             </Routes>
         </>

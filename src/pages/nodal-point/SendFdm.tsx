@@ -36,7 +36,7 @@ const SendFdms = () => {
 
     const transferFdm = (id: string) => {
         NodalInstance.post('/transfer-sending-fdm',{id:id}).then(()=>{
-            setTimeout(()=>{setFdmsData()},100)
+            setTimeout(()=>{setFdmsData()},150)
         })
     }
 
@@ -94,7 +94,7 @@ const SendFdms = () => {
                                     <TableCell align="center">{row.type}</TableCell>
                                     <TableCell align="center">
                                         <Button
-                                            onClick={() => { transferFdm(row._id) }}
+                                            onClick={() => transferFdm(row._id) }
                                         >
                                             Transfer FDM
                                         </Button>

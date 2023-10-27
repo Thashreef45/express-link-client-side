@@ -134,7 +134,7 @@ const TrackingPage = () => {
                             </a>
 
                             {data.drs &&
-                                <a href="" >
+                                <a href={data.drs} target="_blank" rel="noopener noreferrer" >
                                 <img src="/src/assets/images/icons8-document-128 (1).png" alt="" />
                             </a>}
                             
@@ -236,11 +236,11 @@ const TrackingPage = () => {
                                     {data.recieving &&
                                         <div>
                                             {data.recieving.apexRecieved && <Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Apex Recieved: </span> {data.recieving.apexRecieved.name} &nbsp;&nbsp;{formatDate(data.recieving.apexRecieved.Date)} </Typography>}
-                                            {data.recieving.apexSend &&<Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Apex Send</span> : </Typography>}
-                                            {data.recieving.nodalRecieved && <Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Nodal Recieved</span> : {data.recieving.nodalRecieved.name}&nbsp;&nbsp;{formatDate(data.recieving.nodalRecieved.Date)} </Typography>} 
-                                            {data.recieving.nodalSend &&<Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Nodal Send :</span>{formatDate(data.recieving.nodalSend)} </Typography>}
-                                            {data.recieving.cpRecieved &&<Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Cp Recieved</span> : {data.recieving.cpRecieved.name} &nbsp;&nbsp;{formatDate(data.recieving.cpRecieved.Date)} </Typography>}
-                                            {data.recieving.cpUpdate && <Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Delivered</span>: </Typography>}
+                                            {data.recieving.apexSend &&<Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Apex Send : </span> {formatDate(data.recieving.apexSend)}  </Typography>}
+                                            {data.recieving.nodalRecieved && <Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Nodal Recieved : </span> {data.recieving.nodalRecieved.name}&nbsp;&nbsp;{formatDate(data.recieving.nodalRecieved.Date)} </Typography>} 
+                                            {data.recieving.nodalSend &&<Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Nodal Send : </span>{formatDate(data.recieving.nodalSend)} </Typography>}
+                                            {data.recieving.cpRecieved &&<Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Cp Recieved : </span>{data.recieving.cpRecieved.name} &nbsp;&nbsp;{formatDate(data.recieving.cpRecieved.Date)} </Typography>}
+                                            {data.recieving.cpUpdate && <Typography sx={{ fontSize: 15 }}><span style={{fontWeight:'bold'}}>Delivered : </span> {formatDate(data.recieving.cpUpdate)}</Typography>}
                                         </div>}
 
                                     {data.notDelivered &&

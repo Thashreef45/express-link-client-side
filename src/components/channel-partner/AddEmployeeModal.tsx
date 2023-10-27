@@ -14,7 +14,6 @@ export default function AddEmployeeModal(props: any) {
     const [err, setErr] = React.useState('')
 
 
-
     const submitHandler = () => {
         const isValidEmail = (eMail: string) => {
             const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
