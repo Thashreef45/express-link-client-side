@@ -19,7 +19,6 @@ export const Home = () => {
     const navigate = useNavigate()
     useEffect(() => {
         CpInstance.get('/home').then((res: AxiosResponse) => {
-            res = res
         }).catch((err) => {
             console.log(err)
             if (key) localStorage.removeItem('cpToken')

@@ -22,7 +22,7 @@ const ApexCardData = [
     },
     {
         name: "Incomings",
-        link: "",
+        link: "/apex/incomings",
         image: "/src/assets/images/icons8-import-64.png"
     },
     {

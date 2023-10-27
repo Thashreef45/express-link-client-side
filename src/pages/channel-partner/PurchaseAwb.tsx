@@ -48,8 +48,8 @@ const PurchaseAwb = () => {
                 </div>
                 <Container sx={{ py: 8 }} maxWidth="lg">
                     <Grid container spacing={4}>
-                        {cards.map((card, index) => (
-                            <GridCard key={index} card={card} />
+                        {cards.map((card) => (
+                            <GridCard key={card.name} card={card} />
                         ))}
                     </Grid>
                 </Container>
@@ -62,12 +62,12 @@ const PurchaseAwb = () => {
 export default  PurchaseAwb
 
 
-const GridCard = ({ card, key }: { card: any, key: number }) => {
+const GridCard = ({ card }: { card: any }) => {
 
     const [modalShow, setModalShow] = useState(false);
 
     return (
-        <Grid item key={key} xs={12} sm={6} md={4}>
+        <Grid item  xs={12} sm={6} md={4}>
             <Card
                 sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
             >

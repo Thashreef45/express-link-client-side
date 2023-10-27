@@ -14,7 +14,7 @@ import ApextInstance from '../../services/axiosInstances/axiosApex';
 
 
 
-const OutGoings = () => {
+const Incomings = () => {
     const [fdms, setFdms] = useState([])
     const navigate = useNavigate()
 
@@ -34,15 +34,14 @@ const OutGoings = () => {
     }
 
     const transferFdm = (id: string) => {
-        ApextInstance.post('/transfer-sending-fdm', { id: id }).then(() => {
+        ApextInstance.post('/transfer-recieved-fdms', { id: id }).then(() => {
             setTimeout(() => { setFdmsData() }, 200)
-        })
+        })        
     }
 
 
     const setFdmsData = () => {
-        ApextInstance.get('/get-sending-fdms').then((res) => {
-            console.log(res.data,'<<')
+        ApextInstance.get('/recieved-fdms').then((res) => {
             setFdms(res.data.data)
         }).catch((err) => {
             if (err.response.data.message == 'No data found') setFdms([])
@@ -56,7 +55,7 @@ const OutGoings = () => {
             <center className='mt-5'>
                 <img src={Logo.Main}
                     style={{ width: "20%" }} alt="" />
-                <h2 style={{ color: Colors.SecondaryColor }} className='mt-4'>Arrived from nodal-points</h2>
+                <h2 style={{ color: Colors.SecondaryColor }} className='mt-4'>Arrived from outer States</h2>
             </center>
             <div className='mt-5 p-5'>
 
@@ -122,7 +121,7 @@ const OutGoings = () => {
 }
 
 
-export default OutGoings
+export default Incomings
 
 
 
