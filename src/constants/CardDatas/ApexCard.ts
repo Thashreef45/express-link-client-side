@@ -7,12 +7,12 @@ const ApexCardData = [
     },
     {
         name: "Pincode Search",
-        link: "",
+        link: "/apex/pincode-search",
         image: '/src/assets/images/icons8-pin-100.png'
     },
     {
         name: "Tracking",
-        link: "",
+        link: "/apex/tracking",
         image: "/src/assets/images/icons8-tracking-100.png"
     },
     {
@@ -25,11 +25,11 @@ const ApexCardData = [
         link: "/apex/incomings",
         image: "/src/assets/images/icons8-import-64.png"
     },
-    {
-        name: "Employee Management",
-        link: "",
-        image: "/src/assets/images/icons8-booking-96.png"
-    },
+    // {
+    //     name: "Employee Management",
+    //     link: "",
+    //     image: "/src/assets/images/icons8-booking-96.png"
+    // },
 
 ];
 

@@ -8,7 +8,8 @@ import NodalHome from "../pages/nodal-point/NodalHome"
 import AcceptFdm from "../pages/nodal-point/AcceptFdm"
 import SendFdms from "../pages/nodal-point/SendFdm"
 import RecievingFdm from "../pages/nodal-point/RecievingFdm"
-// import PincodeSearch from "../pages/nodal-point/PincodeSearch"
+import PincodeSearch from "../pages/nodal-point/PincodeSearch"
+import ConsignmentTracking from "../pages/nodal-point/ConsignmentTracking"
 
 const NodalRoutes = () => {
     return (
@@ -24,6 +25,8 @@ const NodalRoutes = () => {
                     <Route path="/accept-fdm" element={<AcceptFdm />} />
                     <Route path="/send-fdms" element={<SendFdms />} />
                     <Route path="/recieved-fdms" element={<RecievingFdm />} />
+                    <Route path="/pincode-search" element={<PincodeSearch />} />
+                    <Route path="/tracking" element={<ConsignmentTracking />} />
 
                     
                     {/* <Route path="/pincode-search" element={<PincodeSearch />} /> */}

@@ -42,9 +42,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-let data: []
+let data: any
 let homeData = ''
-let employeeData 
+let employeeData
 
 const AssignedFdms = () => {
     const params = useParams()
@@ -187,6 +187,8 @@ const currentDateTime = () => {
 
 function generatePDF() {
     // Define the content for your PDF using @react-pdf/renderer components
+
+
     const MyDocument = (
         <Document>
             <Page size="A4" style={styles.page}>
@@ -200,9 +202,9 @@ function generatePDF() {
 
                         <View style={{ width: '40%', height: '100%', alignItems: 'center', marginTop: 10 }}>
                             <View>
+                                <Text style={styles.employee}>{currentDateTime()}</Text>
                                 <Text style={styles.employee}>CP ID : {homeData.id}</Text>
-                                <Text style={styles.employee}>{currentDateTime()}</Text>
-                                <Text style={styles.employee}>{currentDateTime()}</Text>
+                                <Text style={styles.employee}>Employee : dummyId</Text>
 
                             </View>
                         </View>
@@ -226,169 +228,20 @@ function generatePDF() {
                             </View>
                         </View>
 
-
-                        <View style={styles.tableRow}>
-                            <View style={styles.tableCell}>
-                                <Text>name
-                                </Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>age</Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>city</Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>Delivered</Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.tableRow}>
-                            <View style={styles.tableCell}>
-                                <Text>name
-                                </Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>age</Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>city</Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>Delivered</Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.tableRow}>
-                            <View style={styles.tableCell}>
-                                <Text>name
-                                </Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>age</Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>city</Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>Delivered</Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.tableRow}>
-                            <View style={styles.tableCell}>
-                                <Text>name
-                                </Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>age</Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>city</Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>Delivered</Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.tableRow}>
-                            <View style={styles.tableCell}>
-                                <Text>name
-                                </Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>age</Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>city</Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>Delivered</Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.tableRow}>
-                            <View style={styles.tableCell}>
-                                <Text>name
-                                </Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>age</Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>city</Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>Delivered</Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.tableRow}>
-                            <View style={styles.tableCell}>
-                                <Text>name
-                                </Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>age</Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>city</Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>Delivered</Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.tableRow}>
-                            <View style={styles.tableCell}>
-                                <Text>name
-                                </Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>age</Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>city</Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>Delivered</Text>
-                            </View>
-                        </View>
-
-
-                        <View style={styles.tableRow}>
-                            <View style={styles.tableCell}>
-                                <Text>name
-                                </Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>age</Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>city</Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>Delivered</Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.tableRow}>
-                            <View style={styles.tableCell}>
-                                <Text>name
-                                </Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>age</Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>city</Text>
-                            </View>
-                            <View style={styles.tableCell}>
-                                <Text>Delivered</Text>
-                            </View>
-                        </View>
-
-
+                        {data && data.map((element:any,index:number) => {
+                            return(<View key={index+100} style={styles.tableRow}>
+                                <View style={styles.tableCell}>
+                                    <Text>
+                                        {element.address}{element.mobile}
+                                    </Text>
+                                </View>
+                                <View style={styles.tableCell}>
+                                    <Text>{element.awbPrefix}{element.awb}</Text>
+                                </View>
+                                <View style={styles.tableCell}></View>
+                                <View style={styles.tableCell}></View>
+                            </View>)
+                        })}
                     </View>
                 </View>
             </Page>
@@ -396,6 +249,7 @@ function generatePDF() {
     );
 
     return MyDocument;
+
 }
 
 
