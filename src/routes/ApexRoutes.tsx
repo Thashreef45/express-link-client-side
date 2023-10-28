@@ -4,6 +4,8 @@ import Login from "../pages/apex/Login"
 import { Routes, Route, Navigate } from "react-router-dom"
 import OutGoings from "../pages/apex/OutGoings"
 import Incomings from "../pages/apex/Incomings"
+import PincodeSearch from "../pages/apex/PicodeSearch"
+import TrackingPage from "../pages/apex/ConsignmentTracking"
 
 const ApexRoute = () => {
     return (
@@ -16,6 +18,10 @@ const ApexRoute = () => {
                 <Route path="/create-nodal" element={<CreateNodal />} />
                 <Route path="/out-goings" element={<OutGoings />} />
                 <Route path="/incomings" element={<Incomings />} />
+                <Route path="/pincode-search" element={<PincodeSearch />} />
+                <Route path="/tracking" element={<TrackingPage />} />
+
+                
 
                 {/* </Route> */}
 

@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -9,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { FormHelperText } from '@mui/material';
 import { Colors } from '../../constants/Colors';
 import Header from '../../components/Header';
-import NodalInstance from '../../services/axiosInstances/axiosNp';
+import ApextInstance from '../../services/axiosInstances/axiosApex';
 
 
 const PincodeSearch = () => {
@@ -17,7 +18,7 @@ const PincodeSearch = () => {
     const key = localStorage.getItem('cpToken')
     const navigate = useNavigate()
     useEffect(() => {
-        NodalInstance.get('/home').then().catch((err) => {
+        ApextInstance.get('/home').then().catch((err) => {
             console.log(err)
             if (key) localStorage.removeItem('cpToken')
             navigate('/cp/login')
@@ -34,7 +35,7 @@ const PincodeSearch = () => {
     const handleSubmit = () => {
         if (pincode.length > 5) {
             setLowerDiv(true)
-            NodalInstance.post('/search-by-pincode', { pincode: pincode }).then((res) => {
+            ApextInstance.post('/search-by-pincode', { pincode: pincode }).then((res) => {
                 cpDataSetter(res.data)
                 cpNotFoundSetter('')
             }).catch((err) => {
@@ -62,7 +63,7 @@ const PincodeSearch = () => {
 
     return (
         <>
-            <Header role='nodal' />
+            <Header role='apex' />
 
             <div style={{ height: '92.9vh', width: '100vw' }}>
                 {!lowerDiv && <div style={{ height: "20%" }}></div>}
