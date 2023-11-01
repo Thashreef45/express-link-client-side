@@ -24,11 +24,11 @@ const nodalCards = [
         link: "/nodal/create-cp",
         image: '/src/assets/images/icons8-add-new-64.png'
     },
-    // {
-    //     name: "Employee Management",
-    //     link: "",
-    //     image: "/src/assets/images/icons8-employee-96.png"
-    // },
+    {
+        name: "Return Management",
+        link: "/nodal/return-sending",
+        image: ""
+    },
     {
         name: "Accept FDM",
         link: "/nodal/accept-fdm",
