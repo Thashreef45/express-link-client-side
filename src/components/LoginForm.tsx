@@ -1,7 +1,6 @@
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -10,12 +9,12 @@ import { FormHelperText } from '@mui/material';
 
 interface SignInProps {
   title: string;
-  submitHandler: (e: React.FormEvent) => void;
+  submitHandler: (event: React.FormEvent<HTMLFormElement | null>) => Promise<void>;
   errRes: string | null;
 }
 
 
-export default function SignIn({ title, submitHandler, errRes }: SignInProps) {
+export default function SignIn({ title, submitHandler, errRes }: SignInProps | any) {
 
   return (
     < >

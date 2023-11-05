@@ -11,7 +11,7 @@ import useImageUpload from '../../services/cloudinary/useImageUpload';
 const DeliveryUpdateModal = (props: any) => {
     const [err, setErr] = useState('')
     const [status, setStatus] = useState([])
-    const { imageUrl, uploadImage } = useImageUpload()
+    const { uploadImage } = useImageUpload()
     let imageLink = ''
     const [image, setImage] = useState('')
 
@@ -104,8 +104,8 @@ const DeliveryUpdateModal = (props: any) => {
                     required
                     // fullWidth
                     id="image"
-                    onChange={(e) => {
-                        const fileInput = document.querySelector('input[type="file"]');
+                    onChange={() => {
+                        const fileInput:any = document.querySelector('input[type="file"]');
                         if (fileInput) {
                             const file = fileInput.files[0];
                             setImage(file)

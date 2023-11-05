@@ -27,8 +27,7 @@ const PurchaseAwb = () => {
     useEffect(() => {
         CpInstance.get('/home').then((res: AxiosResponse) => {
             consignmentPrefix = res.data.consignmentPrefix
-        }).catch((err) => {
-            console.log(err)
+        }).catch(() => {
             if (key) localStorage.removeItem('cpToken')
             navigate('/cp/login')
         })

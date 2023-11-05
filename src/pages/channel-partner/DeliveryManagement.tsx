@@ -10,7 +10,6 @@ import { Container } from 'react-bootstrap';
 import { Colors, Logo } from '../../constants/Colors';
 import Header from '../../components/Header';
 import { Box, Button } from '@mui/material';
-import { CardActions } from '@mui/joy';
 import { useEffect, useState } from 'react';
 import CpInstance from '../../services/axiosInstances/axiosCp';
 import { useNavigate } from 'react-router-dom';
@@ -44,7 +43,6 @@ const DeliveryManagement = () => {
     const [rows, setrows] = useState([])
     const navigate = useNavigate()
     const [id, setId] = useState('')
-    const [assigned, setAssigned] = useState(false)
 
     
     const setData = () => {
@@ -53,11 +51,6 @@ const DeliveryManagement = () => {
                 setrows(res.data?.data)
             }
         })
-    }
-    
-    if(assigned) {
-        setTimeout(()=>{setData()},100)
-        setAssigned(false)
     }
     
     useEffect(() => {
@@ -112,7 +105,7 @@ const DeliveryManagement = () => {
                             </TableRow>
                         </TableHead>
                         {rows && <TableBody>
-                            {rows.map((row: any, index) => (
+                            {rows.map((row: any) => (
                                 <StyledTableRow key={row._id}>
                                     <StyledTableCell component="th" scope="row">
                                         {row.awbPrefix}{row.awb}
@@ -139,25 +132,11 @@ const DeliveryManagement = () => {
                     </Table>
                 </TableContainer>
 
-                <CardActions>
-                    {/* <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}Transfer
-                        style={{ color: "#FFF" }}
-                        onClick={() => setModalShow(true)}
-                    >
-                        Add Employee<AddCircleIcon style={{ marginLeft: "1rem" }} />
-                    </Button> */}
-
-                </CardActions>
-
                 <AssignFdmModal
                     show={modalShow}
                     onHide={() => setModalShow(false)}
                     id = {id}
-                    setAssigned = {setAssigned}
+                    setrows = {setrows}
                 />
 
             </Container>

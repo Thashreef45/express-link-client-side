@@ -17,7 +17,7 @@ import NodalInstance from '../../services/axiosInstances/axiosNp';
 const AcceptFdm = () => {
 
     const [data, setData] = useState([])
-    const [address, setAddress] = useState()
+    const [address, setAddress] = useState<any>(null)
 
     
 
@@ -26,9 +26,7 @@ const AcceptFdm = () => {
 
 
     const acceptHandler = (id: string) => {
-        NodalInstance.post(`/accept-fdm-cp/${id}`,address).then((res) => {
-            setContent()
-        })
+        NodalInstance.post(`/accept-fdm-cp/${id}`,address).then(() => setContent())
     }
 
     const setContent = async () => {
@@ -45,7 +43,7 @@ const AcceptFdm = () => {
                 name:res.data.name,
             })
             setContent()
-        }).catch((err) => {
+        }).catch(() => {
             if (localStorage.getItem('nodalToken')) localStorage.removeItem('nodalToken')
             navigate('/nodal/login')
         })

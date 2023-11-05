@@ -18,7 +18,7 @@ import { Button } from 'react-bootstrap';
 
 
 const MyBookings = () => {
-  
+
 
   const [bookingData, setBookings] = useState([])
   const [modalShow, setModalShow] = useState(false);
@@ -33,12 +33,12 @@ const MyBookings = () => {
     Setdelete(false)
   }
 
-  const [del, setDel] = useState('');
+  const [del, setDel] = useState<any>(null);
   const navigate = useNavigate()
 
 
   const formatDate = (dateString: string) => {
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const options : Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
     return new Date(dateString).toLocaleDateString(undefined, options);
   }
 
@@ -47,11 +47,11 @@ const MyBookings = () => {
     CpInstance.get('/home').then((res) => {
       SetPincode(res.data.pincode)
       CpInstance.get(`/get-my-bookings/${res.data.pincode}`).then((res) => {
-        if(res.data?.bookings){
+        if (res.data?.bookings) {
           setBookings(res.data.bookings)
         }
       }).catch((err) => console.log(err.message, 'messg'))
-    }).catch((err) => {
+    }).catch(() => {
       if (localStorage.getItem('cpToken')) localStorage.removeItem('cpToken')
       navigate('/cp/login')
     })

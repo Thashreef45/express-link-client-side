@@ -7,19 +7,17 @@ import { useNavigate } from 'react-router-dom';
 import CpInstance from '../../services/axiosInstances/axiosCp';
 import { Button, CardActions, Container, Grid } from '@mui/material';
 import { Colors, Logo } from '../../constants/Colors';
-import { AxiosResponse } from 'axios';
 import cpCards, { GridCardProps } from '../../constants/CardDatas/CpCards';
 import Header from '../../components/Header';
 
 const cards = cpCards
 
-export const Home = () => {
+const Home = () => {
 
     const key = localStorage.getItem('cpToken')
     const navigate = useNavigate()
     useEffect(() => {
-        CpInstance.get('/home').then((res: AxiosResponse) => {
-        }).catch((err) => {
+        CpInstance.get('/home').then().catch((err) => {
             console.log(err)
             if (key) localStorage.removeItem('cpToken')
             navigate('/cp/login')
@@ -76,6 +74,8 @@ const GridCard = ({ card }: GridCardProps) => {
         </Grid>
     )
 }
+
+export default Home
 
 
 

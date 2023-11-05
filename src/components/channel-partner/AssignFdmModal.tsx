@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import CpInstance from '../../services/axiosInstances/axiosCp';
-import { Button, Link, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
+import { Button, Link, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { Colors } from '../../constants/Colors';
 
 const AssignFdmModal = (props: any) => {
-  const [err, setErr] = useState('')
 
   const [employees, setEmployees] = useState([])
 
@@ -23,10 +22,17 @@ const AssignFdmModal = (props: any) => {
 
   const submitHandler = (employeeId: string) => {
     CpInstance.post('/assign-fdm', { empId: employeeId, id: props.id }).then(() => {
-      valueSetter()
-      props.setAssigned(true)
-      console.log(props.setAssigned,'**')
-      props.onHide()
+      CpInstance.get('/get-recieved-fdm').then((res) => {
+        if (res.status == 200) {
+          if (res.data?.data) {
+            props.setrows(res.data?.data)
+          } else {
+            props.setrows([])
+          }
+          valueSetter()
+          props.onHide()
+        }
+      })
     })
   }
 
@@ -56,7 +62,7 @@ const AssignFdmModal = (props: any) => {
           })}
         </Box>}
 
-        {!employees &&
+        {!employees.length &&
           <Box>
             <Typography sx={{ color: Colors.SecondaryColor }} variant='h5'>No Employees</Typography>
             <Link href="/cp/employee-management" >

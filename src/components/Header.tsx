@@ -13,9 +13,6 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
 
-// const pages = ['Products', 'Pricing', 'Blog'];
-// const settings = [{ name: 'Account', link: '' },
-// { name: 'Logout' }];
 
 function Header({role}:{role:string}) {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -32,7 +29,7 @@ function Header({role}:{role:string}) {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = (e) => {
+  const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
 

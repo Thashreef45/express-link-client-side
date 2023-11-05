@@ -21,7 +21,7 @@ const OutGoings = () => {
     useEffect(() => {
         ApextInstance.get('/home').then(() => {
             setFdmsData()
-        }).catch((err) => {
+        }).catch(() => {
             if (localStorage.getItem('cpToken')) localStorage.removeItem('cpToken')
             navigate('/cp/login')
         })
@@ -29,7 +29,7 @@ const OutGoings = () => {
 
 
     const formatDate = (dateString: string) => {
-        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        const options : Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
         return new Date(dateString).toLocaleDateString(undefined, options);
     }
 
