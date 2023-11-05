@@ -6,6 +6,7 @@ import CpInstance from "../../services/axiosInstances/axiosCp"
 import { useNavigate } from "react-router-dom"
 import useImageUpload from "../../services/cloudinary/useImageUpload"
 import { Logo } from "../../constants/Colors"
+import { CPData } from "../../interfaces/booking-data"
 
 
 const NewBooking = () => {
@@ -23,12 +24,12 @@ const NewBooking = () => {
     const [err, setErr] = useState('')
     const [successMsg, setSuccesMsg] = useState('')
     let imageLink = ''
-    const [originData, setOriginData] = useState('')
-    let desData = ''
+    const [originData, setOriginData] = useState<CPData | null>(null)
+    let desData: { nodalPoint: string, consignmentPrefix: string } = { nodalPoint: '', consignmentPrefix: '' }
 
     const [pincode, setPincode] = useState('')
 
-    const { imageUrl, uploadImage } = useImageUpload();
+    const { uploadImage } = useImageUpload();
     const navigate = useNavigate()
 
     const token = localStorage.getItem('cpToken')
@@ -64,7 +65,7 @@ const NewBooking = () => {
                 setContentTypes(res.data.types)
                 setDefaultTypeAsDocument(res.data.types)
             })
-        }).catch((err) => {
+        }).catch(() => {
             if (token) localStorage.removeItem('cpToken')
             navigate('/cp/login')
         })
@@ -120,11 +121,10 @@ const NewBooking = () => {
             originPin: Number(pincode),
             pincode: Number(desPincode),
             isDoc,
-            originAddress: originData.address,
+            originAddress: originData?.address,
             contentType: type,
             declaredValue: Number(value),
-            isSameNodal: originData.nodalPoint === desData.nodalPoint,
-            isSameApex: originData.consignmentPrefix === desData.consignmentPrefix,
+            isSameNodal: originData?.consignmentPrefix === desData.consignmentPrefix,
         };
 
 
@@ -166,7 +166,7 @@ const NewBooking = () => {
                     <Typography color={"#556080"} component="h1" variant="h5">
                         New Booking
                     </Typography> <br />
-                    <Box component="form" onSubmit={(e) => { handleSubmit(e) }} noValidate sx={{ mt: 1 }}>
+                    <Box component="form" onSubmit={() => { handleSubmit() }} noValidate sx={{ mt: 1 }}>
 
                         <TextField
                             margin="normal"
@@ -202,8 +202,8 @@ const NewBooking = () => {
                             required
                             fullWidth
                             id="image"
-                            onChange={(e) => {
-                                const fileInput = document.querySelector('input[type="file"]');
+                            onChange={() => {
+                                const fileInput: any = document.querySelector('input[type="file"]');
                                 if (fileInput) {
                                     const file = fileInput.files[0];
                                     setImage(file)
@@ -239,7 +239,6 @@ const NewBooking = () => {
                             name="address"
                             label="Address"
                             id="address"
-                            autoComplete="current-password"
                             onChange={(e) => setAddress(e.currentTarget.value)}
                         />
 

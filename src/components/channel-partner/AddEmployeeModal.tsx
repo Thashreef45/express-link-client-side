@@ -40,7 +40,7 @@ export default function AddEmployeeModal(props: any) {
                 phone: Number(phone),
                 email
             }
-            CpInstance.post('/create-employee',data).then((res)=>{
+            CpInstance.post('/create-employee',data).then(()=>{
                 CpInstance.get('get-employees').then((res) => {
                     if (res.data?.employees) {
                         props.setrows(res.data.employees)

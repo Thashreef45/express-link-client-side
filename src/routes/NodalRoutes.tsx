@@ -1,40 +1,81 @@
-
+import { Routes, Route, Navigate } from "react-router-dom"
+import { lazy, Suspense } from "react"
 import ProtectNodal from "../components/nodal-point/ProtectedRoute"
-// import { Home } from "../pages/channel-partner/Home"
-import CreateCP from "../pages/nodal-point/CreateCP"
 import Login from "../pages/nodal-point/Login"
-import { Routes, Route, Navigate  } from "react-router-dom"
 import NodalHome from "../pages/nodal-point/NodalHome"
-import AcceptFdm from "../pages/nodal-point/AcceptFdm"
-import SendFdms from "../pages/nodal-point/SendFdm"
-import RecievingFdm from "../pages/nodal-point/RecievingFdm"
-import PincodeSearch from "../pages/nodal-point/PincodeSearch"
-import ConsignmentTracking from "../pages/nodal-point/ConsignmentTracking"
-import ReturnSending from "../pages/nodal-point/ReturnManagement"
-import ReturnRecieved from "../pages/nodal-point/ReturnRecieved"
+
+const CreateCP = lazy(() => import("../pages/nodal-point/CreateCP"))
+const PincodeSearch = lazy(() => import("../pages/nodal-point/PincodeSearch"))
+const ReturnRecieved = lazy(() => import("../pages/nodal-point/ReturnRecieved"))
+const ReturnSending = lazy(() => import("../pages/nodal-point/ReturnManagement"))
+const SendFdms = lazy(() => import("../pages/nodal-point/SendFdm"))
+const RecievingFdm = lazy(() => import("../pages/nodal-point/RecievingFdm"))
+const ConsignmentTracking = lazy(() => import("../pages/nodal-point/ConsignmentTracking"))
+const AcceptFdm = lazy(() => import("../pages/nodal-point/AcceptFdm"))
+
+
 
 const NodalRoutes = () => {
     return (
         <>
-            {/* <Header /> */}
             <Routes>
                 <Route path="/login" element={<Login />} />
-                
-                <Route path="/" element={<Navigate to='/nodal/login'/>} />
-                <Route element={<ProtectNodal />} >
-                    <Route path="/create-cp" element={<CreateCP />} />
-                    <Route path="/home" element={<NodalHome />} />
-                    <Route path="/accept-fdm" element={<AcceptFdm />} />
-                    <Route path="/send-fdms" element={<SendFdms />} />
-                    <Route path="/recieved-fdms" element={<RecievingFdm />} />
-                    <Route path="/pincode-search" element={<PincodeSearch />} />
-                    <Route path="/tracking" element={<ConsignmentTracking />} />
-                    <Route path="/return-sending" element={<ReturnSending />} />
-                    <Route path="/return-recieved" element={<ReturnRecieved />} />
-                    
 
-                    
-                    {/* <Route path="/pincode-search" element={<PincodeSearch />} /> */}
+                <Route path="/" element={<Navigate to='/nodal/login' />} />
+                <Route element={<ProtectNodal />} >
+
+                    <Route path="/home" element={<NodalHome />} />
+
+
+                    <Route path="/create-cp" element={
+                        <Suspense fallback={<div>Loading</div>}>
+                            <CreateCP />
+                        </Suspense>
+                    } />
+
+                    <Route path="/accept-fdm" element={
+                        <Suspense fallback={<div>Loading</div>}>
+                            <AcceptFdm />
+                        </Suspense>
+                    } />
+
+                    <Route path="/tracking" element={
+                        <Suspense fallback={<div>Loading</div>}>
+                            <ConsignmentTracking />
+                        </Suspense>
+                    } />
+
+                    <Route path="/recieved-fdms" element={
+                        <Suspense fallback={<div>Loading</div>}>
+                            <RecievingFdm />
+                        </Suspense>
+                    } />
+
+                    <Route path="/send-fdms" element={
+                        <Suspense fallback={<div>Loading</div>}>
+                            <SendFdms />
+                        </Suspense>
+                    } />
+
+                    <Route path="/return-sending" element={
+                        <Suspense fallback = {<div>Loading</div>}>
+                            <ReturnSending />
+                        </Suspense>
+                    } />
+
+                    <Route path="/return-recieved" element={
+                        <Suspense fallback = {<div>Loading</div>}>
+                            <ReturnRecieved />
+                        </Suspense>
+                    } />
+
+                    <Route path="/pincode-search" element={
+                        <Suspense fallback = {<div>Loading</div>}>
+                            <PincodeSearch />
+                        </Suspense>
+                    } />
+
+
                 </Route>
             </Routes>
         </>

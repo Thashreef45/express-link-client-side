@@ -4,6 +4,6 @@ export enum Colors {
 }
 
 export enum Logo {
-    Main = "/src/assets/images/Screenshot_2023-06-20_121057-removebg-preview.png"
+    Main = "https://res.cloudinary.com/expresslink/image/upload/v1699186325/Screenshot_2023-06-20_121057-removebg-preview_ljlzht.png"
 }
 

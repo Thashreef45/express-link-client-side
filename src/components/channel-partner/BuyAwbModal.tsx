@@ -31,7 +31,7 @@ export default function BuyAwbModal(props: any) {
       CpInstance.post('/buy-awb', {
         quantity: count,
         awbPrefix: prefix,
-      }).then((res) => {
+      }).then(() => {
         navigate('/cp/home')
       }).catch(() => {
         setErr('Failed to Purchase')

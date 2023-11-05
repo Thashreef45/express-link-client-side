@@ -21,8 +21,7 @@ const NodalHome = () => {
 
 
     useEffect(() => {
-        NodalInstance.get('/home').then((res) => {
-        }).catch(() => {
+        NodalInstance.get('/home').then().catch(() => {
             if (localStorage.getItem('nodalToken')) {
                 localStorage.removeItem('nodalToken')
             }

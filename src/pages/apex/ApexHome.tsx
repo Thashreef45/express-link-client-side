@@ -1,4 +1,3 @@
-
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -16,6 +15,7 @@ const cards = ApexCardData
 
 const ApexHome = () => {
     const navigate = useNavigate()
+
     useEffect(() => {
         let token = localStorage.getItem('apexToken')
         if (!token) navigate('/apex/login')
@@ -28,6 +28,7 @@ const ApexHome = () => {
 
     }, [])
 
+    
     return (
         <>
             <Header role={'apex'} />

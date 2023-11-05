@@ -33,7 +33,6 @@ export default function CreateNodal() {
 
 
     const handleSubmit = async (event: any) => {
-        const token = localStorage.getItem('apexToken')
         event.preventDefault();
         errResSetter("")
         const formData = new FormData(event.target);
@@ -59,11 +58,8 @@ export default function CreateNodal() {
         }
         else {
             data.consignmentPrefix = consignmentPrefix
-            console.log(token, '<<token  data>>', data, '<<')
-            ApextInstance.post('/create-nodal', data).then((res) => {
-                // localStorage.setItem('apexToken',`Bearer ${res.data.token}`)
+            ApextInstance.post('/create-nodal', data).then(() => {
                 navigate('/apex/home')
-
             }).catch((err) => {
                 toast.error(err.response.data.message)
             })

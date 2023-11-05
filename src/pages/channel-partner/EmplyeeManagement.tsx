@@ -10,7 +10,6 @@ import { Container } from 'react-bootstrap';
 import { Colors, Logo } from '../../constants/Colors';
 import Header from '../../components/Header';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Button } from '@mui/material';
 import AddEmployeeModal from '../../components/channel-partner/AddEmployeeModal';
@@ -53,10 +52,6 @@ const EmployeeManagement = () => {
         })
     }, [])
 
-    const editHandler = (name: string) => {
-        console.log(name, '<<name')
-    }
-
     const deleteHandler = (name: string) => {
         console.log(name, 'delete')
     }
@@ -81,7 +76,7 @@ const EmployeeManagement = () => {
                                 <StyledTableCell>Name</StyledTableCell>
                                 <StyledTableCell align="center">Phone</StyledTableCell>
                                 <StyledTableCell align="center">Email</StyledTableCell>
-                                <StyledTableCell align="center">Edit</StyledTableCell>
+                                {/* <StyledTableCell align="center">Edit</StyledTableCell> */}
                                 <StyledTableCell align="center">Remove</StyledTableCell>
                             </TableRow>
                         </TableHead>
@@ -94,10 +89,10 @@ const EmployeeManagement = () => {
                                     <StyledTableCell align="center">{row.phone}</StyledTableCell>
                                     <StyledTableCell align="center">{row.email}</StyledTableCell>
 
-                                    <StyledTableCell
+                                    {/* <StyledTableCell
                                         style={{ cursor: 'pointer' }}
                                         onClick={() => { editHandler(row.name) }} align="center"
-                                    ><ModeEditIcon /></StyledTableCell>
+                                    ><ModeEditIcon /></StyledTableCell> */}
 
 
                                     <StyledTableCell

@@ -27,7 +27,7 @@ const BookingHistory = () => {
 
 
     const formatDate = (dateString: string) => {
-        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        const options : Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
         return new Date(dateString).toLocaleDateString(undefined, options);
     }
 
@@ -42,7 +42,7 @@ const BookingHistory = () => {
     useEffect(() => {
         CpInstance.get('/home').then((res) => {
             setPincode(res.data.pincode)
-        }).catch((err) => {
+        }).catch(() => {
             if (localStorage.getItem('cpToken')) localStorage.removeItem('cpToken')
             navigate('/cp/login')
         })

@@ -43,15 +43,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 let data: any
-let homeData = ''
-let employeeData
+let homeData = {id:"" ,}
+let employeeData = {name:""}
 
 const AssignedFdms = () => {
     const params = useParams()
     const [rows, setrows] = useState([])
     const navigate = useNavigate()
     const [id, setId] = useState('')
-    const [isReturned, setIsReturned] = useState(false)
+    const [isReturned, setIsReturned] = useState<any>(false)
     const [Updated, setUpdated] = useState(false)
 
 
@@ -67,7 +67,7 @@ const AssignedFdms = () => {
 
     const setEmployeeData = () => {
         CpInstance.get(`/employee/${params.id}`).then((res) => {
-            employeeData = res.data
+            employeeData = res.data.data
         })
     }
 
@@ -81,7 +81,7 @@ const AssignedFdms = () => {
             homeData = res.data
             setData()
             setEmployeeData()
-        }).catch((err) => {
+        }).catch(() => {
             if (localStorage.getItem('cpToken')) localStorage.removeItem('cpToken')
             navigate('/cp/login')
         })
@@ -115,7 +115,7 @@ const AssignedFdms = () => {
                         disabled={!rows.length}
                     >
                         <PDFDownloadLink style={{ textDecoration: 'none', color: 'white' }} document={generatePDF()} fileName="drs.pdf">
-                            {({ blob, url, loading, error }) =>
+                            {({loading }) =>
                                 loading ? 'Loading document...' : 'Download DRS'
                             }
                         </PDFDownloadLink>
@@ -185,6 +185,11 @@ const currentDateTime = () => {
 }
 
 
+
+
+
+
+
 function generatePDF() {
     // Define the content for your PDF using @react-pdf/renderer components
 
@@ -204,7 +209,7 @@ function generatePDF() {
                             <View>
                                 <Text style={styles.employee}>{currentDateTime()}</Text>
                                 <Text style={styles.employee}>CP ID : {homeData.id}</Text>
-                                <Text style={styles.employee}>Employee : dummyId</Text>
+                                <Text style={styles.employee}>Employee : {employeeData.name}</Text>
 
                             </View>
                         </View>
