@@ -10,7 +10,7 @@ import { Colors, Logo } from '../../constants/Colors';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
-import NodalInstance from '../../services/axiosInstances/axiosNp';
+import ApextInstance from '../../services/axiosInstances/axiosApex';
 
 
 const ReturnRecieved = () => {
@@ -18,11 +18,11 @@ const ReturnRecieved = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        NodalInstance.get('/home').then(() => {
+        ApextInstance.get('/home').then(() => {
             setFdmsData()
         }).catch(() => {
-            if (localStorage.getItem('nodalToken')) localStorage.removeItem('cpToken')
-            navigate('/nodal/login')
+            if (localStorage.getItem('apexToken')) localStorage.removeItem('cpToken')
+            navigate('/apex/login')
         })
     }, [])
 
@@ -33,14 +33,14 @@ const ReturnRecieved = () => {
     }
 
     const transferFdm = (id: string) => {
-        NodalInstance.post('/return-recieved-fdms',{id:id}).then(()=>{
+        ApextInstance.post('/return-recieved-fdms',{id:id}).then(()=>{
             setTimeout(()=>{setFdmsData()},150)
         })
     }
 
 
     const setFdmsData = () => {
-        NodalInstance.get('/return-recieved-fdms').then((res) => {
+        ApextInstance.get('/return-recieved-fdms').then((res) => {
             if(res?.data?.data){
                 setFdms(res?.data?.data)
             }else{
@@ -54,7 +54,7 @@ const ReturnRecieved = () => {
 
     return (
         <>
-            <Header role='nodal' />
+            <Header role='apex' />
             <center className='mt-5'>
                 <img src={Logo.Main}
                     style={{ width: "20%" }} alt="" />
@@ -64,7 +64,7 @@ const ReturnRecieved = () => {
 
                 <Button className='mb-3'
           style={{ backgroundColor: Colors.PrimaryColor, border: 0 ,color:'white'}}
-          onClick={() => navigate('/nodal/return-sending')}
+          onClick={() => navigate('/apex/return-sending')}
         >
           Return Sending
         </Button>

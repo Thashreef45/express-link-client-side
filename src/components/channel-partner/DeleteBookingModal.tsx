@@ -3,9 +3,8 @@ import Modal from 'react-bootstrap/Modal';
 import CpInstance from '../../services/axiosInstances/axiosCp';
 
 const DeletBooking = (props: any) => {
-
   const DeleteHandler = (id: string) => {
-    CpInstance.delete(`/delete-booking/${id}`).then(()=>{
+    CpInstance.delete(`/delete-booking/${id}`).then(() => {
       props.data.Setdelete(true)
     })
     props.onHide()
@@ -26,13 +25,13 @@ const DeletBooking = (props: any) => {
       </Modal.Header>
 
       <Modal.Body>
-        <h3 style={{textAlign:"center"}}>Are you sure ? you want to delete  {props.data.awb} Booking.</h3>
+        {props.data && <h3 style={{ textAlign: "center" }}>Are you sure ? you want to delete  {props?.data.awb} Booking.</h3>}
       </Modal.Body>
 
 
-      <Modal.Footer style={{justifyContent:'center'}}>
+      <Modal.Footer style={{ justifyContent: 'center' }}>
         <Button className='btn-primary' onClick={props.onHide}>Cancel</Button>
-        <Button className='btn-danger' onClick={()=>DeleteHandler(props.data.id)}>Delete</Button>
+        {props?.data && <Button className='btn-danger' onClick={() => DeleteHandler(props.data.id)}>Delete</Button>}
       </Modal.Footer>
     </Modal>
   )

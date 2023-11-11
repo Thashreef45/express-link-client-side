@@ -27,12 +27,12 @@ const nodalCards = [
     {
         name: "Return Management",
         link: "/nodal/return-sending",
-        image: ""
+        image: "https://res.cloudinary.com/expresslink/image/upload/v1699700094/icons8-previous-location-100_qza3ck.png"
     },
     {
         name: "Accept FDM",
         link: "/nodal/accept-fdm",
-        image: ""
+        image: "https://res.cloudinary.com/expresslink/image/upload/v1699700600/icons8-accept-64_od2mga.png"
     },
 ];
 

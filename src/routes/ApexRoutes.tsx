@@ -3,7 +3,10 @@ import { lazy, Suspense } from "react"
 import ProtectApex from "../components/apex/ProtectedRoute"
 import Login from "../pages/apex/Login"
 import ApexHome from "../pages/apex/ApexHome"
+import FallBack from "../components/FallBack"
 
+const ReturnSending = lazy(() =>import("../pages/apex/ReturnManagement"))
+const ReturnRecieved = lazy(() => import("../pages/apex/ReturnRecieved"))
 const OutGoings = lazy(() => import("../pages/apex/OutGoings"))
 const CreateNodal = lazy(() => import("../pages/apex/CreateNodal"))
 const Incomings = lazy(() => import("../pages/apex/Incomings"))
@@ -24,33 +27,45 @@ const ApexRoute = () => {
 
 
                     <Route path="/create-nodal" element={
-                        <Suspense fallback={<div>Loading</div>}>
+                        <Suspense fallback={<FallBack />}>
                             <CreateNodal />
                         </Suspense>
                     } />
 
 
                     <Route path="/out-goings" element={
-                        <Suspense fallback={<div>Loading</div>}>
+                        <Suspense fallback={<FallBack />}>
                             <OutGoings />
                         </Suspense>
                     } />
 
                     <Route path="/incomings" element={
-                        <Suspense fallback={<div>Loading</div>}>
+                        <Suspense fallback={<FallBack />}>
                             <Incomings />
                         </Suspense>
                     } />
 
                     <Route path="/pincode-search" element={
-                        <Suspense fallback={<div>Loading</div>}>
+                        <Suspense fallback={<FallBack />}>
                             <PincodeSearch />
                         </Suspense>
                     } />
 
                     <Route path="/tracking" element={
-                        <Suspense fallback={<div>Loading</div>}>
+                        <Suspense fallback={<FallBack />}>
                             <TrackingPage />
+                        </Suspense>
+                    } />
+
+                    <Route path="/return-sending" element={
+                        <Suspense fallback = {<FallBack />}>
+                            <ReturnSending />
+                        </Suspense>
+                    } />
+
+                    <Route path="/return-recieved" element={
+                        <Suspense fallback = {<FallBack />}>
+                            <ReturnRecieved />
                         </Suspense>
                     } />
 

@@ -10,19 +10,20 @@ import { Colors, Logo } from '../../constants/Colors';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
-import NodalInstance from '../../services/axiosInstances/axiosNp';
+import ApextInstance from '../../services/axiosInstances/axiosApex';
 
 
-const ReturnRecieved = () => {
+
+const ReturnSending = () => {
     const [fdms, setFdms] = useState([])
     const navigate = useNavigate()
 
     useEffect(() => {
-        NodalInstance.get('/home').then(() => {
+        ApextInstance.get('/home').then(() => {
             setFdmsData()
         }).catch(() => {
-            if (localStorage.getItem('nodalToken')) localStorage.removeItem('cpToken')
-            navigate('/nodal/login')
+            if (localStorage.getItem('cpToken')) localStorage.removeItem('cpToken')
+            navigate('/apex/login')
         })
     }, [])
 
@@ -33,19 +34,16 @@ const ReturnRecieved = () => {
     }
 
     const transferFdm = (id: string) => {
-        NodalInstance.post('/return-recieved-fdms',{id:id}).then(()=>{
+        ApextInstance.post('return-sending-fdm',{id:id}).then(()=>{
             setTimeout(()=>{setFdmsData()},150)
         })
     }
 
 
     const setFdmsData = () => {
-        NodalInstance.get('/return-recieved-fdms').then((res) => {
-            if(res?.data?.data){
-                setFdms(res?.data?.data)
-            }else{
-                setFdms([])
-            }
+        ApextInstance.get('/return-sending-fdms').then((res) => {
+            if(res?.data.data) setFdms(res.data?.data)
+            else setFdms([])
         }).catch((err) => {
             if(err.response.data.message == 'No data found')setFdms([])
         })
@@ -54,19 +52,19 @@ const ReturnRecieved = () => {
 
     return (
         <>
-            <Header role='nodal' />
+            <Header role='apex' />
             <center className='mt-5'>
                 <img src={Logo.Main}
                     style={{ width: "20%" }} alt="" />
-                <h2 style={{ color: Colors.SecondaryColor }} className='mt-4'>Recieved FDM to be transfer</h2>
+                <h2 style={{ color: Colors.SecondaryColor }} className='mt-4'>Returned FDM to be transfer</h2>
             </center>
             <div className='mt-5 p-5'>
 
                 <Button className='mb-3'
           style={{ backgroundColor: Colors.PrimaryColor, border: 0 ,color:'white'}}
-          onClick={() => navigate('/nodal/return-sending')}
+          onClick={() => navigate('/apex/return-recieved')}
         >
-          Return Sending
+          Return recieved
         </Button>
 
                 <TableContainer component={Paper} >
@@ -108,7 +106,7 @@ const ReturnRecieved = () => {
                             ))}
                         </TableBody>}
 
-                        {!fdms.length &&
+                        { !fdms.length &&
                             <TableBody>
                                 <TableRow >
                                     <TableCell /><TableCell /><TableCell />
@@ -124,7 +122,7 @@ const ReturnRecieved = () => {
 }
 
 
-export default ReturnRecieved
+export default ReturnSending
 
 
 

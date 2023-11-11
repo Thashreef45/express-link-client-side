@@ -9,7 +9,6 @@ import Header from '../../components/Header';
 import { Colors, Logo } from '../../constants/Colors';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { Button } from 'react-bootstrap';
 import { Button } from '@mui/material';
 import NodalInstance from '../../services/axiosInstances/axiosNp';
 
@@ -24,7 +23,7 @@ const ReturnSending = () => {
             setFdmsData()
         }).catch(() => {
             if (localStorage.getItem('cpToken')) localStorage.removeItem('cpToken')
-            navigate('/cp/login')
+            navigate('/nodal/login')
         })
     }, [])
 
