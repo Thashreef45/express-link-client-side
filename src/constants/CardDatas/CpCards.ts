@@ -1,3 +1,5 @@
+import Barcode from '../Barcode'
+
 const cpCards = [
     {
         name: "Pincode Search",
@@ -13,11 +15,6 @@ const cpCards = [
         name: "My Booking",
         link: "/cp/my-bookings",
         image: "https://res.cloudinary.com/expresslink/image/upload/v1699186313/icons8-booking-96_w56aiv.png"
-    },
-    {
-        name: "Recieved-FDM",
-        link: "/cp/recieved-fdms",
-        image: "/src/assets/images/"
     },
     {
         name: "Delivery Management",
@@ -46,17 +43,17 @@ const Awbimage = "https://res.cloudinary.com/expresslink/image/upload/v169918631
 export const awbCards = [{
     name:"Normal",
     link: "",
-    image:Awbimage
+    image:Barcode()
 },
 {
     name: "PR",
     link: "",
-    image:Awbimage
+    image:Barcode()
 },
 {
     name: "WE",
     link: "",
-    image:Awbimage
+    image:Barcode()
 },
 ];
 
@@ -72,3 +69,8 @@ export interface GridCardProps {
 
 
 export default cpCards
+
+
+
+
+// export default Barcode;

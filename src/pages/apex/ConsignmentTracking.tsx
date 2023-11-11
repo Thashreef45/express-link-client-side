@@ -2,15 +2,17 @@ import { Box, Container } from "@mui/system"
 import Header from "../../components/Header"
 import { Button, TextField, Typography } from "@mui/material"
 import { Colors, Logo } from "../../constants/Colors"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ApextInstance from "../../services/axiosInstances/axiosApex"
 import TrackingResponse from "../../interfaces/tracking-results"
+import { useNavigate } from "react-router-dom"
 
 const TrackingPage = () => {
 
     const [data, setData] = useState<TrackingResponse | null>(null)
     const [errMsg, setErrMsg] = useState('')
     const [awb, setAwb] = useState('')
+    const navigate = useNavigate()
 
     const formatDate = (dateString: string) => {
         const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -23,6 +25,14 @@ const TrackingPage = () => {
             setErrMsg('')
         }, 2000)
     }
+
+    useEffect(() => {
+        ApextInstance.get('/home').then().catch(() => {
+            if (localStorage.getItem('apexToken')) localStorage.removeItem('cpToken')
+            navigate('/apex/login')
+        })
+    }, [])
+
 
     const HandleAwbInputs = (value: string) => {
         if (value.length < 3) {
@@ -60,7 +70,7 @@ const TrackingPage = () => {
 
     return (
         <>
-            <Header role="cp" />
+            <Header role="apex" />
             {!data && <Container component="main" maxWidth="xs">
                 <Box
                     sx={{
@@ -244,19 +254,18 @@ const TrackingPage = () => {
                                             {!data?.isReturned && data?.recieving?.cpUpdate && <Typography sx={{ fontSize: 15 }}><span style={{ fontWeight: 'bold' }}>Delivered : </span> {formatDate(data.recieving.cpUpdate)}</Typography>}
                                             {data?.isReturned && <Typography sx={{ fontSize: 15 }}><span style={{ fontWeight: 'bold' }}>Return : </span> {formatDate(data.recieving.cpUpdate)}&nbsp;&nbsp;{`(${data.status})`}</Typography>}
                                         </div>)
-                                        }
+                                    }
 
                                     {data?.notDelivered &&
                                         (<div>
                                             {data?.notDelivered?.sending?.apexRecieved && (<Typography sx={{ fontSize: 15 }}><span style={{ fontWeight: 'bold' }}>Apex Recieved</span> : </Typography>)}
                                             {data?.notDelivered?.sending?.apexSend && (<Typography sx={{ fontSize: 15 }}><span style={{ fontWeight: 'bold' }}>Apex Send</span> : </Typography>)}
-                                            {data?.notDelivered?.recieving?.cpRecieved && (<Typography sx={{ fontSize: 15 }}><span style={{ fontWeight: 'bold' }}>Cp Recieved : </span>{data.notDelivered.recieving.cpRecieved.name}&nbsp;&nbsp;{formatDate(data.notDelivered.recieving.cpRecieved.Date)}</Typography>)}
-                                            {data?.notDelivered?.recieving?.cpUpdate && (<Typography sx={{ fontSize: 15 }}><span style={{ fontWeight: 'bold' }}>Return Delivered : </span>{formatDate(data.notDelivered.recieving.cpUpdate)}</Typography>)}
                                             {data?.notDelivered?.sending?.nodalRecieved && (<Typography sx={{ fontSize: 15 }}><span style={{ fontWeight: 'bold' }}>Nodal Recieved :</span>{data.notDelivered.sending.nodalRecieved.name}&nbsp;&nbsp;{formatDate(data.notDelivered.sending.nodalRecieved.Date)} </Typography>)}
                                             {data?.notDelivered?.sending?.nodalSend && (<Typography sx={{ fontSize: 15 }}><span style={{ fontWeight: 'bold' }}>Nodal Send :</span> {formatDate(data.notDelivered.sending.nodalSend)}</Typography>)}
+                                            {data?.notDelivered?.recieving?.cpRecieved && (<Typography sx={{ fontSize: 15 }}><span style={{ fontWeight: 'bold' }}>Cp Recieved : </span>{data.notDelivered.recieving.cpRecieved.name}&nbsp;&nbsp;{formatDate(data.notDelivered.recieving.cpRecieved.Date)}</Typography>)}
+                                            {data?.notDelivered?.recieving?.cpUpdate && (<Typography sx={{ fontSize: 15 }}><span style={{ fontWeight: 'bold' }}>Return Delivered : </span>{formatDate(data.notDelivered.recieving.cpUpdate)}</Typography>)}
                                         </div>)
-                                        }
-
+                                    }
                                 </div>
                             </div>
 

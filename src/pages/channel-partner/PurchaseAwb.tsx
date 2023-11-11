@@ -2,7 +2,7 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { Container } from '@mui/system';
+import { Box, Container } from '@mui/system';
 import { Button, CardActions, Grid } from '@mui/material';
 import { Colors, Logo } from '../../constants/Colors';
 import { useNavigate } from 'react-router-dom';
@@ -58,7 +58,7 @@ const PurchaseAwb = () => {
     );
 }
 
-export default  PurchaseAwb
+export default PurchaseAwb
 
 
 const GridCard = ({ card }: { card: any }) => {
@@ -70,14 +70,26 @@ const GridCard = ({ card }: { card: any }) => {
             <Card
                 sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
             >
-                <CardMedia
+                {/* <CardMedia
                     component="div"
                     sx={{// 16:9
                         pt: '56.25%',
                         backgroundColor: Colors.PrimaryColor
                     }}
-                    image={card.image}
-                />
+                    // image={card.image}
+                /> */}
+                {/* <card.image/> */}
+                <Box sx={{
+                    display:'flex',
+                    alignItems:'center',justifyContent:'center',
+                    backgroundColor:Colors.PrimaryColor,
+                    height:180
+
+                }}>
+
+                {card.image}
+                </Box>
+
                 <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2" color={Colors.SecondaryColor}>
                         {card.name}

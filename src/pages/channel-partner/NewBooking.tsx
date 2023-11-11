@@ -124,10 +124,12 @@ const NewBooking = () => {
             originAddress: originData?.address,
             contentType: type,
             declaredValue: Number(value),
-            isSameNodal: originData?.consignmentPrefix === desData.consignmentPrefix,
+            isSameNodal:  originData?.nodalPoint === desData?.nodalPoint,
+            isSameApex: originData?.consignmentPrefix === desData.consignmentPrefix, 
         };
 
 
+        console.log(data)
         try {
             await CpInstance.post('/new-booking', data);
         } catch (error) {

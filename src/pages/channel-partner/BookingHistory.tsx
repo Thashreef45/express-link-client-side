@@ -148,7 +148,7 @@ const BookingHistory = () => {
                             ))}
                         </TableBody>}
 
-                        {!data &&
+                        {!data.length &&
                             <TableBody>
                                 <TableRow >
                                     <TableCell /><TableCell />
