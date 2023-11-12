@@ -39,7 +39,7 @@ const cpCards = [
 ];
 
 
-const Awbimage = "https://res.cloudinary.com/expresslink/image/upload/v1699186313/icons8-barcode-100_ukqa9p.png"
+// const Awbimage = "https://res.cloudinary.com/expresslink/image/upload/v1699186313/icons8-barcode-100_ukqa9p.png"
 export const awbCards = [{
     name:"Normal",
     link: "",
@@ -72,5 +72,3 @@ export default cpCards
 
 
 
-
-// export default Barcode;

@@ -52,9 +52,14 @@ const DeliveryManagement = () => {
             }
         })
     }
-    
+
     useEffect(() => {
-        setData()
+        CpInstance.get('/home').then(() => {
+            setData()
+        }).catch(() => {
+            if (localStorage.getItem('cpToken')) localStorage.removeItem('cpToken')
+            navigate('/cp/login')
+        })
     }, [])
 
 

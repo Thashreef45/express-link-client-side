@@ -42,7 +42,8 @@ function Header({role}:{role:string}) {
   }
 
   const accounClicktHandler = () => {
-    console.log('account clicked')
+    handleCloseNavMenu()
+    navigate(`/${role}/account`)
   }
 
   const Home = () => {
@@ -88,7 +89,7 @@ function Header({role}:{role:string}) {
               }}
             >
             
-                <MenuItem  onClick={handleCloseNavMenu}>
+                <MenuItem  onClick={() => Home()}>
                   <Typography textAlign="center">Home</Typography>
                 </MenuItem>
             </Menu>

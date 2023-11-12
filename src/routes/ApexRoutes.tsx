@@ -5,7 +5,8 @@ import Login from "../pages/apex/Login"
 import ApexHome from "../pages/apex/ApexHome"
 import FallBack from "../components/FallBack"
 
-const ReturnSending = lazy(() =>import("../pages/apex/ReturnManagement"))
+const AccountPage = lazy(() => import("../components/AccountPage"))
+const ReturnSending = lazy(() => import("../pages/apex/ReturnManagement"))
 const ReturnRecieved = lazy(() => import("../pages/apex/ReturnRecieved"))
 const OutGoings = lazy(() => import("../pages/apex/OutGoings"))
 const CreateNodal = lazy(() => import("../pages/apex/CreateNodal"))
@@ -25,6 +26,11 @@ const ApexRoute = () => {
                 <Route path="/" element={<ProtectApex />} >
                     <Route path="/home" element={<ApexHome />} />
 
+                    <Route path="/account" element={
+                        <Suspense fallback={<FallBack />}>
+                            <AccountPage role='apex' />
+                        </Suspense>
+                    } />
 
                     <Route path="/create-nodal" element={
                         <Suspense fallback={<FallBack />}>
@@ -58,13 +64,13 @@ const ApexRoute = () => {
                     } />
 
                     <Route path="/return-sending" element={
-                        <Suspense fallback = {<FallBack />}>
+                        <Suspense fallback={<FallBack />}>
                             <ReturnSending />
                         </Suspense>
                     } />
 
                     <Route path="/return-recieved" element={
-                        <Suspense fallback = {<FallBack />}>
+                        <Suspense fallback={<FallBack />}>
                             <ReturnRecieved />
                         </Suspense>
                     } />
