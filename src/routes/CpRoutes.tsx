@@ -5,9 +5,9 @@ import ProtectCp from '../components/channel-partner/ProtectedRoute'
 import NewBooking from "../pages/channel-partner/NewBooking"
 import EmployeeManagement from "../pages/channel-partner/EmplyeeManagement"
 import FallBack from '../components/FallBack';
-import Barcode from '../constants/Barcode';
 
-const TrackingPage = lazy(() => import("../pages/channel-partner/TrackingPage")) 
+const AccountPage = lazy(() => import('../components/AccountPage'))
+const TrackingPage = lazy(() => import("../pages/channel-partner/TrackingPage"))
 const BookingHistory = lazy((() => import("../pages/channel-partner/BookingHistory")))
 const MyBookings = lazy(() => import("../pages/channel-partner/MyBookings"))
 const Home = lazy(() => import("../pages/channel-partner/Home"))
@@ -23,16 +23,19 @@ const CpRoutes = () => {
         <>
             <Routes>
                 <Route path="/login" element={<Login />} />
-                <Route path="/hi" element={<Barcode />} />
-
-                
 
                 <Route path="" element={<Navigate to="/cp/login" />} />
                 <Route element={<ProtectCp />}>
 
                     <Route path="/new-booking" element={<NewBooking />} />
-                    
+
                     <Route path="/employee-management" element={<EmployeeManagement />} />
+
+                    <Route path="/account" element={
+                        <Suspense fallback={<FallBack />}>
+                            <AccountPage role='cp' />
+                        </Suspense>
+                    } />
 
                     <Route path="/tracking" element={
                         <Suspense fallback={<FallBack />}>

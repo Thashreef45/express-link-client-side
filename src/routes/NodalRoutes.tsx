@@ -5,6 +5,7 @@ import Login from "../pages/nodal-point/Login"
 import NodalHome from "../pages/nodal-point/NodalHome"
 import FallBack from "../components/FallBack"
 
+const AccountPage = lazy(() => import("../components/AccountPage"))
 const CreateCP = lazy(() => import("../pages/nodal-point/CreateCP"))
 const PincodeSearch = lazy(() => import("../pages/nodal-point/PincodeSearch"))
 const ReturnRecieved = lazy(() => import("../pages/nodal-point/ReturnRecieved"))
@@ -25,7 +26,14 @@ const NodalRoutes = () => {
                 <Route path="/" element={<Navigate to='/nodal/login' />} />
                 <Route element={<ProtectNodal />} >
 
+
                     <Route path="/home" element={<NodalHome />} />
+
+                    <Route path="/account" element={
+                        <Suspense>
+                            <AccountPage role='nodal' />
+                        </Suspense>
+                    } />
 
 
                     <Route path="/create-cp" element={
@@ -59,19 +67,19 @@ const NodalRoutes = () => {
                     } />
 
                     <Route path="/return-sending" element={
-                        <Suspense fallback = {<FallBack />}>
+                        <Suspense fallback={<FallBack />}>
                             <ReturnSending />
                         </Suspense>
                     } />
 
                     <Route path="/return-recieved" element={
-                        <Suspense fallback = {<FallBack />}>
+                        <Suspense fallback={<FallBack />}>
                             <ReturnRecieved />
                         </Suspense>
                     } />
 
                     <Route path="/pincode-search" element={
-                        <Suspense fallback = {<FallBack />}>
+                        <Suspense fallback={<FallBack />}>
                             <PincodeSearch />
                         </Suspense>
                     } />
