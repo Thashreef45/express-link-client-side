@@ -8,6 +8,7 @@ import {Theme} from '../src/components/theme-provider/theme'
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { Navigate } from 'react-router-dom'
+import NotFound from './components/NotFound'
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path='/cp/*' element={<CpRoutes />} />
             <Route path='/nodal/*' element={<NodalRoutes/>} />
             <Route path='/apex/*' element={<ApexRoute/>}/>
+            <Route path="*" element={<NotFound />} />
             
           </Routes>
         </Router>

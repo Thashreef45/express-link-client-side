@@ -4,6 +4,7 @@ import ProtectApex from "../components/apex/ProtectedRoute"
 import Login from "../pages/apex/Login"
 import ApexHome from "../pages/apex/ApexHome"
 import FallBack from "../components/FallBack"
+import NotFound from "../components/NotFound"
 
 const AccountPage = lazy(() => import("../components/AccountPage"))
 const ReturnSending = lazy(() => import("../pages/apex/ReturnManagement"))
@@ -75,8 +76,10 @@ const ApexRoute = () => {
                         </Suspense>
                     } />
 
+
                 </Route>
 
+                <Route path="*" element={<NotFound role={'apex'}/>} />
             </Routes>
         </>
     )

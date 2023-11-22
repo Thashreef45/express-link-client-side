@@ -4,6 +4,7 @@ import ProtectNodal from "../components/nodal-point/ProtectedRoute"
 import Login from "../pages/nodal-point/Login"
 import NodalHome from "../pages/nodal-point/NodalHome"
 import FallBack from "../components/FallBack"
+import NotFound from "../components/NotFound"
 
 const AccountPage = lazy(() => import("../components/AccountPage"))
 const CreateCP = lazy(() => import("../pages/nodal-point/CreateCP"))
@@ -86,6 +87,8 @@ const NodalRoutes = () => {
 
 
                 </Route>
+
+                <Route path="*" element={<NotFound role={'nodal'}/>} />
             </Routes>
         </>
     )
