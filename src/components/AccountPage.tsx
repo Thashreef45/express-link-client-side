@@ -41,7 +41,7 @@ const AccountPage = (props: { role: string }) => {
                 <h2 style={{ textAlign: 'center', color: Colors.SecondaryColor, marginTop: '6%' }}>Account Details</h2>
             </center>
 
-            {data &&
+            
                 <Container className='mt-5' sx={{
                     display: 'flex',
                     justifyContent: 'center'
@@ -54,7 +54,7 @@ const AccountPage = (props: { role: string }) => {
                         border: 1,
                         borderRadius: 5
                     }}>
-                        <Box >
+                        {data && <Box >
                             <CardContent sx={{ color: 'white' }}>
                                 <Typography fontSize={25}>{data?.name}</Typography>
                                 <Typography level="body-sm">
@@ -73,10 +73,10 @@ const AccountPage = (props: { role: string }) => {
                                     Email : {data?.email}
                                 </Typography>
                             </CardContent>
-                        </Box>
+                        </Box>}
                     </Box>
                 </Container>
-            }
+            
         </>
     )
 }

@@ -5,6 +5,7 @@ import ProtectCp from '../components/channel-partner/ProtectedRoute'
 import NewBooking from "../pages/channel-partner/NewBooking"
 import EmployeeManagement from "../pages/channel-partner/EmplyeeManagement"
 import FallBack from '../components/FallBack';
+import NotFound from '../components/NotFound';
 
 const AccountPage = lazy(() => import('../components/AccountPage'))
 const TrackingPage = lazy(() => import("../pages/channel-partner/TrackingPage"))
@@ -91,7 +92,11 @@ const CpRoutes = () => {
                         </Suspense>}
                     />
 
+
                 </Route>
+
+
+                <Route path="*" element={<NotFound role={'cp'}/>} />
             </Routes>
         </>
     )

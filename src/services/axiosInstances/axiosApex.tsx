@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const ApextInstance = axios.create({
-    baseURL:'http://localhost:3333/apex'
+    baseURL:'http://51.20.132.13:3333/apex'
 })
 
 
