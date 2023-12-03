@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const link = import.meta.env.VITE_GATEWAY_APEX
+
 const ApextInstance = axios.create({
-    baseURL:'http://51.20.132.13:3333/apex'
+    baseURL:link
 })
 
 

@@ -6,7 +6,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
+// import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import Header from '../../components/Header';
 import { Colors, Logo } from '../../constants/Colors';
 import { useEffect, useState } from 'react';
@@ -84,7 +84,7 @@ const MyBookings = () => {
                 <TableCell className='text-light' align="center">Status</TableCell>
                 <TableCell className='text-light' align="center">Booking Date</TableCell>
                 <TableCell className='text-light' align="center">Type</TableCell>
-                <TableCell className='text-light' align="center">Edit</TableCell>
+                {/* <TableCell className='text-light' align="center">Edit</TableCell> */}
                 <TableCell className='text-light' align="center">Remove</TableCell>
               </TableRow>
             </TableHead>
@@ -101,10 +101,10 @@ const MyBookings = () => {
                   <TableCell align="center">Booked</TableCell>
                   <TableCell align="center">{formatDate(row.bookingTime)}</TableCell>
                   <TableCell align="center">{row.type}</TableCell>
-                  <TableCell
+                  {/* <TableCell
                     style={{ cursor: 'pointer' }}
                     onClick={() => { }} align="center"
-                  ><ModeEditIcon /></TableCell>
+                  ><ModeEditIcon /></TableCell> */}
 
                   <TableCell
                     style={{ cursor: 'pointer' }}

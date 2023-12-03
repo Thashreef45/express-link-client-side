@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { FormHelperText } from '@mui/material';
+import { Logo } from '../constants/Colors';
 
 interface SignInProps {
   title: string;
@@ -19,7 +20,7 @@ export default function SignIn({ title, submitHandler, errRes }: SignInProps | a
   return (
     < >
       <center className='mt-5'>
-        <img src="/src/assets/images/Screenshot_2023-06-20_121057-removebg-preview.png"
+        <img src={Logo.Main}
           style={{ width: "20%" }} alt="" />
       </center>
       <Container component="main" maxWidth="xs">

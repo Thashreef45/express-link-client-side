@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, CardActions, Container, Grid } from '@mui/material';
-import { Colors } from '../../constants/Colors';
+import { Colors, Logo } from '../../constants/Colors';
 import ApextInstance from '../../services/axiosInstances/axiosApex';
 import ApexCardData, { GridCardProps } from '../../constants/CardDatas/ApexCard';
 import Header from '../../components/Header';
@@ -34,7 +34,7 @@ const ApexHome = () => {
             <Header role={'apex'} />
 
             <center className='mt-4'>
-                <img src="/src/assets/images/Screenshot_2023-06-20_121057-removebg-preview.png"
+                <img src={Logo.Main}
                     style={{ width: "20%" }} alt="" />
             </center>
             <div style={{ display: 'flex', width: '100vw', alignItems: 'center', justifyContent: 'center', marginTop: '2rem' }}>

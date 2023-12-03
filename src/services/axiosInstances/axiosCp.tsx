@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const link = import.meta.env.VITE_GATEWAY_CP
+
 const CpInstance = axios.create({
-    baseURL: 'http://localhost:3333/cp',
+    baseURL: link
 });
 
 CpInstance.interceptors.request.use(

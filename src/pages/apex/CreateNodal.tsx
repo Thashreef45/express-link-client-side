@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ApextInstance from '../../services/axiosInstances/axiosApex';
 import Header from '../../components/Header';
+import { Logo } from '../../constants/Colors';
 
 
 
@@ -80,7 +81,7 @@ export default function CreateNodal() {
                         alignItems: 'center',
                     }}
                 >
-                    <img src="/src/assets/images/Screenshot_2023-06-20_121057-removebg-preview.png"
+                    <img src={Logo.Main}
                         style={{ width: "50%" }} alt="" /> <br />
 
                     <Typography color={"#556080"} component="h1" variant="h5">
