@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import { Container } from 'react-bootstrap';
 import { Colors, Logo } from '../../constants/Colors';
 import Header from '../../components/Header';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+// import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Button } from '@mui/material';
 import AddEmployeeModal from '../../components/channel-partner/AddEmployeeModal';
@@ -52,9 +52,9 @@ const EmployeeManagement = () => {
         })
     }, [])
 
-    const deleteHandler = (name: string) => {
-        console.log(name, 'delete')
-    }
+    // const deleteHandler = (name: string) => {
+    //     console.log(name, 'delete')
+    // }
 
     const [modalShow, setModalShow] = useState(false);
 
@@ -77,7 +77,7 @@ const EmployeeManagement = () => {
                                 <StyledTableCell align="center">Phone</StyledTableCell>
                                 <StyledTableCell align="center">Email</StyledTableCell>
                                 {/* <StyledTableCell align="center">Edit</StyledTableCell> */}
-                                <StyledTableCell align="center">Remove</StyledTableCell>
+                                {/* <StyledTableCell align="center">Remove</StyledTableCell> */}
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -95,10 +95,10 @@ const EmployeeManagement = () => {
                                     ><ModeEditIcon /></StyledTableCell> */}
 
 
-                                    <StyledTableCell
+                                    {/* <StyledTableCell
                                         style={{ cursor: 'pointer' }}
                                         onClick={() => { deleteHandler(row.name) }} align="center"
-                                    ><DeleteForeverIcon style={{ color: 'red' }} /></StyledTableCell>
+                                    ><DeleteForeverIcon style={{ color: 'red' }} /></StyledTableCell> */}
 
                                 </StyledTableRow>
                             ))}

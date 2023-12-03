@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 
+const link = import.meta.env.VITE_CLOUDINARY_IMAGE
+
 const useImageUpload = () => {
     const [imageUrl, setImageUrl] = useState('');
 
@@ -12,8 +14,7 @@ const useImageUpload = () => {
             data.append("file", image);
 
             const response = await axios.post(
-                `https://api.cloudinary.com/v1_1/expresslink/image/upload/`,
-                data
+                link,data
             );
 
             if (response.status === 200) {

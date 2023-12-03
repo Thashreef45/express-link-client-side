@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const link = import.meta.env.VITE_GATEWAY_NODAL
+
 const NodalInstance = axios.create({
-    baseURL:'http://localhost:3333/nodal'
+    baseURL:link
 })
 
 NodalInstance.interceptors.request.use(
