@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom"
 import useImageUpload from "../../services/cloudinary/useImageUpload"
 import { Logo } from "../../constants/Colors"
 import { CPData } from "../../interfaces/booking-data"
+import CP_API from "../../API/channel-partner"
 
 
 const NewBooking = () => {
@@ -58,10 +59,10 @@ const NewBooking = () => {
 
 
     useEffect(() => {
-        CpInstance.get('/home').then((res) => {
+        CpInstance.get(CP_API.home).then((res) => {
             setPincode(res.data.pincode)
             setOriginData(res.data)
-            CpInstance.get('/get-consignment-types').then((res) => {
+            CpInstance.get(CP_API.get_consignment_types).then((res) => {
                 setContentTypes(res.data.types)
                 setDefaultTypeAsDocument(res.data.types)
             })
@@ -92,14 +93,14 @@ const NewBooking = () => {
 
         // api section
         try {
-            await CpInstance.post('/validate-awb', { awb, token: localStorage.getItem('cpToken') });
+            await CpInstance.post(CP_API.validate_awb, { awb, token: localStorage.getItem('cpToken') });
         } catch (error) {
             makeError('Entered AWB is not valid');
             return
         }
 
         try {
-            await CpInstance.post('/search-by-pincode', { pincode: Number(desPincode) })
+            await CpInstance.post(CP_API.search_by_pincode, { pincode: Number(desPincode) })
                 .then((res) => { desData = res.data })
         } catch (error) {
             makeError('Destination Pincode is not serviceable');
@@ -124,14 +125,13 @@ const NewBooking = () => {
             originAddress: originData?.address,
             contentType: type,
             declaredValue: Number(value),
-            isSameNodal:  originData?.nodalPoint === desData?.nodalPoint,
-            isSameApex: originData?.consignmentPrefix === desData.consignmentPrefix, 
+            isSameNodal: originData?.nodalPoint === desData?.nodalPoint,
+            isSameApex: originData?.consignmentPrefix === desData.consignmentPrefix,
         };
 
 
-        console.log(data)
         try {
-            await CpInstance.post('/new-booking', data);
+            await CpInstance.post(CP_API.new_booking, data);
         } catch (error) {
             makeError('Booking failed');
             return
@@ -180,6 +180,30 @@ const NewBooking = () => {
                             autoComplete="id"
                             autoFocus
                             onChange={(e) => setAwb(e.currentTarget.value)}
+                            inputProps={{
+                                pattern: '^[A-Z]{2}\\d{8}$',
+                                title: 'Invalid format. Please use the format "PR12345698"',
+                            }}
+
+                            // inputProps={{
+                            //     inputMode: 'numeric',
+                            //     pattern: '[0-9]*',
+                            //     onInput: (event: React.FormEvent<HTMLInputElement>) => {
+                            //         const input = event.currentTarget;
+                            //         const value = input.value;
+
+                            //         if (value === '' || (value.length === 1 && value === '0')) {
+                            //             input.value = '';
+                            //         } else {
+                            //             input.value = value.replace(/[^0-9]/g, '');
+
+                            //             if (input.value.length > 5) {
+                            //                 input.value = input.value.slice(0, 6);
+                            //             }
+                            //             setValue(value)
+                            //         }
+                            //     },
+                            // }}
                         // inputProps={{
                         //     inputMode: 'text',
                         //     onInput: (event: React.FormEvent<HTMLInputElement>) => {
@@ -197,6 +221,23 @@ const NewBooking = () => {
                         //     },
                         // }}
                         />
+
+                        {/* <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="awb"
+                            label="AWB"
+                            name="awb"
+                            autoComplete="id"
+                            autoFocus
+                            value={awb}
+                            onChange={handleAwbChange}
+                            inputProps={{
+                                pattern: '^[A-Z]{2}\\d{8}$',
+                                title: 'Invalid format. Please use the format "PR10000058"',
+                            }}
+                        /> */}
 
 
                         <TextField

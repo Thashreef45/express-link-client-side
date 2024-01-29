@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import CpInstance from '../../services/axiosInstances/axiosCp';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import CP_API from '../../API/channel-partner';
 
 
 
@@ -40,7 +41,7 @@ const BookingHistory = () => {
 
 
     useEffect(() => {
-        CpInstance.get('/home').then((res) => {
+        CpInstance.get(CP_API.home).then((res) => {
             setPincode(res.data.pincode)
         }).catch(() => {
             if (localStorage.getItem('cpToken')) localStorage.removeItem('cpToken')
@@ -65,7 +66,7 @@ const BookingHistory = () => {
             } else if (dateDifferenceInDays >= 11) {
                 makeError('10 days only allowed')
             } else {
-                CpInstance.post('/get-booking-history', { from: fromDate, to: toDate, pincode }).then((res) => {
+                CpInstance.post(CP_API.get_booking_history, { from: fromDate, to: toDate, pincode }).then((res) => {
                     console.log(res.data,'re$$')
                     setData(res.data.data)
                 })

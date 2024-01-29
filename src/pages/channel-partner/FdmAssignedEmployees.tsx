@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import CpInstance from '../../services/axiosInstances/axiosCp';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import CP_API from '../../API/channel-partner';
 
 
 
@@ -43,8 +44,8 @@ const FdmAssignedEmployees = () => {
     const [rows, setrows] = useState([])
 
     useEffect(() => {
-        CpInstance.get('/home').then(() => {
-            CpInstance.get('get-employees').then((res) => {
+        CpInstance.get(CP_API.home).then(() => {
+            CpInstance.get(CP_API.get_employees).then((res) => {
                 if (res.data?.employees) {
                     setrows(res.data?.employees)
                 }
@@ -53,7 +54,7 @@ const FdmAssignedEmployees = () => {
             if(localStorage.getItem('cpToken')){
                 localStorage.removeItem('cpToken')
             }
-            navigate('/login')
+            navigate('/cp/login')
         })
     }, [])
 

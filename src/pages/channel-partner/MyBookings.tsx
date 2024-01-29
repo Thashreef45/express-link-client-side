@@ -14,6 +14,7 @@ import CpInstance from '../../services/axiosInstances/axiosCp';
 import DeletBooking from '../../components/channel-partner/DeleteBookingModal';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import CP_API from '../../API/channel-partner';
 
 
 
@@ -27,7 +28,7 @@ const MyBookings = () => {
 
 
   if (isDeleted) {
-    CpInstance.get(`/get-my-bookings/${pincode}`).then((res) => {
+    CpInstance.get(`${CP_API.get_my_bookings}/${pincode}`).then((res) => {
       setBookings(res.data.bookings)
     }).catch((err) => console.log(err, 'messg'))
     Setdelete(false)
@@ -44,9 +45,9 @@ const MyBookings = () => {
 
 
   useEffect(() => {
-    CpInstance.get('/home').then((res) => {
+    CpInstance.get(CP_API.home).then((res) => {
       SetPincode(res.data.pincode)
-      CpInstance.get(`/get-my-bookings/${res.data.pincode}`).then((res) => {
+      CpInstance.get(`${CP_API.get_my_bookings}/${res.data.pincode}`).then((res) => {
         if (res.data?.bookings) {
           setBookings(res.data.bookings)
         }

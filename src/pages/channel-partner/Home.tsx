@@ -9,6 +9,7 @@ import { Button, CardActions, Container, Grid } from '@mui/material';
 import { Colors, Logo } from '../../constants/Colors';
 import cpCards, { GridCardProps } from '../../constants/CardDatas/CpCards';
 import Header from '../../components/Header';
+import CP_API from '../../API/channel-partner';
 
 const cards = cpCards
 
@@ -17,7 +18,7 @@ const Home = () => {
     const key = localStorage.getItem('cpToken')
     const navigate = useNavigate()
     useEffect(() => {
-        CpInstance.get('/home').then().catch((err) => {
+        CpInstance.get(CP_API.home).then().catch((err) => {
             console.log(err)
             if (key) localStorage.removeItem('cpToken')
             navigate('/cp/login')

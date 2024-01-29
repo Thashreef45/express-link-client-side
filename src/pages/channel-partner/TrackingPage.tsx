@@ -5,6 +5,7 @@ import { Colors, Logo } from "../../constants/Colors"
 import { useState } from "react"
 import CpInstance from "../../services/axiosInstances/axiosCp"
 import TrackingResponse from "../../interfaces/tracking-results"
+import CP_API from "../../API/channel-partner"
 
 
 const TrackingPage = () => {
@@ -48,8 +49,7 @@ const TrackingPage = () => {
         if (awb.length < 10) {
             makeError('AWB Should be 10 characters')
         } else {
-            CpInstance.get(`/tracking/${awb}`).then((res) => {
-                console.log(res.data.data, '#track')
+            CpInstance.get(`${CP_API.tracking}/${awb}`).then((res) => {
                 setData(res.data.data)
             }).catch((err) => {
                 makeError(err.response.data.message)

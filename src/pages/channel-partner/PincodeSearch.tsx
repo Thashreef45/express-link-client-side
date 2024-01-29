@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { FormHelperText } from '@mui/material';
 import { Colors } from '../../constants/Colors';
 import Header from '../../components/Header';
+import CP_API from '../../API/channel-partner';
 
 
 const PincodeSearch = () => {
@@ -17,7 +18,7 @@ const PincodeSearch = () => {
     const key = localStorage.getItem('cpToken')
     const navigate = useNavigate()
     useEffect(() => {
-        CpInstance.get('/home').then().catch((err) => {
+        CpInstance.get(CP_API.home).then().catch((err) => {
             console.log(err)
             if (key) localStorage.removeItem('cpToken')
             navigate('/cp/login')
@@ -34,7 +35,7 @@ const PincodeSearch = () => {
     const handleSubmit = () => {
         if (pincode.length > 5) {
             setLowerDiv(true)
-            CpInstance.post('/search-by-pincode', { pincode: pincode }).then((res) => {
+            CpInstance.post(CP_API.search_by_pincode, { pincode: pincode }).then((res) => {
                 cpDataSetter(res.data)
                 cpNotFoundSetter('')
             }).catch((err) => {
