@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import LoginForm from '../../components/LoginForm'
 import CpInstance from '../../services/axiosInstances/axiosCp';
-
+import CP_API from '../../API/channel-partner';
 
 export default function SignIn() {
 
@@ -28,7 +28,8 @@ export default function SignIn() {
       errResSetter("ID must be 6 characters")
     }
     else {
-      CpInstance.post('/login', formData).then((res) => {
+
+      CpInstance.post(CP_API.login, formData).then((res) => {
         localStorage.setItem('cpToken',`Bearer ${res.data.token}`)
         navigate('/cp/home')
 
@@ -37,6 +38,7 @@ export default function SignIn() {
       })
     }
   };
+
   return (
     <LoginForm title={'Channel Partner'} submitHandler={handleSubmit} errRes={errRes} />
   );

@@ -12,6 +12,7 @@ import { AxiosResponse } from 'axios';
 import { awbCards } from '../../constants/CardDatas/CpCards';
 import Header from '../../components/Header';
 import BuyAwbModal from '../../components/channel-partner/BuyAwbModal';
+import CP_API from '../../API/channel-partner';
 
 
 
@@ -25,7 +26,7 @@ const PurchaseAwb = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        CpInstance.get('/home').then((res: AxiosResponse) => {
+        CpInstance.get(CP_API.home).then((res: AxiosResponse) => {
             consignmentPrefix = res.data.consignmentPrefix
         }).catch(() => {
             if (key) localStorage.removeItem('cpToken')

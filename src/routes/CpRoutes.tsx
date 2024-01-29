@@ -26,6 +26,7 @@ const CpRoutes = () => {
                 <Route path="/login" element={<Login />} />
 
                 <Route path="" element={<Navigate to="/cp/login" />} />
+                
                 <Route element={<ProtectCp />}>
 
                     <Route path="/new-booking" element={<NewBooking />} />

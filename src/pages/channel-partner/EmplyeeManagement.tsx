@@ -16,6 +16,7 @@ import AddEmployeeModal from '../../components/channel-partner/AddEmployeeModal'
 import { CardActions } from '@mui/joy';
 import { useEffect, useState } from 'react';
 import CpInstance from '../../services/axiosInstances/axiosCp';
+import CP_API from '../../API/channel-partner';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -45,7 +46,7 @@ const EmployeeManagement = () => {
     const [rows, setrows] = useState([])
 
     useEffect(() => {
-        CpInstance.get('get-employees').then((res) => {
+        CpInstance.get(CP_API.get_employees).then((res) => {
             if (res.data?.employees) {
                 setrows(res.data?.employees)
             }

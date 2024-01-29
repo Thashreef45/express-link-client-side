@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import CpInstance from '../../services/axiosInstances/axiosCp';
 import { useNavigate } from 'react-router-dom';
 import AssignFdmModal from '../../components/channel-partner/AssignFdmModal';
+import CP_API from '../../API/channel-partner';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -46,7 +47,7 @@ const DeliveryManagement = () => {
 
     
     const setData = () => {
-        CpInstance.get('/get-recieved-fdm').then((res) => {
+        CpInstance.get(CP_API.get_recieved_fdm).then((res) => {
             if (res.data?.data) {
                 setrows(res.data?.data)
             }
@@ -54,7 +55,7 @@ const DeliveryManagement = () => {
     }
 
     useEffect(() => {
-        CpInstance.get('/home').then(() => {
+        CpInstance.get(CP_API.home).then(() => {
             setData()
         }).catch(() => {
             if (localStorage.getItem('cpToken')) localStorage.removeItem('cpToken')

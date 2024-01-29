@@ -19,6 +19,7 @@ import DeliveryUpdateModal from "../../components/channel-partner/DeliveryUpdate
 
 //
 import { Page, Text, View, Image, Document, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer';
+import CP_API from "../../API/channel-partner";
 
 
 
@@ -57,7 +58,7 @@ const AssignedFdms = () => {
 
 
     const setData = () => {
-        CpInstance.get(`/assigned-fdms/${params.id}`).then((res) => {
+        CpInstance.get(`${CP_API.assigned_fdms}/${params.id}`).then((res) => {
             if (res.data?.data) {
                 setrows(res.data.data)
                 data = res.data.data
@@ -66,7 +67,7 @@ const AssignedFdms = () => {
     }
 
     const setEmployeeData = () => {
-        CpInstance.get(`/employee/${params.id}`).then((res) => {
+        CpInstance.get(`${CP_API.get_employee}/${params.id}`).then((res) => {
             employeeData = res.data.data
         })
     }
@@ -77,7 +78,7 @@ const AssignedFdms = () => {
     }
 
     useEffect(() => {
-        CpInstance.get('/home').then((res) => {
+        CpInstance.get(CP_API.home).then((res) => {
             homeData = res.data
             setData()
             setEmployeeData()

@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const link = import.meta.env.VITE_GATEWAY_CP
-
 const CpInstance = axios.create({
     baseURL: link
 });
