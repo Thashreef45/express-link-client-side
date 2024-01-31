@@ -5,6 +5,7 @@ import { Button, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { Colors } from '../../constants/Colors';
 import useImageUpload from '../../services/cloudinary/useImageUpload';
+import CP_API from '../../API/channel-partner';
 
 
 
@@ -17,7 +18,7 @@ const DeliveryUpdateModal = (props: any) => {
 
 
     const valueSetter = () => {
-        CpInstance.get('/delivery-status').then((res) => {
+        CpInstance.get(CP_API.delivery_status).then((res) => {
             setStatus(res.data.data)
         })
     }
@@ -47,7 +48,7 @@ const DeliveryUpdateModal = (props: any) => {
                 return
             }
             let data = { id: props.id, statusId: id, image: imageLink }
-            CpInstance.post('/update-delivery-status', data).then(() => {
+            CpInstance.post(CP_API.update_delivery_status, data).then(() => {
                 props.setupdated()
                 props.onHide()
             })

@@ -4,6 +4,7 @@ import CpInstance from '../../services/axiosInstances/axiosCp';
 import { Button, Link, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { Colors } from '../../constants/Colors';
+import CP_API from '../../API/channel-partner';
 
 const AssignFdmModal = (props: any) => {
 
@@ -11,7 +12,7 @@ const AssignFdmModal = (props: any) => {
 
 
   const valueSetter = () => {
-    CpInstance.get('/get-employees').then((res) => {
+    CpInstance.get(CP_API.get_employees).then((res) => {
       setEmployees(res.data.employees)
     })
   }
@@ -21,8 +22,8 @@ const AssignFdmModal = (props: any) => {
   }, [])
 
   const submitHandler = (employeeId: string) => {
-    CpInstance.post('/assign-fdm', { empId: employeeId, id: props.id }).then(() => {
-      CpInstance.get('/get-recieved-fdm').then((res) => {
+    CpInstance.post(CP_API.assign_fdm, { empId: employeeId, id: props.id }).then(() => {
+      CpInstance.get(CP_API.get_recieved_fdm).then((res) => {
         if (res.status == 200) {
           if (res.data?.data) {
             props.setrows(res.data?.data)

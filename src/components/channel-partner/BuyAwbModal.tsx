@@ -4,6 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import CpInstance from '../../services/axiosInstances/axiosCp';
 import { useNavigate } from 'react-router-dom';
+import CP_API from '../../API/channel-partner';
 
 export default function BuyAwbModal(props: any) {
 
@@ -28,7 +29,7 @@ export default function BuyAwbModal(props: any) {
       if (prefix == 'Normal') {
         prefix = props.cpPrefix
       }
-      CpInstance.post('/buy-awb', {
+      CpInstance.post(CP_API.buy_awb, {
         quantity: count,
         awbPrefix: prefix,
       }).then(() => {
