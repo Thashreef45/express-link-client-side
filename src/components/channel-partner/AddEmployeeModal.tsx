@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import CpInstance from '../../services/axiosInstances/axiosCp';
+import CP_API from '../../API/channel-partner';
 
 export default function AddEmployeeModal(props: any) {
 
@@ -40,8 +41,8 @@ export default function AddEmployeeModal(props: any) {
                 phone: Number(phone),
                 email
             }
-            CpInstance.post('/create-employee',data).then(()=>{
-                CpInstance.get('get-employees').then((res) => {
+            CpInstance.post(CP_API.create_employee,data).then(()=>{
+                CpInstance.get(CP_API.get_employees).then((res) => {
                     if (res.data?.employees) {
                         props.setrows(res.data.employees)
                     }

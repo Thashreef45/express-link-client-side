@@ -9,9 +9,16 @@ enum CP_API {
     tracking = '/tracking',
     get_booking_history = '/get-booking-history',
     get_my_bookings = '/get-my-bookings',//by pincode
-    get_recieved_fdm = 'get-recieved-fdm',
+    get_recieved_fdm = '/get-recieved-fdm',
     get_employee = '/employee',//by id
     assigned_fdms = '/assigned-fdms',//assigned fdm for a employee
+    create_employee = '/create-employee',
+    assign_fdm = '/assign-fdm',
+    buy_awb = '/buy-awb',
+    delete_booking = '/delete-booking',
+    delivery_status = '/delivery-status',
+    update_delivery_status = '/update-delivery-status'
+  
 }
 
 export default CP_API
