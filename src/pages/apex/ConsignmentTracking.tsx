@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import ApextInstance from "../../services/axiosInstances/axiosApex"
 import TrackingResponse from "../../interfaces/tracking-results"
 import { useNavigate } from "react-router-dom"
+import APEX_API from "../../API/apex"
 
 const TrackingPage = () => {
 
@@ -27,7 +28,7 @@ const TrackingPage = () => {
     }
 
     useEffect(() => {
-        ApextInstance.get('/home').then().catch(() => {
+        ApextInstance.get(APEX_API.home).then().catch(() => {
             if (localStorage.getItem('apexToken')) localStorage.removeItem('cpToken')
             navigate('/apex/login')
         })
@@ -57,7 +58,7 @@ const TrackingPage = () => {
         if (awb.length < 10) {
             makeError('AWB Should be 10 characters')
         } else {
-            ApextInstance.get(`/tracking/${awb}`).then((res) => {
+            ApextInstance.get(`${APEX_API.tracking}/${awb}`).then((res) => {
                 console.log(res.data.data, '#track')
                 setData(res.data.data)
             }).catch((err) => {

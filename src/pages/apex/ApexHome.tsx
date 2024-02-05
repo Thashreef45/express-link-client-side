@@ -9,6 +9,7 @@ import { Colors, Logo } from '../../constants/Colors';
 import ApextInstance from '../../services/axiosInstances/axiosApex';
 import ApexCardData, { GridCardProps } from '../../constants/CardDatas/ApexCard';
 import Header from '../../components/Header';
+import APEX_API from '../../API/apex';
 
 const cards = ApexCardData
 
@@ -20,7 +21,7 @@ const ApexHome = () => {
         let token = localStorage.getItem('apexToken')
         if (!token) navigate('/apex/login')
         else {
-            ApextInstance.get('/home').catch(() => {
+            ApextInstance.get(APEX_API.home).catch(() => {
                 if (localStorage.getItem('apexToken')) localStorage.removeItem('apexToken')
                 navigate('/apex/login')
             })

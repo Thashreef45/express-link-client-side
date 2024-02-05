@@ -11,6 +11,7 @@ import { FormHelperText } from '@mui/material';
 import { Colors } from '../../constants/Colors';
 import Header from '../../components/Header';
 import ApextInstance from '../../services/axiosInstances/axiosApex';
+import APEX_API from '../../API/apex';
 
 
 const PincodeSearch = () => {
@@ -18,7 +19,7 @@ const PincodeSearch = () => {
     const key = localStorage.getItem('cpToken')
     const navigate = useNavigate()
     useEffect(() => {
-        ApextInstance.get('/home').then().catch((err) => {
+        ApextInstance.get(APEX_API.home).then().catch((err) => {
             console.log(err)
             if (key) localStorage.removeItem('cpToken')
             navigate('/cp/login')
@@ -35,7 +36,7 @@ const PincodeSearch = () => {
     const handleSubmit = () => {
         if (pincode.length > 5) {
             setLowerDiv(true)
-            ApextInstance.post('/search-by-pincode', { pincode: pincode }).then((res) => {
+            ApextInstance.post(APEX_API.search_by_pincode, { pincode: pincode }).then((res) => {
                 cpDataSetter(res.data)
                 cpNotFoundSetter('')
             }).catch((err) => {
