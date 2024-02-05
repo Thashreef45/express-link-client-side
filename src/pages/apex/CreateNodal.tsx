@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import ApextInstance from '../../services/axiosInstances/axiosApex';
 import Header from '../../components/Header';
 import { Logo } from '../../constants/Colors';
+import APEX_API from '../../API/apex';
 
 
 
@@ -24,7 +25,7 @@ export default function CreateNodal() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        ApextInstance.get('/home').then((res) => {
+        ApextInstance.get(APEX_API.home).then((res) => {
             setPrefix(res.data.consignmentPrefix)
         }).catch(() => {
             if (localStorage.getItem('apexToken')) localStorage.removeItem('apexToken')
@@ -59,7 +60,7 @@ export default function CreateNodal() {
         }
         else {
             data.consignmentPrefix = consignmentPrefix
-            ApextInstance.post('/create-nodal', data).then(() => {
+            ApextInstance.post(APEX_API.create_nodal, data).then(() => {
                 navigate('/apex/home')
             }).catch((err) => {
                 toast.error(err.response.data.message)

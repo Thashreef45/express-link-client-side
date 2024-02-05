@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import ApextInstance from '../../services/axiosInstances/axiosApex';
+import APEX_API from '../../API/apex';
 
 
 
@@ -19,7 +20,7 @@ const Incomings = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        ApextInstance.get('/home').then(() => {
+        ApextInstance.get(APEX_API.home).then(() => {
             setFdmsData()
         }).catch(() => {
             if (localStorage.getItem('cpToken')) localStorage.removeItem('cpToken')
@@ -34,14 +35,14 @@ const Incomings = () => {
     }
 
     const transferFdm = (id: string) => {
-        ApextInstance.post('/transfer-recieved-fdms', { id: id }).then(() => {
+        ApextInstance.post(APEX_API.transfer_recieved_fdms, { id: id }).then(() => {
             setTimeout(() => { setFdmsData() }, 200)
         })        
     }
 
 
     const setFdmsData = () => {
-        ApextInstance.get('/recieved-fdms').then((res) => {
+        ApextInstance.get(APEX_API.recieved_fdms).then((res) => {
             setFdms(res.data.data)
         }).catch((err) => {
             if (err.response.data.message == 'No data found') setFdms([])

@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import LoginForm from '../../components/LoginForm'
 import ApextInstance from '../../services/axiosInstances/axiosApex';
+import APEX_API from '../../API/apex';
 
 export default function SignIn() {
 
@@ -28,7 +29,7 @@ export default function SignIn() {
       errResSetter("ID must be 6 characters")
     }
     else {
-      ApextInstance.post('/login', formData).then((res) => {
+      ApextInstance.post(APEX_API.login, formData).then((res) => {
         localStorage.setItem('apexToken',`Bearer ${res.data.token}`)
         navigate('/apex/home')
 
