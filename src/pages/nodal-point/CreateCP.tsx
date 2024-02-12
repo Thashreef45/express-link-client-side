@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import NodalInstance from '../../services/axiosInstances/axiosNp';
 import Header from '../../components/Header';
 import { Logo } from '../../constants/Colors';
+import NODAL_API from '../../API/nodal-point';
 
 
 
@@ -25,7 +26,7 @@ export default function CreateCP() {
     useEffect(() => {
         const token = localStorage.getItem('nodalToken')
 
-        NodalInstance.get('/home').then((res) => {
+        NodalInstance.get(NODAL_API.home).then((res) => {
             setPrefix(res.data.consignmentPrefix)
         }).catch((err) => {
             console.log(err)
@@ -63,7 +64,7 @@ export default function CreateCP() {
         }
         else {
             data.consignmentPrefix = prefix
-            NodalInstance.post('/create-cp', data).then((res) => {
+            NodalInstance.post(NODAL_API.create_cp, data).then((res) => {
                 localStorage.setItem('apexToken', `Bearer ${res.data.token}`)
                 navigate('/nodal/home')
             }).catch((err) => {

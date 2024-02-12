@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import NodalInstance from '../../services/axiosInstances/axiosNp';
+import NODAL_API from '../../API/nodal-point';
 
 
 const ReturnRecieved = () => {
@@ -18,7 +19,7 @@ const ReturnRecieved = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        NodalInstance.get('/home').then(() => {
+        NodalInstance.get(NODAL_API.home).then(() => {
             setFdmsData()
         }).catch(() => {
             if (localStorage.getItem('nodalToken')) localStorage.removeItem('cpToken')
@@ -33,14 +34,14 @@ const ReturnRecieved = () => {
     }
 
     const transferFdm = (id: string) => {
-        NodalInstance.post('/return-recieved-fdms',{id:id}).then(()=>{
+        NodalInstance.post(NODAL_API.return_sending_fdms,{id:id}).then(()=>{
             setTimeout(()=>{setFdmsData()},150)
         })
     }
 
 
     const setFdmsData = () => {
-        NodalInstance.get('/return-recieved-fdms').then((res) => {
+        NodalInstance.get(NODAL_API.return_sending_fdms).then((res) => {
             if(res?.data?.data){
                 setFdms(res?.data?.data)
             }else{

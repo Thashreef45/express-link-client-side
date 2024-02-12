@@ -10,6 +10,7 @@ import { FormHelperText } from '@mui/material';
 import { Colors } from '../../constants/Colors';
 import Header from '../../components/Header';
 import NodalInstance from '../../services/axiosInstances/axiosNp';
+import NODAL_API from '../../API/nodal-point';
 
 
 const PincodeSearch = () => {
@@ -17,7 +18,7 @@ const PincodeSearch = () => {
     const key = localStorage.getItem('cpToken')
     const navigate = useNavigate()
     useEffect(() => {
-        NodalInstance.get('/home').then().catch((err) => {
+        NodalInstance.get(NODAL_API.home).then().catch((err) => {
             console.log(err)
             if (key) localStorage.removeItem('cpToken')
             navigate('/cp/login')
@@ -34,7 +35,7 @@ const PincodeSearch = () => {
     const handleSubmit = () => {
         if (pincode.length > 5) {
             setLowerDiv(true)
-            NodalInstance.post('/search-by-pincode', { pincode: pincode }).then((res) => {
+            NodalInstance.post(NODAL_API.search_by_pincode, { pincode: pincode }).then((res) => {
                 cpDataSetter(res.data)
                 cpNotFoundSetter('')
             }).catch((err) => {

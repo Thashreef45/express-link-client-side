@@ -9,9 +9,9 @@ import Header from '../../components/Header';
 import { Colors, Logo } from '../../constants/Colors';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { Button } from 'react-bootstrap';
 import { Button } from '@mui/material';
 import NodalInstance from '../../services/axiosInstances/axiosNp';
+import NODAL_API from '../../API/nodal-point';
 
 
 
@@ -20,7 +20,7 @@ const SendFdms = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        NodalInstance.get('/home').then(() => {
+        NodalInstance.get(NODAL_API.home).then(() => {
             setFdmsData()
         }).catch(() => {
             if (localStorage.getItem('cpToken')) localStorage.removeItem('cpToken')
@@ -35,14 +35,14 @@ const SendFdms = () => {
     }
 
     const transferFdm = (id: string) => {
-        NodalInstance.post('/transfer-sending-fdm',{id:id}).then(()=>{
+        NodalInstance.post(NODAL_API.transfer_sending_fdm,{id:id}).then(()=>{
             setTimeout(()=>{setFdmsData()},150)
         })
     }
 
 
     const setFdmsData = () => {
-        NodalInstance.get('/get-sending-fdms').then((res) => {
+        NodalInstance.get(NODAL_API.get_sending_fdms).then((res) => {
             setFdms(res.data.data)
         }).catch((err) => {
             if(err.response.data.message == 'No data found')setFdms([])
