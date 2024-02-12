@@ -5,6 +5,7 @@ import { Colors, Logo } from "../../constants/Colors"
 import { useState } from "react"
 import NodalInstance from "../../services/axiosInstances/axiosNp"
 import TrackingResponse from "../../interfaces/tracking-results"
+import NODAL_API from "../../API/nodal-point"
 
 
 
@@ -49,7 +50,7 @@ const ConsignmentTracking = () => {
         if (awb.length < 10) {
             makeError('AWB Should be 10 characters')
         } else {
-            NodalInstance.get(`/tracking/${awb}`).then((res) => {
+            NodalInstance.get(`${NODAL_API.tracking}/${awb}`).then((res) => {
                 console.log(res.data.data, '#track')
                 setData(res.data.data)
             }).catch((err) => {

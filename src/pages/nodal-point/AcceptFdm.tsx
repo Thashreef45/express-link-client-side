@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import NodalInstance from '../../services/axiosInstances/axiosNp';
+import NODAL_API from '../../API/nodal-point';
 
 
 
@@ -26,18 +27,18 @@ const AcceptFdm = () => {
 
 
     const acceptHandler = (id: string) => {
-        NodalInstance.post(`/accept-fdm-cp/${id}`,address).then(() => setContent())
+        NodalInstance.post(`${NODAL_API.accept_fdm_cp}/${id}`,address).then(() => setContent())
     }
 
     const setContent = async () => {
-        NodalInstance.get('/accept-fdm').then((res) => {
+        NodalInstance.get(NODAL_API.accept_fdm).then((res) => {
             setData(res.data.data)
         })
     }
 
 
     useEffect(() => {
-        NodalInstance.get('/home').then((res) => {
+        NodalInstance.get(NODAL_API.home).then((res) => {
             setAddress({
                 address:res.data.address,
                 name:res.data.name,

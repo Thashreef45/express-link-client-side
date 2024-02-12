@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import nodalCards, { GridCardProps } from '../../constants/CardDatas/NodalCards';
 import Header from '../../components/Header';
 import { useEffect } from 'react';
+import NODAL_API from '../../API/nodal-point';
 
 
 const cards = nodalCards
@@ -21,7 +22,7 @@ const NodalHome = () => {
 
 
     useEffect(() => {
-        NodalInstance.get('/home').then().catch(() => {
+        NodalInstance.get(NODAL_API.home).then().catch(() => {
             if (localStorage.getItem('nodalToken')) {
                 localStorage.removeItem('nodalToken')
             }
