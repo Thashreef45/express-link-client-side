@@ -23,7 +23,7 @@ export default function CreateCP() {
     const [prefix, setPrefix] = useState('')
     const navigate = useNavigate()
 
-    useEffect(() => {
+    const auth = () => {
         const token = localStorage.getItem('nodalToken')
 
         NodalInstance.get(NODAL_API.home).then((res) => {
@@ -33,9 +33,13 @@ export default function CreateCP() {
             if (token) localStorage.removeItem('nodalToken')
             navigate('/nodal/login')
         })
+    }
+
+    
+    useEffect(() => {
+        auth()
     }, [])
 
-    // const 
 
 
     const handleSubmit = async (event: any) => {

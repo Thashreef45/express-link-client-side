@@ -46,17 +46,18 @@ const ConsignmentTracking = () => {
         }
     }
 
+    const trackConsignment = () => {
+        NodalInstance.get(`${NODAL_API.tracking}/${awb}`).then((res) => {
+            console.log(res.data.data, '#track')
+            setData(res.data.data)
+        }).catch((err) => {
+            makeError(err.response.data.message)
+        })
+    }
+
     const HandleTracking = () => {
-        if (awb.length < 10) {
-            makeError('AWB Should be 10 characters')
-        } else {
-            NodalInstance.get(`${NODAL_API.tracking}/${awb}`).then((res) => {
-                console.log(res.data.data, '#track')
-                setData(res.data.data)
-            }).catch((err) => {
-                makeError(err.response.data.message)
-            })
-        }
+        if (awb.length < 10) makeError ('AWB Should be 10 characters')
+        else trackConsignment()
     }
 
 

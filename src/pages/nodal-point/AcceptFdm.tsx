@@ -20,14 +20,14 @@ const AcceptFdm = () => {
     const [data, setData] = useState([])
     const [address, setAddress] = useState<any>(null)
 
-    
+
 
 
     const navigate = useNavigate()
 
 
     const acceptHandler = (id: string) => {
-        NodalInstance.post(`${NODAL_API.accept_fdm_cp}/${id}`,address).then(() => setContent())
+        NodalInstance.post(`${NODAL_API.accept_fdm_cp}/${id}`, address).then(() => setContent())
     }
 
     const setContent = async () => {
@@ -36,18 +36,22 @@ const AcceptFdm = () => {
         })
     }
 
-
-    useEffect(() => {
+    const setaddress = () => {
         NodalInstance.get(NODAL_API.home).then((res) => {
             setAddress({
-                address:res.data.address,
-                name:res.data.name,
+                address: res.data.address,
+                name: res.data.name,
             })
             setContent()
         }).catch(() => {
             if (localStorage.getItem('nodalToken')) localStorage.removeItem('nodalToken')
             navigate('/nodal/login')
         })
+    }
+
+
+    useEffect(() => {
+        setaddress()
     }, [])
 
 

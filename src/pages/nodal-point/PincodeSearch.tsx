@@ -17,13 +17,20 @@ const PincodeSearch = () => {
 
     const key = localStorage.getItem('cpToken')
     const navigate = useNavigate()
-    useEffect(() => {
+
+    const auth = () => {
         NodalInstance.get(NODAL_API.home).then().catch((err) => {
             console.log(err)
             if (key) localStorage.removeItem('cpToken')
             navigate('/cp/login')
         })
+    }
+
+
+    useEffect(() => {
+        auth()
     }, []);
+
 
     const [lowerDiv, setLowerDiv] = useState(false)
     const [pincode, setPincode] = useState('')
@@ -31,16 +38,20 @@ const PincodeSearch = () => {
     const [cpData, cpDataSetter] = useState<any>(null)
     const [cpNotFound, cpNotFoundSetter] = useState('')
 
+    const searchByPincode = () => {
+        NodalInstance.post(NODAL_API.search_by_pincode, { pincode: pincode }).then((res) => {
+            cpDataSetter(res.data)
+            cpNotFoundSetter('')
+        }).catch((err) => {
+            cpNotFoundSetter(err.response.data.message)
+        })
+    }
+
 
     const handleSubmit = () => {
         if (pincode.length > 5) {
             setLowerDiv(true)
-            NodalInstance.post(NODAL_API.search_by_pincode, { pincode: pincode }).then((res) => {
-                cpDataSetter(res.data)
-                cpNotFoundSetter('')
-            }).catch((err) => {
-                cpNotFoundSetter(err.response.data.message)
-            })
+            searchByPincode()
         }
         else {
             errSetter('Enter a valid pincode')
