@@ -19,24 +19,28 @@ const SendFdms = () => {
     const [fdms, setFdms] = useState([])
     const navigate = useNavigate()
 
-    useEffect(() => {
+    const auth = () => {
         NodalInstance.get(NODAL_API.home).then(() => {
             setFdmsData()
         }).catch(() => {
             if (localStorage.getItem('cpToken')) localStorage.removeItem('cpToken')
             navigate('/cp/login')
         })
+    }
+
+    useEffect(() => {
+        auth()
     }, [])
 
 
     const formatDate = (dateString: string) => {
-        const options : Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
         return new Date(dateString).toLocaleDateString(undefined, options);
     }
 
     const transferFdm = (id: string) => {
-        NodalInstance.post(NODAL_API.transfer_sending_fdm,{id:id}).then(()=>{
-            setTimeout(()=>{setFdmsData()},150)
+        NodalInstance.post(NODAL_API.transfer_sending_fdm, { id: id }).then(() => {
+            setTimeout(() => { setFdmsData() }, 150)
         })
     }
 
@@ -45,7 +49,7 @@ const SendFdms = () => {
         NodalInstance.get(NODAL_API.get_sending_fdms).then((res) => {
             setFdms(res.data.data)
         }).catch((err) => {
-            if(err.response.data.message == 'No data found')setFdms([])
+            if (err.response.data.message == 'No data found') setFdms([])
         })
     }
 
@@ -94,7 +98,7 @@ const SendFdms = () => {
                                     <TableCell align="center">{row.type}</TableCell>
                                     <TableCell align="center">
                                         <Button
-                                            onClick={() => transferFdm(row._id) }
+                                            onClick={() => transferFdm(row._id)}
                                         >
                                             Transfer FDM
                                         </Button>

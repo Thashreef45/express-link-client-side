@@ -18,13 +18,17 @@ const ReturnRecieved = () => {
     const [fdms, setFdms] = useState([])
     const navigate = useNavigate()
 
-    useEffect(() => {
+    const auth  = () => {
         NodalInstance.get(NODAL_API.home).then(() => {
             setFdmsData()
         }).catch(() => {
             if (localStorage.getItem('nodalToken')) localStorage.removeItem('cpToken')
             navigate('/nodal/login')
         })
+    }
+
+    useEffect(() => {
+        auth()
     }, [])
 
 

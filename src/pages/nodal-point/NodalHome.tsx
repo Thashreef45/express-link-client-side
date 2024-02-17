@@ -20,14 +20,18 @@ const cards = nodalCards
 const NodalHome = () => {
     const navigate = useNavigate()
 
-
-    useEffect(() => {
+    const auth = () => {
         NodalInstance.get(NODAL_API.home).then().catch(() => {
             if (localStorage.getItem('nodalToken')) {
                 localStorage.removeItem('nodalToken')
             }
             navigate('/nodal/login')
         })
+    }
+
+
+    useEffect(() => {
+        auth()
     }, [])
 
 
